@@ -11,14 +11,20 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('projects', function (Blueprint $table) {
+        Schema::create('board_templates', function (Blueprint $table) {
             $table->id();
 
             $table->string('name')->unique();
 
-            $table->date('due_date')->nullable()->default(null);
+            $table->foreignId('project_template_id')
+                ->nullable()
+                ->default(null)
+                ->references('id')
+                ->on('projects')
+                ->onDelete('set null')
+                ->onUpdate('cascade');
 
-            $table->date('completed_date')->nullable()->default(null);
+            $table->json('tasks');
 
             $table->timestamps();
         });
@@ -29,6 +35,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('projects');
+        Schema::dropIfExists('board_templates');
     }
 };
