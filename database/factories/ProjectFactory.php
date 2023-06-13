@@ -17,7 +17,8 @@ class ProjectFactory extends Factory
     public function definition(): array
     {
         return [
-            //
+            'name' => $this->faker->boolean() ? $this->faker->colorName().' '.$this->faker->words(3, true) : $this->faker->name().' '.$this->faker->date(),
+            'due_date' => $this->faker->boolean(50) ? $this->faker->date() : null,
         ];
     }
 }

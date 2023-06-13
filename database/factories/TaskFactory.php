@@ -17,7 +17,8 @@ class TaskFactory extends Factory
     public function definition(): array
     {
         return [
-            //
+            'name' => $this->faker->firstName().' '.random_int(1, 500).' '.$this->faker->companySuffix(),
+            'due_date' => $this->faker->boolean(50) ? $this->faker->date() : null,
         ];
     }
 }
