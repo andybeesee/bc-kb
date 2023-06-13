@@ -8,18 +8,23 @@
 @endphp
 
 <nav hx-boost="true">
-    <div class="hidden md:flex justify-between items-center max-w-4xl mx-auto">
-        <a href="/" class="px-1 py-2 font-bold text-indigo-100">BCKB</a>
+    <div class="hidden md:flex justify-between items-center container border-b border-zinc-500">
+        <a href="/" class="px-1 py-2 font-bold text-indigo-600 dark:text-indigo-100">BCKB</a>
         <div class="flex space-x-4">
             @foreach($links as $link)
-                <a class="px-1 py-2 hover:underline" href="{{ $link['href'] }}" active-class="font-bold">
+                <a
+                    class="px-1 py-2 dark:text-zinc-600 hover:underline"
+                    href="{{ $link['href'] }}"
+                    data-active-class="font-bold dark:text-zinc-100 text-zinc-800"
+                    data-inactive-class="dark:text-zinc-400 text-zinc-500 hover:underline hover:text-zinc-700 dark:hover:text-zinc-300"
+                >
                     {{ $link['name'] }}
                 </a>
             @endforeach
         </div>
         <div>
             <button
-                class="px-1 py-2 hover:underline"
+                class="px-1 py-2 hover:underline text-zinc-800 dark:text-zinc-200 "
                 type="button"
                 onclick="document.getElementById('logout-form').submit()"
             >

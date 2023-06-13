@@ -15,7 +15,6 @@ registerControllers(application, controllers);
 
 document.addEventListener('turbo:load', addActiveToLinks);
 
-
 window.onload = function() {
     addActiveToLinks();
 }
