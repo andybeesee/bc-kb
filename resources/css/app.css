@@ -1,3 +1,13 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+body {
+    background: lightgrey;
+}
+
+@media(prefers-color-scheme: dark) {
+    body {
+        background: #6b7280;
+    }
+}
