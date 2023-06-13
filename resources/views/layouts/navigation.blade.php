@@ -18,7 +18,13 @@
             @endforeach
         </div>
         <div>
-            <button class="px-1 py-2 hover:underline" type="button" hx-post="{{ route('logout') }}">Sign out {{ auth()->user()->name }}</button>
+            <button
+                class="px-1 py-2 hover:underline"
+                type="button"
+                onclick="document.getElementById('logout-form').submit()"
+            >
+                Sign out {{ auth()->user()->name }}
+            </button>
         </div>
     </div>
     <div class="md:hidden" data-controller="toggle">
@@ -35,7 +41,12 @@
                     {{ $link['name'] }}
                 </a>
             @endforeach
-            <button class="text-left px-3 py-2 hover:underline" type="button" hx-post="{{ route('logout') }}">Sign out {{ auth()->user()->name }}</button>
+            <button class="text-left px-3 py-2 hover:underline" type="button" onclick="document.getElementById('logout-form').submit()">
+                Sign out {{ auth()->user()->name }}
+            </button>
         </div>
     </div>
+    <form id="logout-form" action="{{ route('logout') }}" method="post">
+        @csrf
+    </form>
 </nav>
