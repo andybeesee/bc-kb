@@ -15,12 +15,9 @@
     </head>
     <body>
         <div class="min-h-screen">
-            @include('layouts.navigation')
-            <!-- Page Heading -->
-            @if (isset($header))
-                {{ $header }}
-            @endif
-
+            <div class="mb-5">
+                @include('layouts.navigation')
+            </div>
             <!-- Page Content -->
             <main>
                 {{ $slot }}

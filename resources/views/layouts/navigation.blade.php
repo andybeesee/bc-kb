@@ -16,7 +16,7 @@
                     class="px-1 py-2 dark:text-zinc-600 hover:underline"
                     href="{{ $link['href'] }}"
                     data-active-class="font-bold dark:text-zinc-100 text-zinc-800"
-                    data-inactive-class="dark:text-zinc-400 text-zinc-500 hover:underline hover:text-zinc-700 dark:hover:text-zinc-300"
+                    data-inactive-class="dark:text-zinc-600 text-zinc-500 hover:underline hover:text-zinc-700 dark:hover:text-zinc-300"
                 >
                     {{ $link['name'] }}
                 </a>
