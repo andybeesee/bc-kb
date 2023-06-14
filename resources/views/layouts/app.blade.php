@@ -13,7 +13,7 @@
         <!-- Scripts -->
         @vite(['resources/css/app.css', 'resources/js/app.js'])
     </head>
-    <body>
+    <body class="pb-14">
         <div class="min-h-screen">
             <div class="mb-5">
                 @include('layouts.navigation')

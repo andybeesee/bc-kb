@@ -1,17 +1,13 @@
+@import "list-group.css";
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
+
 body {
     background: bg-zinc-50;
 }
-
-@media(prefers-color-scheme: dark) {
-    body {
-        @apply bg-zinc-800 text-zinc-50;
-    }
-}
-
 
 .container {
     @apply max-w-6xl mx-auto;
@@ -23,5 +19,33 @@ body {
 
 
 h1 {
-    @apply text-4xl font-bold;
+    @apply text-4xl font-bold mb-4;
+}
+
+.link {
+    @apply text-blue-600 underline;
+}
+
+.link:hover {
+    @apply text-blue-800;
+}
+
+@media(prefers-color-scheme: dark) {
+    body {
+        @apply bg-zinc-800 text-zinc-50;
+    }
+
+    .link {
+        @apply text-blue-400 underline;
+    }
+
+    .link:hover {
+        @apply text-blue-500;
+    }
+}
+
+@media(max-width: 768px) {
+    main {
+        @apply mx-2;
+    }
 }
