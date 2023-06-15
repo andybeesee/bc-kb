@@ -1,0 +1,7 @@
+.text-danger {
+    @apply text-red-600;
+}
+
+.text-primary {
+    @apply text-blue-600;
+}

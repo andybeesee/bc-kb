@@ -1,0 +1,15 @@
+.badge {
+    @apply text-xs font-semibold px-2 py-0.5 rounded;
+}
+
+.badge.badge-primary {
+    @apply bg-blue-700 text-white;
+}
+
+.badge.badge-danger {
+    @apply bg-red-600 text-white;
+}
+
+@media(prefers-color-scheme: dark) {
+
+}

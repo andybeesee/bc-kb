@@ -9,16 +9,23 @@ use App\Models\Task;
 use App\Models\User;
 use Database\Factories\BoardFactory;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\DB;
 
 class DatabaseSeeder extends Seeder
 {
     protected $boards;
+
+    protected $users;
+
     /**
      * Seed the application's database.
      */
     public function run(): void
     {
-        // \App\Models\User::factory(10)->create();
+        if(DB::table('users')->count() < 100) {
+            User::factory(100)->create();
+        }
+
 
         if(User::where('email', 'admin@example.com')->count() === 0) {
             \App\Models\User::factory()->create([
@@ -26,6 +33,8 @@ class DatabaseSeeder extends Seeder
                 'email' => 'admin@example.com',
             ]);
         }
+
+        $this->users = User::all('id');
 
         $this->boards = Board::factory()->count(random_int(1000, 2500))->create();
 
@@ -36,10 +45,14 @@ class DatabaseSeeder extends Seeder
             });
 
         $this->boards->each(function(Board $board) {
-            Task::factory()->count(random_int(10, 100))
-                ->create([
-                    'board_id' => $board->id,
-                ]);
+            for($i = 0; $i < random_int(10, 100); $i++) {
+                Task::factory()
+                    ->create([
+                        'board_id' => $board->id,
+                        'assigned_to' => random_int(1, 100) > 40 ? $this->users->random()->id : null,
+                    ]);
+            }
+
         });
     }
 }

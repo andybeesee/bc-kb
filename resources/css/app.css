@@ -1,4 +1,6 @@
 @import "list-group.css";
+@import "badge.css";
+@import "text.css";
 
 @tailwind base;
 @tailwind components;
@@ -19,7 +21,11 @@ body {
 
 
 h1 {
-    @apply text-4xl font-bold mb-4;
+    @apply text-4xl font-bold mb-4 tracking-tight;
+}
+
+h2 {
+    @apply text-3xl font-semibold mb-3 tracking-tight;
 }
 
 .link {
