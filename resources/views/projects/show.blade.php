@@ -4,8 +4,9 @@
 
         <div>
             <h2>Boards</h2>
+            {{--TODO: drag and drop to re-order, I saw we just deep link... --}}
             <div class="row">
-                <div class="col-span-12 project-board-menu">
+                <div class="col-span-12">
                     @foreach($project->boards as $board)
                         @php
                             $class = '';
@@ -21,11 +22,9 @@
                                 $class .= 'has-incomplete-user';
                             }
                         @endphp
-                        <a
-                            href="#"
+                        <div
                             id="board-list-{{ $board->id }}"
-                            class="p-1  flex text-sm rounded-md hover:bg-zinc-300"
-                            data-active-class="active"
+                            class="p-1 flex text-sm rounded-md"
                             title="{{ $board->name }}"
                         >
 
@@ -41,11 +40,11 @@
                                     {{ $board->incomplete_user_tasks_count }}
                                 </span>
                             </span>
-                            <span class="link ml-2 truncate">
-                                {{ $board->name }}
-                            </span>
+                            <a href="#" class="link ml-2 truncate">
+                                #{{ $board->id }} {{ $board->name }}
+                            </a>
 
-                        </a>
+                        </div>
                     @endforeach
                 </div>
                 <div class="col-span-9">
