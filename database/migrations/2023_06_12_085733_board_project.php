@@ -26,6 +26,8 @@ return new class extends Migration
                 ->onUpdate('cascade')
                 ->onDelete('cascade');
 
+            $table->unsignedInteger('sort')->default(0);
+
             $table->timestamps();
         });
     }

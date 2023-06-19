@@ -11,6 +11,8 @@ class Project extends Model
 
     public function boards()
     {
-        return $this->belongsToMany(Board::class);
+        return $this->belongsToMany(Board::class)
+            ->orderBy('board_project.sort')
+            ->orderBy('boards.name');
     }
 }
