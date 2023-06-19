@@ -29,6 +29,7 @@ Route::middleware('auth')->group(function () {
 
     Route::resource('projects', \App\Http\Controllers\ProjectController::class);
     Route::put('/projects/{project}/boards/sort', \App\Http\Controllers\ProjectBoardSortController::class)->name('projects.boards.sort');
+    Route::resource('projects.boards', \App\Http\Controllers\ProjectBoardController::class);
 });
 
 require __DIR__.'/auth.php';

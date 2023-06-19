@@ -1,0 +1,37 @@
+.btn {
+    @apply text-center p-2 rounded bg-zinc-50;
+}
+
+.btn.icon {
+    @apply inline-flex items-center;
+}
+
+.btn.icon > .icon {
+    @apply h-5 w-5 mr-2;
+}
+
+.btn.icon.icon-end > .icon {
+    @apply ml-2 mr-0;
+}
+
+.btn:hover {
+    @apply bg-zinc-200;
+}
+
+.btn.btn-primary {
+    @apply bg-blue-600;
+}
+
+@media(prefers-color-scheme: dark) {
+    .btn {
+        @apply bg-zinc-700;
+    }
+
+    .btn:hover {
+        @apply bg-zinc-900;
+    }
+
+    .btn.btn-primary {
+        @apply bg-blue-800;
+    }
+}

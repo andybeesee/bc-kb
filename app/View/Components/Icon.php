@@ -100,7 +100,7 @@ class Icon extends Component
     public function render()
     {
 return <<<'blade'
-<svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" {{ $svg['otherAttributes'] ?? '' }} viewBox="{{ $svg['viewBox'] }}" {{ $attributes->merge(['class' => '']) }}>{!! $svg['paths'] !!}</svg>
+<svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" {{ $svg['otherAttributes'] ?? '' }} viewBox="{{ $svg['viewBox'] }}" {{ $attributes->merge(['class' => 'icon']) }}>{!! $svg['paths'] !!}</svg>
 blade;
     }
 }

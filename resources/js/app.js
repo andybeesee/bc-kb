@@ -13,7 +13,7 @@ const controllers = import.meta.glob('./**/*_controller.js', { eager: true });
 registerControllers(application, controllers);
 
 
-document.addEventListener('turbo:load', addActiveToLinks);
+// document.addEventListener('turbo:load', addActiveToLinks);
 
 window.onload = function() {
     addActiveToLinks();

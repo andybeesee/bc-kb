@@ -1,5 +1,8 @@
 @import "list-group.css";
 @import "badge.css";
+@import "btn.css";
+@import "form.css";
+@import "sub-nav.css";
 @import "text.css";
 
 @tailwind base;
@@ -36,6 +39,7 @@ h2 {
     @apply text-blue-800;
 }
 
+
 @media(prefers-color-scheme: dark) {
     body {
         @apply bg-zinc-800 text-zinc-50;
@@ -55,3 +59,4 @@ h2 {
         @apply mx-2;
     }
 }
+

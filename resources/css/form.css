@@ -1,0 +1,50 @@
+.form-label {
+    @apply block font-semibold mb-1.5 text-zinc-600 tracking-tight;
+}
+
+.form-group.error .form-label {
+    @apply text-red-700;
+}
+
+.form-help {
+    @apply text-sm mt-0.5;
+}
+
+.form-error {
+    @apply text-red-700;
+}
+
+.form-group.error .form-label {
+    @apply text-red-700;
+}
+
+.form-control {
+    @apply block w-full rounded shadow-inner py-2 px-1.5;
+}
+
+.form-control.error {
+    @apply border-red-600
+}
+
+@media(prefers-color-scheme: dark) {
+    .form-label {
+        @apply text-zinc-300;
+    }
+
+    .form-help   {
+        @apply text-zinc-400;
+    }
+
+    .form-control.error {
+        @apply border-red-400
+    }
+
+    .form-group.error .form-label {
+        @apply text-red-300;
+    }
+
+    textarea.form-control, select.form-control, input.form-control {
+        @apply bg-zinc-500;
+    }
+
+}

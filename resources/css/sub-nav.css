@@ -1,0 +1,25 @@
+.sub-nav {
+    @apply flex items-center space-x-6;
+}
+
+.sub-nav .link {
+
+}
+
+.sub-nav .link.active {
+    @apply font-bold text-zinc-800 no-underline border-zinc-800;
+}
+
+@media(prefers-color-scheme: dark) {
+    .sub-nav {
+
+    }
+
+    .sub-nav .link {
+
+    }
+
+    .sub-nav .link.active {
+        @apply font-bold text-zinc-300 border-zinc-500;
+    }
+}
