@@ -5,17 +5,28 @@
     $value = old($name, $value);
     $hasError = $errors->has($name )
 @endphp
-<div class="form-group">
+<div class="form-group" {{ $type === 'date' ? 'data-controller=date-picker' : '' }}>
     <label for="{{ $inputId }}" class="form-label {{ $hasError ? 'error' : '' }}">
         {{ $label }}
     </label>
 
-    <input
-        type="{{ $type }}"
-        name="{{ $name }}"
-        value="{{ $value }}"
-        class="form-control {{ $hasError ? 'error' : '' }}"
-    />
+    @if($type === 'date')
+        <duet-date-picker
+            data-date-picker-target="input"
+            name="{{ $name }}"
+            identifier="{{ $inputId }}"
+            value="{{ $value }}"
+            data-action="click->date-picker#open"
+        />
+    @else
+        <input
+            type="{{ $type }}"
+            name="{{ $name }}"
+            value="{{ $value }}"
+            class="form-control {{ $hasError ? 'error' : '' }}"
+        />
+    @endif
+
 
     @if(!empty($help))
         <div class="form-help">{{ $help }}</div>

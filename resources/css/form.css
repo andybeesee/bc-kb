@@ -18,8 +18,8 @@
     @apply text-red-700;
 }
 
-.form-control {
-    @apply block w-full rounded shadow-inner py-2 px-1.5;
+.form-control, .duet-date__input {
+    @apply block w-full rounded shadow-inner border border-zinc-600 py-2 px-1.5;
 }
 
 .form-control.error {
@@ -43,8 +43,8 @@
         @apply text-red-300;
     }
 
-    textarea.form-control, select.form-control, input.form-control {
-        @apply bg-zinc-500;
+    .form-control, .duet-date__input {
+        @apply bg-zinc-700 border-zinc-500;
     }
 
 }

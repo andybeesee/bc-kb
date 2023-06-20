@@ -1,4 +1,6 @@
 import './bootstrap';
+import { DuetDatePicker } from "./date-picker/custom-element";
+customElements.define("duet-date-picker", DuetDatePicker);
 
 // import * as Turbo from '@hotwired/turbo';
 import * as htmx from 'htmx.org';
