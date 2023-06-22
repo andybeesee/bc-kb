@@ -10,23 +10,12 @@
         {{ $label }}
     </label>
 
-    @if($type === 'date')
-        <duet-date-picker
-            data-date-picker-target="input"
-            name="{{ $name }}"
-            identifier="{{ $inputId }}"
-            value="{{ $value }}"
-            data-action="click->date-picker#open"
-        />
-    @else
-        <input
-            type="{{ $type }}"
-            name="{{ $name }}"
-            value="{{ $value }}"
-            class="form-control {{ $hasError ? 'error' : '' }}"
-        />
-    @endif
-
+    <input
+        type="{{ $type }}"
+        name="{{ $name }}"
+        value="{{ $value }}"
+        class="form-control {{ $hasError ? 'error' : '' }}"
+    />
 
     @if(!empty($help))
         <div class="form-help">{{ $help }}</div>

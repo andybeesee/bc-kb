@@ -1,20 +1,18 @@
 <x-layouts.project-layout :project="$project">
     <h2>Adding a Board</h2>
 
-    <div class="flex items-center space-x-3 mb-5">
-        <a class="btn icon start" href="?how=select">
-            @if($how === 'select')
-                <x-icon icon="check-circle" />
-            @endif
+    <form method="get" class="grid mb-4 gap-0.5" >
+
+        <label>
+            <input onchange="event.target.closest('form').submit()" type="radio" value="select" name="how" {{ $how === 'select' ? "checked=checked" : "" }} />
             Select an Existing Board
-        </a>
-        <a class="btn icon" href="?how=create">
-            @if($how === 'create')
-                <x-icon icon="check-circle" />
-            @endif
+        </label>
+
+        <label>
+            <input onchange="event.target.closest('form').submit()" type="radio" value="create" name="how" {{ $how === 'create' ? "checked=checked" : "" }} />
             Create a New Board
-        </a>
-    </div>
+        </label>
+    </form>
 
     @if($how === 'select')
         project select input
