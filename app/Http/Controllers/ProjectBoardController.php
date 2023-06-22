@@ -29,6 +29,12 @@ class ProjectBoardController extends Controller
 
     public function show(Project $project, Board $board)
     {
-        return view('projects.boards.show')->with('project', $project);
+        $project->load([
+            'boards' => fn($q) => $q->addTaskCounts(),
+        ]);
+
+        return view('projects.boards.show')
+            ->with('project', $project)
+            ->with('board', $board);
     }
 }

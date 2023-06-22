@@ -12,7 +12,7 @@
             'resources/js/app.js'
         ])
     </head>
-    <body class="pb-14">
+    <body>
         <div class="min-h-screen">
             <div class="mb-5">
                 @include('layouts.navigation')

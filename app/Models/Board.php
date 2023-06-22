@@ -35,4 +35,9 @@ class Board extends Model
     {
         return $this->tasksAssignedToUser($userId)->whereNull('completed_date');
     }
+
+    public function scopeAddTaskCounts($q)
+    {
+        return $q->withCount(['pastDueTasks', 'incompleteTasks', 'incompleteUserTasks']);
+    }
 }

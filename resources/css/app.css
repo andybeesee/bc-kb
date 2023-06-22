@@ -40,6 +40,12 @@ h2 {
     @apply text-blue-800;
 }
 
+.full-body-scroll-column {
+    @apply overflow-y-scroll;
+    /** 65px is the approximate height of the navbar **/
+    /** TODO: we need a better value for calc **/
+    max-height:  calc(100vh - 65px);
+}
 
 @media(prefers-color-scheme: dark) {
     body {

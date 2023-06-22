@@ -17,13 +17,15 @@ class DatabaseSeeder extends Seeder
 
     protected $users;
 
+    protected User $admin;
+
     /**
      * Seed the application's database.
      */
     public function run(): void
     {
-        if(DB::table('users')->count() < 100) {
-            User::factory(100)->create();
+        if(DB::table('users')->count() < 200) {
+            User::factory(200)->create();
         }
 
 
@@ -33,6 +35,8 @@ class DatabaseSeeder extends Seeder
                 'email' => 'admin@example.com',
             ]);
         }
+
+        $this->admin = User::where('email', 'admin@example.com')->first();
 
         $this->users = User::all('id');
 
@@ -45,6 +49,12 @@ class DatabaseSeeder extends Seeder
             });
 
         $this->boards->each(function(Board $board) {
+            Task::factory()
+                ->create([
+                    'board_id' => $board->id,
+                    'assigned_to' => $this->admin->id,
+                ]);
+
             for($i = 0; $i < random_int(10, 100); $i++) {
                 Task::factory()
                     ->create([

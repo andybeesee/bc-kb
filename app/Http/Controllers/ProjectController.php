@@ -39,7 +39,7 @@ class ProjectController extends Controller
     public function show(Project $project)
     {
         $project->load([
-            'boards' => fn($q) => $q->withCount(['pastDueTasks', 'incompleteTasks', 'incompleteUserTasks',]),
+            'boards' => fn($q) => $q->addTaskCounts(),
         ]);
 
         return view('projects.show')->with('project', $project);

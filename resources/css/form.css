@@ -22,6 +22,10 @@
     @apply block min-w-[175px] shadow-inner border border-zinc-600 py-1 px-2;
 }
 
+.form-control.form-control-sm {
+    @apply text-sm px-1 py-0.5;
+}
+
 .form-control.error {
     @apply border-red-600
 }
