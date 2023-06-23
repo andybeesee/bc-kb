@@ -37,7 +37,7 @@ document.body.addEventListener('htmx:configRequest', (event) => {
 
 document.addEventListener('htmx:pushedIntoHistory', () => {
     addActiveToLinks();
-    scrollStuffIntoView();
+    // scrollStuffIntoView();
 });
 
 
