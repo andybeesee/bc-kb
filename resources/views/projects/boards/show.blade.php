@@ -13,17 +13,17 @@
                 @php $userProjects = \App\Models\Project::forUser(auth()->user())->orderBy('name')->get(); @endphp
                 @foreach($userProjects as $sideProject)
                     <a
-                        class="px-1 truncate rounded-md hover:bg-zinc-200 dark:hover:bg-zinc-600"
-                        title="{{ $sideProject->name }}"
-                        {{--TODO: if we do this business we need to update active class somehow --}}
-                        data-active-class="bg-purple-300 hover:bg-purple-400 dark:hover:bg-purple-900 dark:bg-purple-700"
-                        data-inactive-class="hover:bg-zinc-200 dark:hover:bg-zinc-600"
-                        href="{{ route('projects.show', $sideProject->id) }}"
                         hx-get="{{ route('projects.show', $sideProject->id) }}"
                         hx-target="#project-board-list"
                         hx-select="#project-board-list"
                         hx-swap="outerHTML"
                         hx-push-url="true"
+                        class="px-1 truncate rounded-md hover:bg-zinc-200 dark:hover:bg-zinc-600"
+                        title="{{ $sideProject->name }}"
+                        {{--TODO: if we do this business we need to update active class somehow --}}
+                        data-active-class="bg-purple-300 cursor-pointer hover:bg-purple-400 dark:hover:bg-purple-900 dark:bg-purple-700"
+                        data-inactive-class="hover:bg-zinc-200 dark:hover:bg-zinc-600"
+                        href="{{ route('projects.show', $sideProject->id) }}/"
                         {{ $project->id === $sideProject->id ? 'data-scroll-into-view=1' : '' }}
                     >
                         {{ $sideProject->name }}
