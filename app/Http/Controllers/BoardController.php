@@ -36,7 +36,7 @@ class BoardController extends Controller
      */
     public function show(Board $board)
     {
-        //
+        return view('boards.show')->with('board', $board);
     }
 
     /**

@@ -10,7 +10,11 @@ class ProjectBoardController extends Controller
 {
     public function index(Project $project)
     {
+        $project->load([
+            'boards' => fn($q) => $q->addTaskCounts(),
+        ]);
 
+        return view('projects.boards.index')->with('project', $project);
     }
 
     public function create(Request $request, Project $project)

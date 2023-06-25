@@ -38,13 +38,8 @@ class ProjectController extends Controller
      */
     public function show(Project $project)
     {
-        if($project->boards()->count() > 0) {
-            return redirect()
-                ->route('projects.boards.show', [$project, $project->boards()->first()]);
-        }
-
         $project->load([
-            'boards' => fn($q) => $q->addTaskCounts(),
+            'boards' => fn($q) => $q->withOpenTasks()->addTaskCounts(),
         ]);
 
         return view('projects.show')->with('project', $project);

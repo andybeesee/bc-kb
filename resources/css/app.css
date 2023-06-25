@@ -28,6 +28,10 @@ h1 {
     @apply text-4xl font-bold mb-4 tracking-tight;
 }
 
+h1 + .subtitle {
+    @apply -mt-3 mb-4 text-sm;
+}
+
 h2 {
     @apply text-3xl font-semibold mb-3 tracking-tight;
 }

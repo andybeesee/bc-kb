@@ -40,4 +40,9 @@ class Board extends Model
     {
         return $q->withCount(['pastDueTasks', 'incompleteTasks', 'incompleteUserTasks']);
     }
+
+    public function scopeWithOpenTasks($q)
+    {
+        return $q->whereHas('incompleteTasks');
+    }
 }
