@@ -29,34 +29,35 @@ We're going to have
 
 # Page design
 
-## Projects
+## Projects - its all DEEP LINKED
+or we don't deep link a GD thing - and we just SPA the bad boy with a bunch of random components
+with livewire instead of an actual SPA though
+that seems straight forwad, no?
+
+then we get rid of all those routes for files, and maybe some of the tasks? 
+
 /projects
 /projects/create
 /projects/{project}
 /projects/{project}/edit
-/projects/{project}/boards (sorting happens here too)
 /projects/{project}/files
 /projects/{project}/files/create
 /projects/{project}/files/{file}
 /projects/{project}/files/{file}/edit
-
-## Boards
-/boards
-/boards/create
-/boards/{board} (if part of a projects that is shown, tasks and files are shown on this page too)
-/boards/{board}/edit
-/boards/{boards}/tasks (sorting happens here too)
-/boards/{boards}/files
-/boards/{boards}/files/create
-/boards/{boards}/files/{file}
-/boards/{boards}/files/{file}/edit
-
-## Tasks
-/tasks
-/tasks/create
-/tasks/{task|
-/tasks/{task}/edit
-/tasks/{task}/files
-/tasks/{task}/files/create
-/tasks/{task}/files/{file}
-/tasks/{task}/files/{file}/edit
+/projects/{project}/boards (sorting happens here too)
+/projects/{project}/boards/create
+/projects/{project}/boards/{board} (if part of a projects that is shown, tasks and files are shown on this page too)
+/projects/{project}/boards/{board}/edit
+/projects/{project}/boards/{board}/files
+/projects/{project}/boards/{board}/files/create
+/projects/{project}/boards/{board}/files/{file}
+/projects/{project}/boards/{board}/files/{file}/edit
+/projects/{project}/boards/{board}/tasks (sorting happens here too)
+/projects/{project}/boards/{board}/tasks
+/projects/{project}/boards/{board}/tasks/create
+/projects/{project}/boards/{board}/tasks/{task|
+/projects/{project}/boards/{board}/tasks/{task}/edit
+/projects/{project}/boards/{board}/tasks/{task}/files
+/projects/{project}/boards/{board}/tasks/{task}/files/create
+/projects/{project}/boards/{board}/tasks/{task}/files/{file}
+/projects/{project}/boards/{board}/tasks/{task}/files/{file}/edit
