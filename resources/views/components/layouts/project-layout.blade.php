@@ -1,5 +1,6 @@
 <x-app-layout title="Project Detail">
     <div class="container">
+        {{ Breadcrumbs::render() }}
         <h1>{{ $project->name }}</h1>
 
         <div>

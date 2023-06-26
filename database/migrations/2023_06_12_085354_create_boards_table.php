@@ -22,6 +22,8 @@ return new class extends Migration
 
             $table->string('name');
 
+            $table->unsignedInteger('sort')->default(0);
+
             $table->unique(['name', 'project_id']);
 
             $table->date('due_date')->nullable()->default(null);

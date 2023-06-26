@@ -34,7 +34,7 @@ We're going to have
 /projects/create
 /projects/{project}
 /projects/{project}/edit
-/projects/{project}/boards
+/projects/{project}/boards (sorting happens here too)
 /projects/{project}/files
 /projects/{project}/files/create
 /projects/{project}/files/{file}
@@ -44,9 +44,8 @@ We're going to have
 /boards
 /boards/create
 /boards/{board} (if part of a projects that is shown, tasks and files are shown on this page too)
-/boards/{board}/projects
 /boards/{board}/edit
-/boards/{boards}/tasks
+/boards/{boards}/tasks (sorting happens here too)
 /boards/{boards}/files
 /boards/{boards}/files/create
 /boards/{boards}/files/{file}

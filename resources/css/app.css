@@ -29,7 +29,11 @@ h1 {
 }
 
 h1 + .subtitle {
-    @apply -mt-3 mb-4 text-sm;
+    @apply -mt-2 mb-4 text-sm;
+}
+
+.breadcrumbs + h1 {
+    @apply mt-1.5;
 }
 
 h2 {

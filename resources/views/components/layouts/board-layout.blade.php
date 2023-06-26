@@ -1,7 +1,9 @@
 @props(['board'])
 <x-app-layout title="Board Detail">
     <div class="container">
+        {{ Breadcrumbs::render() }}
         <h1>{{ $board->name }}</h1>
+
 
         <div class="subtitle">
             Due date, owner, misc. counts here,
