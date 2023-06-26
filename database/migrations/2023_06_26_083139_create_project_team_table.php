@@ -11,7 +11,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('boards', function (Blueprint $table) {
+        Schema::create('project_team', function (Blueprint $table) {
             $table->id();
 
             $table->foreignId('project_id')
@@ -20,13 +20,11 @@ return new class extends Migration
                 ->onDelete('cascade')
                 ->onUpdate('cascade');
 
-            $table->string('name');
-
-            $table->unique(['name', 'project_id']);
-
-            $table->date('due_date')->nullable()->default(null);
-
-            $table->date('completed_date')->nullable()->default(null);
+            $table->foreignId('team_id')
+                ->references('id')
+                ->on('teams')
+                ->onDelete('cascade')
+                ->onUpdate('cascade');
 
             $table->timestamps();
         });
@@ -37,6 +35,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('boards');
+        Schema::dropIfExists('project_team');
     }
 };

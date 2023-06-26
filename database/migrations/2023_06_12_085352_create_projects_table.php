@@ -11,18 +11,12 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('boards', function (Blueprint $table) {
+        Schema::create('projects', function (Blueprint $table) {
             $table->id();
 
-            $table->foreignId('project_id')
-                ->references('id')
-                ->on('projects')
-                ->onDelete('cascade')
-                ->onUpdate('cascade');
+            $table->string('name')->unique();
 
-            $table->string('name');
-
-            $table->unique(['name', 'project_id']);
+            $table->string('status')->default('incomplete');
 
             $table->date('due_date')->nullable()->default(null);
 
@@ -37,6 +31,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('boards');
+        Schema::dropIfExists('projects');
     }
 };

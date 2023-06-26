@@ -11,22 +11,20 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('board_project', function (Blueprint $table) {
+        Schema::create('team_user', function (Blueprint $table) {
             $table->id();
 
-            $table->foreignId('project_id')
+            $table->foreignId('team_id')
                 ->references('id')
-                ->on('projects')
-                ->onUpdate('cascade')
-                ->onDelete('cascade');
+                ->on('teams')
+                ->onDelete('cascade')
+                ->onUpdate('cascade');
 
-            $table->foreignId('board_id')
+            $table->foreignId('user_id')
                 ->references('id')
-                ->on('boards')
-                ->onUpdate('cascade')
-                ->onDelete('cascade');
-
-            $table->unsignedInteger('sort')->default(0);
+                ->on('users')
+                ->onDelete('cascade')
+                ->onUpdate('cascade');
 
             $table->timestamps();
         });
@@ -37,6 +35,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('board_project');
+        Schema::dropIfExists('team_user');
     }
 };

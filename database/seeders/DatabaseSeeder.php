@@ -28,7 +28,6 @@ class DatabaseSeeder extends Seeder
             User::factory(200)->create();
         }
 
-
         if(User::where('email', 'admin@example.com')->count() === 0) {
             \App\Models\User::factory()->create([
                 'name' => 'Admin User',
@@ -40,29 +39,28 @@ class DatabaseSeeder extends Seeder
 
         $this->users = User::all('id');
 
-        $this->boards = Board::factory()->count(random_int(1000, 2500))->create();
-
-        Project::factory()->count(100)->create()
+        Project::factory()->count(random_int(100, 500))->create()
             ->each(function(Project $project) {
-                $boardIds = $this->boards->random(random_int(5, 100))->pluck('id')->toArray();
-                $project->boards()->sync($boardIds);
+                $boards = Board::factory()->count(random_int(5, 15))->create(['project_id' => $project->id]);
+
+                $boards->each(function(Board $board) {
+                    Task::factory()
+                        ->create([
+                            'board_id' => $board->id,
+                            'assigned_to' => $this->admin->id,
+                        ]);
+
+                    for($i = 0; $i < random_int(10, 100); $i++) {
+                        Task::factory()
+                            ->create([
+                                'board_id' => $board->id,
+                                'assigned_to' => random_int(1, 100) > 40 ? $this->users->random()->id : null,
+                            ]);
+                    }
+
+                });
             });
 
-        $this->boards->each(function(Board $board) {
-            Task::factory()
-                ->create([
-                    'board_id' => $board->id,
-                    'assigned_to' => $this->admin->id,
-                ]);
 
-            for($i = 0; $i < random_int(10, 100); $i++) {
-                Task::factory()
-                    ->create([
-                        'board_id' => $board->id,
-                        'assigned_to' => random_int(1, 100) > 40 ? $this->users->random()->id : null,
-                    ]);
-            }
-
-        });
     }
 }
