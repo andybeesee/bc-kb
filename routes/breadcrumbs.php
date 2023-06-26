@@ -19,7 +19,8 @@ Breadcrumbs::for('projects.index', function (BreadcrumbTrail $trail) {
 
 Breadcrumbs::for('projects.show', function (BreadcrumbTrail $trail, \App\Models\Project $project) {
     $trail->parent('projects.index');
-    $trail->push($project->name, route('projects.show', $project));
+    $name = str_contains(request()->url(), '/projects/'.$project->id) ? 'Project Dashboard' : $project->name;
+    $trail->push($name, route('projects.show', $project));
 });
 
 Breadcrumbs::for('projects.edit', function (BreadcrumbTrail $trail, \App\Models\Project $project) {

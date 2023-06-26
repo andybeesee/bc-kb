@@ -1,6 +1,6 @@
 @if(!$breadcrumbs->isEmpty())
     {{-- TODO: We dont show the last 'active' item... seems unnecccesary? --}}
-    <nav aria-label="breadcrumb" class="breadcrumbs flex items-center space-x-2 text-sm">
+    <nav aria-label="breadcrumb" class="breadcrumbs hidden md:flex items-center space-x-2 text-sm">
         @foreach ($breadcrumbs as $breadcrumb)
 
             @if(!$loop->first && !$loop->last)
@@ -14,5 +14,12 @@
             @endif
 
         @endforeach
+    </nav>
+
+    <nav aria-label="breadcrumb" class="breadcrumbs md:hidden">
+        @php $bc = $breadcrumbs->reverse()->take(2)->last() @endphp
+        <a class="link" href="{{ $bc->url }}">
+            Back to {{ $bc->title }}
+        </a>
     </nav>
 @endif
