@@ -5,18 +5,15 @@
     $value = old($name, $value);
     $hasError = $errors->has($name )
 @endphp
-<div class="form-group">
+<div class="form-group" {{ $type === 'date' ? 'data-controller=date-picker' : '' }}>
     <label for="{{ $inputId }}" class="form-label {{ $hasError ? 'error' : '' }}">
         {{ $label }}
     </label>
 
-    <input
-        type="{{ $type }}"
+    <textarea
         name="{{ $name }}"
-        value="{{ $value }}"
         class="form-control {{ $hasError ? 'error' : '' }}"
-        {{ $attributes->merge() }}
-    />
+    >{{ $value }}</textarea>
 
     @if(!empty($help))
         <div class="form-help">{{ $help }}</div>

@@ -22,7 +22,7 @@ class ProjectController extends Controller
      */
     public function create()
     {
-        //
+        return view('projects.create');
     }
 
     /**
@@ -30,7 +30,21 @@ class ProjectController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $this->validate($request, [
+            'name' => 'required|unique:projects',
+            'status' => 'required|max:50',
+            'due_date' => 'nullable|date',
+        ]);
+
+        $project = new Project();
+        $project->name = $request->get('name');
+        $project->description = $request->get('description');
+        $project->status = $request->get('status');
+        $project->due_date = $request->get('due_date');
+        $project->save();
+
+        return redirect()->route('projects.show', $project);
+
     }
 
     /**

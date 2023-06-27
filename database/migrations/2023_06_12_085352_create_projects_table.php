@@ -16,6 +16,8 @@ return new class extends Migration
 
             $table->string('name')->unique();
 
+            $table->text('description')->nullable()->default(null);
+
             $table->string('status')->default('incomplete');
 
             $table->date('due_date')->nullable()->default(null);

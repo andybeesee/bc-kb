@@ -4,6 +4,26 @@
         {{ Breadcrumbs::render() }}
         <h1>{{ $project->name }}</h1>
 
+        <div class="meta">
+            <div class="meta-item">
+                {{ str($project->status)->title() }}
+            </div>
+            @if(!empty($project->due_date))
+                <div class="meta-item">
+                    <x-icon icon="calendar3" />
+                    Due {{ $project->due_date->format('M jS, Y') }}
+                </div>
+            @endif
+            @if(!empty($project->completed_date))
+                <div class="meta-item">
+                    {{-- TODO: use 'calendar2-x' icon if completed late --}}
+                    <x-icon icon="calendar2-check" />
+                    Due {{ $project->completed_date->format('M jS, Y') }}
+                </div>
+            @endif
+
+        </div>
+
         <div>
             <div class="mb-5">
                  <div class="sub-nav">

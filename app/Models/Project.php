@@ -9,6 +9,11 @@ class Project extends Model
 {
     use HasFactory;
 
+    protected $casts = [
+        'due_date' => 'date',
+        'completed_date' => 'date',
+    ];
+
     public function boards()
     {
         return $this->hasMany(Board::class)
