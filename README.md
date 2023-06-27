@@ -61,3 +61,9 @@ then we get rid of all those routes for files, and maybe some of the tasks?
 /projects/{project}/boards/{board}/tasks/{task}/files/create
 /projects/{project}/boards/{board}/tasks/{task}/files/{file}
 /projects/{project}/boards/{board}/tasks/{task}/files/{file}/edit
+
+I think we'll also want some 'share' links that direct to an itesm deeply linked page
+
+/tasks/{task}
+/files/{file}
+/boards/{board}
