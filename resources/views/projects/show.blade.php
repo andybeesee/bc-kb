@@ -11,7 +11,7 @@
             >
                 <div class="flex">
                     <div>
-                        <a href="{{ route('boards.show', [$project, $board]) }}" class="link truncate">
+                        <a href="{{ route('projects.boards.show', [$project, $board]) }}" class="link truncate">
                             #{{ $board->id }} {{ $board->name }}
                         </a>
                         @include('boards._count-box')
