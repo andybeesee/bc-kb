@@ -19,7 +19,11 @@
 }
 
 .btn.btn-primary {
-    @apply bg-blue-600;
+    @apply bg-blue-600 text-white;
+}
+
+.btn.btn-primary:hover {
+    @apply bg-blue-700;
 }
 
 @media(prefers-color-scheme: dark) {
@@ -32,6 +36,10 @@
     }
 
     .btn.btn-primary {
+        @apply bg-blue-900;
+    }
+
+    .btn.btn-primary:hover {
         @apply bg-blue-800;
     }
 }

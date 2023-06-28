@@ -4,7 +4,10 @@ namespace App\Http\Controllers;
 
 use App\Models\Board;
 use App\Models\Project;
+use App\Models\Task;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Validation\Rule;
 
 class ProjectBoardController extends Controller
 {
@@ -28,7 +31,36 @@ class ProjectBoardController extends Controller
 
     public function store(Request $request, Project $project)
     {
+        $this->validate($request, [
+            'name' => [
+                'required',
+                Rule::unique('boards', 'name')
+                    ->where('project_id', $project->id)
+            ],
+            'due_date' => 'nullable|date',
+        ]);
 
+        $board = new Board();
+        $board->project_id = $project->id;
+        $board->name = $request->get('name');
+        $board->due_date = $request->get('due_date');
+        $board->save();
+
+        if($request->filled('tasks')) {
+            $insert = [];
+            $newTasks = array_unique(preg_split("/\r\n|\n|\r/", $request->get('tasks')));
+            foreach($newTasks as $index => $taskName) {
+                $insert[] = [
+                    'name' => $taskName,
+                    'board_id' => $board->id,
+                    'sort' => $index,
+                ];
+            }
+
+            DB::table('tasks')->insert($insert);
+        }
+
+        return redirect()->route('projects.boards.show', [$project, $board]);
     }
 
     public function show(Project $project, Board $board)

@@ -22,6 +22,8 @@ return new class extends Migration
                 ->onUpdate('cascade')
                 ->onDelete('cascade');
 
+            $table->unsignedInteger('sort')->default(0);
+
             $table->date('due_date')->nullable()->default(null);
 
             $table->date('completed_date')->nullable()->default(null);

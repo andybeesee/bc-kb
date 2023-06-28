@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Board;
 use App\Models\Project;
 use Illuminate\Http\Request;
 
@@ -42,6 +43,11 @@ class ProjectController extends Controller
         $project->status = $request->get('status');
         $project->due_date = $request->get('due_date');
         $project->save();
+
+        $board = new Board();
+        $board->name = 'Tasks';
+        $board->project_id = $project->id;
+        $board->save();
 
         return redirect()->route('projects.show', $project);
 
