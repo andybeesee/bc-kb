@@ -5,14 +5,14 @@
             <a class="link" href="{{ route('admin.teams.edit', $team) }}">Edit</a>
         </div>
 
-        <div class="flex flex-col md:flex-row items-start md:space-x-4 md:w-2/3">
-            <div class="mb-4 sm:mb-0 flex-grow">
+        <div class="flex w-full flex-col md:flex-row items-start md:space-x-4 md:w-2/3">
+            <div class="mb-4 sm:mb-0 w-full flex-grow">
                 @if($newMemberOptions->count() > 0)
                     @include('admin.teams.members._create')
                 @endif
             </div>
 
-            <div class="flex-grow card">
+            <div class="flex-grow w-full card">
                 <div class="card-title">Current Members</div>
                 <div class="divide-y divide-zinc-300 flex-grow">
                     @foreach($team->members->sortBy('name') as $member)
