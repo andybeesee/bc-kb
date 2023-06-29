@@ -8,10 +8,16 @@
         <div class="list-group striped hover">
             @foreach($projects as $project)
                 <div class="list-group-item flex md:items-center flex-col md:flex-row">
-                    <a class="link" href="{{ route('projects.show', $project) }}">
+                    <div class="md:hidden">
+                        <a class="truncate link" href="{{ route('projects.show', $project) }}">
+                            {{ $project->id }} {{ $project->name }}
+                        </a>
+                        <br>
+                        <span class="md:hidden truncate status-badge {{ $project->status }}" title="Status">{{ config('statuses.'.$project->status) }}</span>
+                    </div>
+                    <a class="hidden md:inline truncate link" href="{{ route('projects.show', $project) }}">
                         {{ $project->id }} {{ $project->name }}
                     </a>
-                    <span class="md:hidden status-badge {{ $project->status }}" title="Status">{{ config('statuses.'.$project->status) }}</span>
                     @if(!empty($project->team))
                         <span class="md:ml-3 text-sm" title="Team">{{ $project->team->name }}</span>
                     @endif
