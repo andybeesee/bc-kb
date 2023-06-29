@@ -1,7 +1,10 @@
 @props(['project', 'board' => null])
 <x-app-layout title="Project Detail">
+    <div class="">
+
+    </div>
     <div class="container">
-        {{ Breadcrumbs::render() }}
+
         <h1>{{ $project->name }}</h1>
 
         <div class="meta">
@@ -11,14 +14,14 @@
             @if(!empty($project->due_date))
                 <div class="meta-item">
                     <x-icon icon="calendar3" />
-                    Due {{ $project->due_date->format('M jS, Y') }}
+                    Due {{ $project->due_date->format(config('app.date_display')) }}
                 </div>
             @endif
             @if(!empty($project->completed_date))
                 <div class="meta-item">
                     {{-- TODO: use 'calendar2-x' icon if completed late --}}
                     <x-icon icon="calendar2-check" />
-                    Due {{ $project->completed_date->format('M jS, Y') }}
+                    Due {{ $project->completed_date->format(config('app.date_display')) }}
                 </div>
             @endif
 

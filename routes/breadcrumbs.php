@@ -5,6 +5,7 @@
 use Diglactic\Breadcrumbs\Breadcrumbs;
 use App\Models\Project;
 use App\Models\Board;
+use App\Models\Task;
 
 // This import is also not required, and you could replace `BreadcrumbTrail $trail`
 //  with `$trail`. This is nice for IDE type checking and completion.
@@ -21,8 +22,7 @@ Breadcrumbs::for('projects.index', function (BreadcrumbTrail $trail) {
 
 Breadcrumbs::for('projects.show', function (BreadcrumbTrail $trail, Project $project) {
     $trail->parent('projects.index');
-    $name = str_contains(request()->url(), '/projects/'.$project->id) ? 'Project Dashboard' : $project->name;
-    $trail->push($name, route('projects.show', $project));
+    $trail->push('Project Dashboard', route('projects.show', $project));
 });
 
 Breadcrumbs::for('projects.edit', function (BreadcrumbTrail $trail, Project $project) {
@@ -36,8 +36,8 @@ Breadcrumbs::for('projects.boards.index', function (BreadcrumbTrail $trail, Proj
 });
 
 Breadcrumbs::for('projects.boards.show', function (BreadcrumbTrail $trail, Project $project, Board $board) {
-    $trail->parent('projects.show', $project);
-    $trail->push($board->name, route('projects.boards.show', [$project, $board]));
+    $trail->parent('projects.boards.index', $project);
+    $trail->push('Board Detail', route('projects.boards.show', [$project, $board]));
 });
 
 Breadcrumbs::for('projects.boards.create', function (BreadcrumbTrail $trail, Project $project) {
@@ -45,7 +45,22 @@ Breadcrumbs::for('projects.boards.create', function (BreadcrumbTrail $trail, Pro
     $trail->push('New Board', route('projects.boards.create', $project));
 });
 
-Breadcrumbs::for('boards.show', function (BreadcrumbTrail $trail, Board $board) {
-    $trail->parent('projects.boards.index', $board->project);
-    $trail->push($board->name, route('boards.show', $board));
+Breadcrumbs::for('projects.boards.edit', function (BreadcrumbTrail $trail, Project $project, Board $board) {
+    $trail->parent('projects.boards.show', $project, $board);
+    $trail->push('Edit Board', route('projects.boards.edit', [$project, $board]));
+});
+
+Breadcrumbs::for('projects.boards.tasks.index', function (BreadcrumbTrail $trail, Project $project, Board $board) {
+    $trail->parent('projects.boards.show', $project, $board);
+    $trail->push('Tasks', route('projects.boards.tasks.index', [$project, $board]));
+});
+
+Breadcrumbs::for('projects.boards.tasks.show', function (BreadcrumbTrail $trail, Project $project, Board $board, Task $task) {
+    $trail->parent('projects.boards.tasks.index', $project, $board);
+    $trail->push('Task Detail', route('projects.boards.tasks.show', [$project, $board, $task]));
+});
+
+Breadcrumbs::for('projects.boards.tasks.edit', function (BreadcrumbTrail $trail, Project $project, Board $board, Task $task) {
+    $trail->parent('projects.boards.tasks.show', $project, $board, $task);
+    $trail->push('Edit Task', route('projects.boards.tasks.edit', [$project, $board, $task]));
 });

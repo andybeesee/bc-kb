@@ -45,6 +45,7 @@ class ProjectBoardController extends Controller
         $board->project_id = $project->id;
         $board->name = $request->get('name');
         $board->due_date = $request->get('due_date');
+        $board->sort = DB::table('boards')->where('project_id', $project->id)->max('sort') + 1;
         $board->save();
 
         if($request->filled('tasks')) {
@@ -66,11 +67,14 @@ class ProjectBoardController extends Controller
 
     public function show(Project $project, Board $board)
     {
-        $project->load([
-            'boards' => fn($q) => $q->addTaskCounts(),
-        ]);
-
         return view('projects.boards.show')
+            ->with('project', $project)
+            ->with('board', $board);
+    }
+
+    public function edit(Project $project, Board $board)
+    {
+        return view('projects.boards.edit')
             ->with('project', $project)
             ->with('board', $board);
     }

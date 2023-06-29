@@ -18,6 +18,8 @@ return [
 
     'name' => env('APP_NAME', 'Laravel'),
 
+    'date_display' => 'M jS, Y',
+
     /*
     |--------------------------------------------------------------------------
     | Application Environment
