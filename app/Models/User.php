@@ -44,4 +44,9 @@ class User extends Authenticatable
         'password' => 'hashed',
         'admin' => 'boolean',
     ];
+
+    public function teams()
+    {
+        return $this->belongsToMany(Team::class);
+    }
 }

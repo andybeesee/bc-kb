@@ -4,6 +4,10 @@
     $inputId = $name.'-'.str($label)->slug();
     $hasError = $errors->first($name);
     $value = old($name, $value);
+
+    if(is_numeric($value)) {
+        $value = (int) $value;
+    }
 @endphp
 
 <div class="from-group {{ $hasError ? 'has-validation' : '' }}">
@@ -28,7 +32,7 @@
         @else
             @foreach($options as $optKey => $display)
                 @if($display instanceof \Illuminate\Database\Eloquent\Model)
-                    <option value="{{ $display->getKey() }}">
+                    <option value="{{ $display->getKey() }}" {{ $value === $display->getKey() ? "selected=selected" : '' }}>
                         {{ $display->name }}
                     </option>
                 @else

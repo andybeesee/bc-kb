@@ -2,10 +2,12 @@
 
 
 return [
-    'incomplete' => 'Incomplete',
+    'idea' => 'Idea',
+    'planning' => 'Planning',
+    'planned' => 'Planned',
     'in_progress' => 'In Progress',
     'complete' => 'Complete',
+    'incomplete' => 'Incomplete',
     'late' => 'Late',
-    'pending_start' => 'Pending Start',
     'abandoned' => 'Abandoned',
 ];

@@ -53,6 +53,7 @@ We're going to have
 * project/board templates
   * CRUD
 * Project - create from template
+* Track status changes (across proejct/task/all that jazz)
 * Project/Board create - add from template
 * Board/Tasks - import tasks from a template
 

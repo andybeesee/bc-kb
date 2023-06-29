@@ -33,10 +33,13 @@ class ProjectController extends Controller
      */
     public function store(Request $request)
     {
+        $allowedStatuses = implode(',', array_keys(config('statuses')));
         $this->validate($request, [
             'name' => 'required|unique:projects',
-            'status' => 'required|max:50',
+            'status' => 'required|in:'.$allowedStatuses,
             'due_date' => 'nullable|date',
+            'owner' => 'nullable|exists:users,id',
+            'team' => 'nullable|exists:teams,id',
         ]);
 
         $project = new Project();
@@ -44,6 +47,8 @@ class ProjectController extends Controller
         $project->description = $request->get('description');
         $project->status = $request->get('status');
         $project->due_date = $request->get('due_date');
+        $project->owner_id = $request->get('owner');
+        $project->team_id = $request->get('team');
         $project->save();
 
         $board = new Board();
@@ -80,7 +85,24 @@ class ProjectController extends Controller
      */
     public function update(Request $request, Project $project)
     {
-        //
+        $allowedStatuses = implode(',', array_keys(config('statuses')));
+        $this->validate($request, [
+            'name' => 'required|unique:projects,name,'.$project->id,
+            'status' => 'required|in:'.$allowedStatuses,
+            'due_date' => 'nullable|date',
+            'owner' => 'nullable|exists:users,id',
+            'team' => 'nullable|exists:teams,id',
+        ]);
+
+        $project->name = $request->get('name');
+        $project->description = $request->get('description');
+        $project->status = $request->get('status');
+        $project->due_date = $request->get('due_date');
+        $project->owner_id = $request->get('owner');
+        $project->team_id = $request->get('team');
+        $project->save();
+
+        return redirect()->route('projects.show', $project);
     }
 
     /**

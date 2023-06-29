@@ -20,6 +20,11 @@ Breadcrumbs::for('projects.index', function (BreadcrumbTrail $trail) {
     $trail->push('Projects', route('projects.index'));
 });
 
+Breadcrumbs::for('projects.create', function (BreadcrumbTrail $trail) {
+    $trail->parent('projects.index');
+    $trail->push('New Project',route('projects.create'));
+});
+
 Breadcrumbs::for('projects.show', function (BreadcrumbTrail $trail, Project $project) {
     $trail->parent('projects.index');
     $trail->push('Project Dashboard', route('projects.show', $project));

@@ -3,26 +3,35 @@
     @apply px-1 text-xs py-0.5 font-semibold border rounded-md;
 }
 
-.status-badge.incomplete {
-    @apply bg-zinc-100 text-zinc-900 border-zinc-400;
+
+.status-badge.idea {
+    @apply bg-zinc-200 border-zinc-400 text-zinc-900;
+}
+
+.status-badge.planning {
+    @apply bg-blue-50 border-blue-400 text-blue-500;
+}
+
+.status-badge.planned {
+    @apply bg-blue-200 border-blue-400 text-blue-900;
 }
 
 .status-badge.in_progress {
-    @apply bg-indigo-100 text-indigo-900 border-indigo-400;
+    @apply bg-blue-600 border-blue-700 text-white;
 }
 
 .status-badge.complete {
-    @apply bg-emerald-100 text-emerald-900 border-emerald-400;
+    @apply bg-emerald-200 border-emerald-400 text-emerald-900;
+}
+
+.status-badge.incomplete {
+    @apply bg-orange-200 border-orange-400 text-orange-900;
 }
 
 .status-badge.late {
-    @apply bg-red-100 text-red-900 border-red-400;
-}
-
-.status-badge.pending_start {
-    @apply bg-blue-100 text-blue-900 border-blue-400;
+    @apply bg-red-200 border-red-400 text-red-900;
 }
 
 .status-badge.abandoned {
-    @apply bg-pink-100 text-pink-900 border-pink-400;
+    @apply bg-zinc-100 border-zinc-300 text-zinc-500;
 }

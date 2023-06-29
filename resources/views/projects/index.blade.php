@@ -13,11 +13,11 @@
                     </a>
                     <span class="md:hidden status-badge {{ $project->status }}" title="Status">{{ config('statuses.'.$project->status) }}</span>
                     @if(!empty($project->team))
-                        <span title="Team">{{ $project->team->name }}</span>
+                        <span class="md:ml-3 text-sm" title="Team">{{ $project->team->name }}</span>
                     @endif
 
                     @if(!empty($project->owner))
-                        <span title="Owner">{{ $project->owner->name }}</span>
+                        <span class="md:ml-3 text-sm" title="Owner">{{ $project->owner->name }}</span>
                     @endif
                     <span class="hidden md:block md:ml-auto status-badge {{ $project->status }}" title="Status">{{ config('statuses.'.$project->status) }}</span>
                 </div>
