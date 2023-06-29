@@ -1,18 +1,28 @@
 <div>
-    <div class="card" data-controller="toggle" data-toggle-is-open-value="{{ $tasks->count() === 0 ? '1' : '0' }}">
+    <div
+        x-data="{ addFormOpen: false }"
+        class="card"
+    >
         <div class="card-title flex items-center">
             Tasks
             <button
                 type="button"
                 class="btn btn-white btn-sm font-normal ml-auto"
-                data-action="click->toggle#toggle"
-                data-toggle-target="openHide"
+                @click="addFormOpen = true"
+                x-show="!addFormOpen"
             >
                 Add task
             </button>
         </div>
-        <form class="card-body" data-toggle-target="content">
+        <form class="card-body" x-show="addFormOpen" style="display: none;">
             form goes here
+            <button
+                type="button"
+                class="btn btn-white btn-sm font-normal ml-auto"
+                @click="addFormOpen = false"
+            >
+                Add task
+            </button>
         </form>
         <div class="list-group hover">
             @foreach($tasks as $task)
