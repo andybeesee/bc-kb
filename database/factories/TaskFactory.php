@@ -16,8 +16,15 @@ class TaskFactory extends Factory
      */
     public function definition(): array
     {
+        if($this->faker->boolean()) {
+            $name = $this->faker->colorName().' '.random_int(100, 999);
+        } elseif($this->faker->boolean()) {
+            $name = $this->faker->jobTitle().' '.$this->faker->colorName();
+        } else {
+            $name = $this->faker->name();
+        }
         return [
-            'name' => $this->faker->firstName().' '.random_int(1, 500).' '.$this->faker->companySuffix(),
+            'name' => $name,
             'due_date' => $this->faker->boolean(50) ? $this->faker->date() : null,
         ];
     }

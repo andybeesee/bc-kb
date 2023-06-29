@@ -10,10 +10,13 @@ use App\Models\Team;
 use App\Models\User;
 use Database\Factories\BoardFactory;
 use Illuminate\Database\Seeder;
+use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Support\Facades\DB;
 
 class DatabaseSeeder extends Seeder
 {
+    use WithFaker;
+
     protected $boards;
 
     protected $users;
@@ -27,6 +30,8 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
+        $this->setUpFaker();
+
         if(User::where('email', 'admin@example.com')->count() === 0) {
             \App\Models\User::factory()->create([
                 'name' => 'Admin User',
@@ -61,8 +66,8 @@ class DatabaseSeeder extends Seeder
                 $owner = $team->members->random();
 
                 $project->status = collect(array_keys(config('statuses')))->random();
-                $project->team_id = random_int(1, 100) > 30 ? $team->id : null;
-                $project->owner_id = random_int(1, 100) > 50 ? $owner->id : null;
+                $project->team_id = $this->faker->boolean(35) ? $team->id : null;
+                $project->owner_id = $this->faker->boolean() ? $owner->id : null;
                 $project->save();
 
                 $numBoards = random_int(2, 15);
@@ -73,13 +78,16 @@ class DatabaseSeeder extends Seeder
                         ->create([
                             'board_id' => $board->id,
                             'assigned_to' => $this->admin->id,
+                            'sort' => 0,
                         ]);
 
                     for($i = 0; $i < random_int(10, 100); $i++) {
                         Task::factory()
                             ->create([
+                                'sort' => $i + 1,
                                 'board_id' => $board->id,
-                                'assigned_to' => random_int(1, 100) > 40 ? $team->members->random()->id : null,
+                                'assigned_to' => $this->faker->boolean(40) ? $team->members->random()->id : null,
+                                'completed_date' => $this->faker->boolean() ? $this->faker->date() : null,
                             ]);
                     }
                 }

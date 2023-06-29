@@ -7,6 +7,7 @@ export default class extends Controller {
         'openIcon',
         'closedIcon',
         'openHide',
+        'openShow',
     ]
 
     static values = {
@@ -33,8 +34,9 @@ export default class extends Controller {
         this.isOpenValue = !this.isOpenValue;
 
 
-        if(this.isOpenValue) {
+        if(this.isOpenValue && this.hasContentTarget) {
             setTimeout(() => {
+
                 const focusEl = this.contentTarget.querySelector('input[type="text"],textarea');
 
                 if(focusEl) {
@@ -45,7 +47,10 @@ export default class extends Controller {
     }
 
     isOpenValueChanged(isOpen) {
-        this.contentTarget.style.display = isOpen ? '' : 'none';
+        console.log('openv changed!?', isOpen);
+        if(this.hasContentTarget) {
+            this.contentTarget.style.display = isOpen ? '' : 'none';
+        }
 
         if(this.hasOpenIconTarget) {
             this.openIconTarget.style.display = isOpen ? '' : 'none';
