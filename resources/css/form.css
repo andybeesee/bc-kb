@@ -19,7 +19,7 @@
 }
 
 .form-control {
-    @apply block min-w-[175px] shadow-inner border border-zinc-600 py-1 px-2;
+    @apply block bg-white w-full shadow-inner border border-zinc-600 py-1 px-2;
 }
 
 .form-control.form-control-sm {

@@ -1,0 +1,15 @@
+.card {
+    @apply border rounded-md border-zinc-400;
+}
+
+.card-title {
+    @apply rounded-t-md border-b border-b-zinc-400 bg-zinc-100 font-bold p-3;
+}
+
+.card-body {
+    @apply p-3;
+}
+
+.card-footer {
+    @apply border-t border-t-zinc-400 bg-zinc-100 p-3 rounded-b-md;
+}

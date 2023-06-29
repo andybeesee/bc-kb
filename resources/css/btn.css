@@ -34,6 +34,14 @@
     @apply bg-zinc-100;
 }
 
+.btn.btn-danger {
+    @apply bg-red-600 text-white;
+}
+
+.btn.btn-danger:hover {
+    @apply bg-red-800;
+}
+
 @media(prefers-color-scheme: dark) {
     .btn {
         @apply bg-zinc-700;
@@ -58,4 +66,13 @@
     .btn.btn-white:hover {
         @apply bg-zinc-400;
     }
+
+    .btn.btn-danger {
+        @apply bg-red-700 text-white;
+    }
+
+    .btn.btn-danger:hover {
+        @apply bg-red-900;
+    }
+
 }

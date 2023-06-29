@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Team;
+use App\Models\User;
 use Illuminate\Http\Request;
 
 class TeamController extends Controller
@@ -48,7 +49,14 @@ class TeamController extends Controller
      */
     public function show(Team $team)
     {
-        return view('admin.teams.show')->with('team', $team);
+        $team->load('members');
+
+        $newMemberOptions = User::whereNotIn('id', $team->members->pluck('id')->toArray())
+            ->get();
+
+        return view('admin.teams.show')
+            ->with('team', $team)
+            ->with('newMemberOptions', $newMemberOptions);
     }
 
     /**
