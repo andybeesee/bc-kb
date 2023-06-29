@@ -6,6 +6,7 @@ namespace Database\Seeders;
 use App\Models\Project;
 use App\Models\Board;
 use App\Models\Task;
+use App\Models\Team;
 use App\Models\User;
 use Database\Factories\BoardFactory;
 use Illuminate\Database\Seeder;
@@ -16,6 +17,8 @@ class DatabaseSeeder extends Seeder
     protected $boards;
 
     protected $users;
+
+    protected $teams;
 
     protected User $admin;
 
@@ -35,9 +38,19 @@ class DatabaseSeeder extends Seeder
             ]);
         }
 
-        $this->admin = User::where('email', 'admin@example.com')->first();
-
         $this->users = User::all('id');
+
+        if(Team::count() < 25) {
+            Team::factory(25)
+                ->create()
+                ->each(function(Team $team) {
+                    $team->members()->sync(random_int(3, $this->users->count() / 10));
+                });
+        }
+
+        $this->teams = Team::with('members')->get();
+
+        $this->admin = User::where('email', 'admin@example.com')->first();
 
         Project::factory()->count(random_int(100, 500))->create()
             ->each(function(Project $project) {
