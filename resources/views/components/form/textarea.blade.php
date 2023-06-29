@@ -11,6 +11,7 @@
     </label>
 
     <textarea
+        {{ $attributes->merge() }}
         name="{{ $name }}"
         class="form-control {{ $hasError ? 'error' : '' }}"
     >{{ $value }}</textarea>
