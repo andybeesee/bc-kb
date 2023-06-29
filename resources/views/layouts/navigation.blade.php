@@ -39,15 +39,15 @@
             </button>
         </div>
     </div>
-    <div class="md:hidden" data-controller="toggle">
+    <div  x-data="{ mobileMenuOpen: false }" class="md:hidden">
         <div class="flex justify-between border-b">
             <a class="px-3 py-2" href="/">BC KB</a>
-            <button class="px-3 py-1" type="button" data-action="click->toggle#toggle">
-                <x-icon data-toggle-target="closedIcon" class="h-6 w-6" icon="list" />
-                <x-icon data-toggle-target="openIcon" style="display: none" class="h-6 w-6" icon="x-circle" />
+            <button @click="mobileMenuOpen = !mobileMenuOpen" class="px-3 py-1" type="button">
+                <x-icon x-show="!mobileMenuOpen" class="h-6 w-6" icon="list" />
+                <x-icon x-show="mobileMenuOpen" style="display: none" class="h-6 w-6" icon="x-circle" />
             </button>
         </div>
-        <div class="flex flex-col border-b" data-toggle-target="content">
+        <div class="flex flex-col border-b" x-show="mobileMenuOpen" style="display: none;">
             @foreach($links as $link)
                 <a class="px-3 py-2 hover:underline" href="{{ $link['href'] }}" active-class="font-bold">
                     {{ $link['name'] }}

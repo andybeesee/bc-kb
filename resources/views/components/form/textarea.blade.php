@@ -5,7 +5,7 @@
     $value = old($name, $value);
     $hasError = $errors->has($name )
 @endphp
-<div class="form-group" {{ $type === 'date' ? 'data-controller=date-picker' : '' }}>
+<div class="form-group">
     <label for="{{ $inputId }}" class="form-label {{ $hasError ? 'error' : '' }}">
         {{ $label }}
     </label>
