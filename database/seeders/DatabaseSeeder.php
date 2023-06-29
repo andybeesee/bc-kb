@@ -34,18 +34,20 @@ class DatabaseSeeder extends Seeder
                 'admin' => true,
             ]);
         }
-
+        
         if(DB::table('users')->count() < 200) {
             User::factory(200)->create();
         }
-        
+
         $this->users = User::all('id');
 
         if(Team::count() < 25) {
             Team::factory(25)
                 ->create()
                 ->each(function(Team $team) {
-                    $team->members()->sync(random_int(3, $this->users->count() / 10));
+                    $toAdd = random_int(3, $this->users->count() / 10);
+                    $ids = $this->users->random($toAdd)->pluck('id')->toArray();
+                    $team->members()->sync($ids);
                 });
         }
 
