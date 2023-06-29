@@ -24,6 +24,22 @@ return new class extends Migration
 
             $table->date('completed_date')->nullable()->default(null);
 
+            $table->foreignId('owner_id')
+                ->nullable()
+                ->default(null)
+                ->references('id')
+                ->on('users')
+                ->onUpdate('cascade')
+                ->onDelete('restrict');
+
+            $table->foreignId('team_id')
+                ->nullable()
+                ->default(null)
+                ->references('id')
+                ->on('teams')
+                ->onUpdate('cascade')
+                ->onDelete('restrict');
+
             $table->timestamps();
         });
     }

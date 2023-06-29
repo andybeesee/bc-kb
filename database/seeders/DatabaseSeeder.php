@@ -57,6 +57,13 @@ class DatabaseSeeder extends Seeder
 
         Project::factory()->count(random_int(100, 500))->create()
             ->each(function(Project $project) {
+                $team = $this->teams->random();
+                $owner = $team->members->random();
+
+                $project->team_id = $team->id;
+                $project->owner_id = $owner->id;
+                $project->save();
+
                 $numBoards = random_int(2, 15);
                 for($i = 0; $i < $numBoards; $i++) {
                     $board = Board::factory()->create(['project_id' => $project->id, 'sort' => $i]);
@@ -71,7 +78,7 @@ class DatabaseSeeder extends Seeder
                         Task::factory()
                             ->create([
                                 'board_id' => $board->id,
-                                'assigned_to' => random_int(1, 100) > 40 ? $this->users->random()->id : null,
+                                'assigned_to' => random_int(1, 100) > 40 ? $team->members->random()->id : null,
                             ]);
                     }
                 }
