@@ -25,7 +25,34 @@ We're going to have
 * Project Templates
 * Board Templates
 
+# MVP
+* Teams
+  * CRUD
+  * Team dashboards
+* Projects
+  * CRUD
+  * Start date/due date?
+  * 'Last Update' field
+* Boards
+  * CRUD
+  * Dashboard (boards.index) - all boards with open tasks?
+  * Move boards between projects
+* Tasks
+  * CRUD
+  * complete/due date/start date
+  * Dashboard (tasks.index) - all tasks
+  * move tasks between boards
+  * assign
+  * complete
+* Files?
+* Comments?
 
+# MVP.2
+* project/board templates
+  * CRUD
+* Project - create from template
+* Project/Board create - add from template
+* Board/Tasks - import tasks from a template
 
 # Page design
 
