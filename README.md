@@ -27,10 +27,11 @@ We're going to have
 
 # MVP
 * Teams
-  * CRUD
+  * ~~CRUD~~
   * Team dashboards
 * Projects
   * CRUD
+    * add team/owner stuff
   * Start date/due date?
   * 'Last Update' field
 * Boards
@@ -46,6 +47,7 @@ We're going to have
   * complete
 * Files?
 * Comments?
+* Global status options & colors
 
 # MVP.2
 * project/board templates
@@ -53,6 +55,11 @@ We're going to have
 * Project - create from template
 * Project/Board create - add from template
 * Board/Tasks - import tasks from a template
+
+# MVP.3
+* per project status options
+  * pulled from template OR team default
+  * colors on status
 
 # Page design
 
