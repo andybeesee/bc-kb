@@ -24,7 +24,7 @@
                 Add task
             </button>
         </form>
-        <div class="list-group hover">
+        <div class="list-group hover" x-sortable="{ options: { handle: '.handle' }, url: '/test' }">
             @foreach($tasks as $task)
                 <div class="list-group-item">
                     <div class="flex items-center">

@@ -35,5 +35,11 @@ import Alpine from 'alpinejs';
 
 window.Alpine = Alpine;
 
+// Alpine.directive('sortable', (el, { value, modifiers, expression }, ));
+Alpine.directive('sortable', (el, { value, modifiers, expression }, { Alpine, evaluate, effect, cleanup }) => {
+    const data = evaluate(expression);
+    console.log(data.url, data.options);
+
+})
 Alpine.start();
 
