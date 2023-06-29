@@ -13,6 +13,7 @@
                     </a>
 
                     <span class="flex flex-col md:flex-row md:inline-flex text-sm md:ml-2 truncate md:space-x-4">
+                        <span title="Status">{{ str($project->status)->title() }}</span>
                         @if(!empty($project->team))
                             <span title="Team">{{ $project->team->name }}</span>
                         @endif
