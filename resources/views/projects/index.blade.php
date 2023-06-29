@@ -7,21 +7,19 @@
 
         <div class="list-group striped hover">
             @foreach($projects as $project)
-                <div class="list-group-item">
+                <div class="list-group-item flex md:items-center flex-col md:flex-row">
                     <a class="link" href="{{ route('projects.show', $project) }}">
                         {{ $project->id }} {{ $project->name }}
                     </a>
+                    <span class="md:hidden status-badge {{ $project->status }}" title="Status">{{ config('statuses.'.$project->status) }}</span>
+                    @if(!empty($project->team))
+                        <span title="Team">{{ $project->team->name }}</span>
+                    @endif
 
-                    <span class="flex flex-col md:flex-row md:inline-flex text-sm md:ml-2 truncate md:space-x-4">
-                        <span title="Status">{{ str($project->status)->title() }}</span>
-                        @if(!empty($project->team))
-                            <span title="Team">{{ $project->team->name }}</span>
-                        @endif
-
-                        @if(!empty($project->owner))
-                            <span title="Owner">{{ $project->owner->name }}</span>
-                        @endif
-                    </span>
+                    @if(!empty($project->owner))
+                        <span title="Owner">{{ $project->owner->name }}</span>
+                    @endif
+                    <span class="hidden md:block md:ml-auto status-badge {{ $project->status }}" title="Status">{{ config('statuses.'.$project->status) }}</span>
                 </div>
             @endforeach
         </div>

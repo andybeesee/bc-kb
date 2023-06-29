@@ -60,6 +60,7 @@ class DatabaseSeeder extends Seeder
                 $team = $this->teams->random();
                 $owner = $team->members->random();
 
+                $project->status = collect(array_keys(config('statuses')))->random();
                 $project->team_id = random_int(1, 100) > 30 ? $team->id : null;
                 $project->owner_id = random_int(1, 100) > 50 ? $owner->id : null;
                 $project->save();
