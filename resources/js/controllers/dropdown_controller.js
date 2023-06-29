@@ -1,5 +1,6 @@
 import { Controller } from '@hotwired/stimulus';
 
+// TODO: switch to stimulus-use
 export default class extends Controller {
     static values = {
         isOpen: { type: Boolean, default: false },

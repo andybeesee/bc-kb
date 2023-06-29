@@ -1,4 +1,4 @@
-<form hx-boost="true" method="post" class="card" action="{{ route('admin.teams.members.store', $team) }}">
+<form method="post" class="card" action="{{ route('admin.teams.members.store', $team) }}">
     @csrf
     <div class="card-title">New Member</div>
     <div class="card-body">

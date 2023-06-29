@@ -14,7 +14,7 @@
     }
 @endphp
 
-<nav hx-boost="true">
+<nav>
     <div class="hidden md:flex justify-between items-center container border-b border-zinc-500">
         <a href="/" class="px-1 py-2 font-bold text-indigo-600 dark:text-indigo-100">BCKB</a>
         <div class="flex space-x-4">

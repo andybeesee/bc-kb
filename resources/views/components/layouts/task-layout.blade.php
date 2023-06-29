@@ -44,7 +44,7 @@
             {{ $slot }}
         </div>
 
-        <div hx-boost="true" class="grid grid-cols-2">
+        <div class="grid grid-cols-2">
             <div class="text-sm text-left">
                 @if($previousTask)
                     <a class="link inline-flex items-center" href="{{ route('projects.boards.tasks.show', [$project, $board, $previousTask]) }}">

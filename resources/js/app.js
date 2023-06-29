@@ -1,10 +1,4 @@
 import './bootstrap';
-import { DuetDatePicker } from "./date-picker/custom-element";
-customElements.define("duet-date-picker", DuetDatePicker);
-
-// import * as Turbo from '@hotwired/turbo';
-import * as htmx from 'htmx.org';
-window.htmx = htmx;
 
 import { Application } from '@hotwired/stimulus';
 import { registerControllers } from './utils/stimulus-helpers';
