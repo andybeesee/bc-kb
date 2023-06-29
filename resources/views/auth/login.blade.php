@@ -13,7 +13,7 @@
         <!-- Password -->
         <div class="mt-4">
 
-            <x-form.input label="Password" name="password" />
+            <x-form.input type="password" label="Password" name="password" />
         </div>
 
         <!-- Remember Me -->

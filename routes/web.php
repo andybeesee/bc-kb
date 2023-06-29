@@ -36,8 +36,7 @@ Route::middleware('auth')->group(function () {
     Route::resource('tasks', \App\Http\Controllers\TaskController::class);
 });
 
-// TODO: Admin middleware
-Route::middleware('auth')->name('admin.')->prefix('/admin')->group(function() {
+Route::middleware(['auth', 'admin'])->name('admin.')->prefix('/admin')->group(function() {
     Route::resource('teams', \App\Http\Controllers\Admin\TeamController::class);
     Route::post('teams/{team}/members', [\App\Http\Controllers\Admin\TeamMemberController::class, 'store'])->name('teams.members.store');
     Route::delete('teams/{team}/members/{member}', [\App\Http\Controllers\Admin\TeamMemberController::class, 'destroy'])->name('teams.members.destroy');
