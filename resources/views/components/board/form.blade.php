@@ -6,7 +6,7 @@
     $route = $newBoard ? route('projects.boards.store', $project) : route('projects.boards.update', [$project, $board]);
 @endphp
 
-<form action="{{ $route }}" method="post">
+<form class="md:w-1/3" action="{{ $route }}" method="post">
     @csrf
     @method($newBoard ? 'POST' : 'PUT')
 
