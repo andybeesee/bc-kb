@@ -10,10 +10,10 @@ class ProjectBoardSortController extends Controller
 {
     public function __invoke(Request $request, Project $project)
     {
-        $boards = DB::table('board_project')
+        $boards = DB::table('boards')
             ->where('project_id', $project->id)
             ->get()
-            ->pluck('board_id', 'sort')
+            ->pluck('id', 'sort')
             ->toArray();
 
         foreach($request->get('items') as $data) {
@@ -25,9 +25,9 @@ class ProjectBoardSortController extends Controller
                 continue;
             }
 
-            DB::table('board_project')
+            DB::table('boards')
                 ->where('project_id', $project->id)
-                ->where('board_id', $boardId)
+                ->where('id', $boardId)
                 ->update([
                     'sort' => $newSort,
                 ]);
