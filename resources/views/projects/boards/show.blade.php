@@ -7,7 +7,12 @@
             <div class="mb-2">
                 <input type="text" class="form-control w-full form-control-sm" placeholder="Search Boards on this Project" />
             </div>
-            <div class="grid" hx-boost="true">
+            <div
+                class="grid"
+                hx-boost="true"
+                data-controller="sortable"
+                data-sortable-url-value="{{ route('projects.boards.sort', $project) }}"
+            >
                 @foreach($project->boards as $projectBoard)
                     {{--TODO: On click updated the url --}}
                     <a
@@ -20,11 +25,14 @@
                         title="{{ $projectBoard->name }}"
                         data-active-class="bg-purple-300 hover:bg-purple-400 dark:hover:bg-purple-900 dark:bg-purple-700"
                         data-inactive-class="hover:bg-zinc-200 dark:hover:bg-zinc-600"
+                        data-sortable-target="item"
+                        data-id="{{$projectBoard->id}}"
                         class="{{ $loop->last ? '' : 'mb-1' }} p-1 rounded-md truncate"
                         {{ $projectBoard->id === $board->id ? 'data-scroll-into-view=1' : '' }}
                     >
-                        <span>{{ $projectBoard->name }}</span>
-                        <br>
+                        <span class="flex items-center">
+                            <span>{{ $projectBoard->name }}</span>
+                        </span>
                         @include('boards._count-box', ['board' => $projectBoard])
                     </a>
                 @endforeach

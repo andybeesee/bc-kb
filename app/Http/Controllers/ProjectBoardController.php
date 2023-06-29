@@ -14,9 +14,10 @@ class ProjectBoardController extends Controller
     public function index(Project $project)
     {
         if($project->boards()->count() > 0) {
-            return redirect()->route('projects.boards.show', [$project, $project->boards()->first()]);
+            // return redirect()->route('projects.boards.show', [$project, $project->boards()->first()]);
         }
 
+        $project->load(['boards' => fn($bq) => $bq->addTaskCounts()]);
         return view('projects.boards.index')->with('project', $project);
     }
 
