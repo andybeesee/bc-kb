@@ -5,6 +5,13 @@
         ['name' => 'Boards', 'href' => route('boards.index')],
         ['name' => 'Templates', 'href' => '#'],
     ];
+
+    if(auth()->user()->admin){
+        $links[] = [
+            'name' => 'Teams',
+            'href' => route('admin.teams.index'),
+        ];
+    }
 @endphp
 
 <nav hx-boost="true">

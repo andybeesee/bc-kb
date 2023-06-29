@@ -34,7 +34,7 @@ class DatabaseSeeder extends Seeder
                 'admin' => true,
             ]);
         }
-        
+
         if(DB::table('users')->count() < 200) {
             User::factory(200)->create();
         }

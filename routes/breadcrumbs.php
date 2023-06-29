@@ -64,3 +64,28 @@ Breadcrumbs::for('projects.boards.tasks.edit', function (BreadcrumbTrail $trail,
     $trail->parent('projects.boards.tasks.show', $project, $board, $task);
     $trail->push('Edit Task', route('projects.boards.tasks.edit', [$project, $board, $task]));
 });
+
+
+
+/*************************************** ADMIN TEAMS ***************************************/
+Breadcrumbs::for('admin.teams.index', function(BreadcrumbTrail $trail) {
+    $trail->push('Teams', route('admin.teams.index'));
+});
+
+Breadcrumbs::for('admin.teams.create', function(BreadcrumbTrail $trail) {
+    $trail->parent('admin.teams.index');
+    $trail->push('New Team', route('admin.teams.create'));
+});
+
+Breadcrumbs::for('admin.teams.show', function(BreadcrumbTrail $trail, \App\Models\Team $team) {
+    $trail->parent('admin.teams.index');
+    $trail->push($team->name, route('admin.teams.show', $team));
+});
+
+Breadcrumbs::for('admin.teams.edit', function(BreadcrumbTrail $trail, \App\Models\Team $team) {
+    $trail->parent('admin.teams.show', $team);
+    $trail->push('Editing', route('admin.teams.edit', $team));
+});
+
+
+

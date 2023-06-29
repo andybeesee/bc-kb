@@ -36,4 +36,9 @@ Route::middleware('auth')->group(function () {
     Route::resource('tasks', \App\Http\Controllers\TaskController::class);
 });
 
+// TODO: Admin middleware
+Route::middleware('auth')->name('admin.')->prefix('/admin')->group(function() {
+   Route::resource('teams', \App\Http\Controllers\Admin\TeamController::class);
+});
+
 require __DIR__.'/auth.php';
