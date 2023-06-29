@@ -27,17 +27,18 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        if(DB::table('users')->count() < 200) {
-            User::factory(200)->create();
-        }
-
         if(User::where('email', 'admin@example.com')->count() === 0) {
             \App\Models\User::factory()->create([
                 'name' => 'Admin User',
                 'email' => 'admin@example.com',
+                'admin' => true,
             ]);
         }
 
+        if(DB::table('users')->count() < 200) {
+            User::factory(200)->create();
+        }
+        
         $this->users = User::all('id');
 
         if(Team::count() < 25) {
