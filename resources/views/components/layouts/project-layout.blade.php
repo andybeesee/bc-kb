@@ -24,7 +24,19 @@
                     Due {{ $project->completed_date->format(config('app.date_display')) }}
                 </div>
             @endif
+            @if(!empty($project->team))
+                <div class="meta-item" title="Team">
+                    <x-icon icon="people-fill" />
+                    {{ $project->team->name }}
+                </div>
+            @endif
 
+            @if(!empty($project->owner))
+                <div class="meta-item" title="Owner">
+                    <x-icon icon="person" />
+                    {{ $project->owner->name }}
+                </div>
+            @endif
         </div>
 
         <div>
