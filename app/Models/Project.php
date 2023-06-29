@@ -14,6 +14,16 @@ class Project extends Model
         'completed_date' => 'date',
     ];
 
+    public function team()
+    {
+        return $this->belongsTo(Team::class);
+    }
+
+    public function owner()
+    {
+        return $this->belongsTo(User::class, 'owner_id');
+    }
+
     public function boards()
     {
         return $this->hasMany(Board::class)

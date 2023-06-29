@@ -13,7 +13,9 @@ class ProjectController extends Controller
      */
     public function index()
     {
-        $projects = Project::orderBy('name')->paginate(25);
+        $projects = Project::with(['team', 'owner'])
+            ->orderBy('name')
+            ->paginate(25);
 
         return view('projects.index')->with('projects', $projects);
     }

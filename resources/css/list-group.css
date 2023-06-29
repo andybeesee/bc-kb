@@ -11,7 +11,7 @@
 }
 
 .list-group.hover .list-group-item:hover {
-    @apply bg-zinc-200;
+    @apply bg-zinc-50;
 }
 
 .list-group-item {

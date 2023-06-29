@@ -11,6 +11,16 @@
                     <a class="link" href="{{ route('projects.show', $project) }}">
                         {{ $project->id }} {{ $project->name }}
                     </a>
+
+                    <span class="flex flex-col md:flex-row md:inline-flex text-sm md:ml-2 truncate md:space-x-4">
+                        @if(!empty($project->team))
+                            <span title="Team">{{ $project->team->name }}</span>
+                        @endif
+
+                        @if(!empty($project->owner))
+                            <span title="Owner">{{ $project->owner->name }}</span>
+                        @endif
+                    </span>
                 </div>
             @endforeach
         </div>
