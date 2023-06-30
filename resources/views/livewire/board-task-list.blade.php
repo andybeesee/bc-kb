@@ -24,7 +24,7 @@
                 Add task
             </button>
         </form>
-        <div class="list-group hover" x-sortable="{ options: { handle: '.handle' }, url: '/test' }">
+        <div class="list-group hover" x-sortable="{ options: { handle: '.handle' }, url: '{{ route('projects.boards.tasks.sort', [$board->project_id, $board]) }}' }">
             @foreach($tasks as $task)
                 <div class="list-group-item" data-sort-id="{{ $task->id }}">
                     <div class="flex items-center">
