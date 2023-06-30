@@ -11,6 +11,8 @@ class BoardTaskList extends Component
 {
     public Board $board;
 
+    protected $listeners = ['sorted' => 'handleSort'];
+
     public function render()
     {
         $tasks = Task::where('board_id', $this->board->id)
@@ -19,6 +21,32 @@ class BoardTaskList extends Component
 
         return view('livewire.board-task-list')
             ->with('tasks', $tasks);
+    }
+
+    public function handleSort($items)
+    {
+        $boards = DB::table('tasks')
+            ->where('board_id', $this->board->id)
+            ->get()
+            ->pluck('id', 'sort')
+            ->toArray();
+
+        foreach($items as $data) {
+            $taskId = $data['id'];
+            $newSort = $data['sort'];
+
+            $curSort = $boards[$taskId] ?? 0;
+            if($curSort === $newSort) {
+                continue;
+            }
+
+            DB::table('tasks')
+                ->where('board_id', $this->board->id)
+                ->where('id', $taskId)
+                ->update([
+                    'sort' => $newSort,
+                ]);
+        }
     }
 
     public function toggleTask($taskId)

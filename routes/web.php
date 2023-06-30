@@ -29,9 +29,8 @@ Route::middleware('auth')->group(function () {
 
     Route::resource('projects', \App\Http\Controllers\ProjectController::class);
     Route::put('/projects/{project}/boards/sort', \App\Http\Controllers\ProjectBoardSortController::class)->name('projects.boards.sort');
-    Route::resource('projects.boards', \App\Http\Controllers\ProjectBoardController::class);
 
-    Route::put('/projects/{project}/boards/{board}/tasks/sort', \App\Http\Controllers\ProjectBoardTaskSortController::class)->name('projects.boards.tasks.sort');
+    Route::resource('projects.boards', \App\Http\Controllers\ProjectBoardController::class);
     Route::resource('projects.boards.tasks', \App\Http\Controllers\ProjectBoardTaskController::class);
 
     Route::resource('boards', \App\Http\Controllers\BoardController::class);

@@ -15,7 +15,11 @@ export default function(el, { expression }, { evaluate, cleanup }) {
                 };
             })
 
-            axios.put(data.url, { items });
+            if(data.url) {
+                axios.put(data.url, { items });
+            } else {
+                Livewire.emit(data.event ?? 'sorted', items);
+            }
         },
         ghostClass: ['dark:bg-zinc-600', 'bg-zinc-100'],
     }, data.options);
