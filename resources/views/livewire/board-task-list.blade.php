@@ -26,9 +26,9 @@
         </form>
         <div class="list-group hover" x-sortable="{ options: { handle: '.handle' }, url: '/test' }">
             @foreach($tasks as $task)
-                <div class="list-group-item">
+                <div class="list-group-item" data-sort-id="{{ $task->id }}">
                     <div class="flex items-center">
-                        <div class="mr-1.5 text-zinc-400 hover:text-zinc-700 cursor-move" title="Click and drag to rearrange tasks">
+                        <div class="handle mr-1.5 text-zinc-400 hover:text-zinc-700 cursor-move" title="Click and drag to rearrange tasks">
                             <x-icon icon="grip-vertical" class="h-4 w-4" />
                         </div>
                         <button
@@ -44,13 +44,8 @@
                         </button>
 
                         <span class="cursor-pointer" wire:click="toggleTask({{$task->id}})">
-                        {{ $task->name }}
-                    </span>
-
-
-                        <div>
-
-                        </div>
+                            {{ $task->name }}
+                        </span>
                     </div>
                 </div>
             @endforeach

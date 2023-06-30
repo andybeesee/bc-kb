@@ -1,13 +1,14 @@
 import './bootstrap';
 
-// import { Application } from '@hotwired/stimulus';
-// import { registerControllers } from './utils/stimulus-helpers';
 import addActiveToLinks from "./utils/add-active-to-links";
+import sortableDirective from './directives/sortable.js';
 
-// const application = Application.start();
-// const controllers = import.meta.glob('./**/*_controller.js', { eager: true });
-// registerControllers(application, controllers);
+import Alpine from 'alpinejs';
 
+window.Alpine = Alpine;
+
+Alpine.directive('sortable', sortableDirective)
+Alpine.start();
 
 function scrollStuffIntoView() {
     Array.from(document.querySelectorAll('[data-scroll-into-view]'))
@@ -17,29 +18,7 @@ function scrollStuffIntoView() {
         })
 }
 
-// document.addEventListener('turbo:load', addActiveToLinks);
-
 window.onload = function() {
     addActiveToLinks();
     scrollStuffIntoView();
-
 }
-
-document.addEventListener('htmx:pushedIntoHistory', () => {
-    addActiveToLinks();
-    // scrollStuffIntoView();
-});
-
-
-import Alpine from 'alpinejs';
-
-window.Alpine = Alpine;
-
-// Alpine.directive('sortable', (el, { value, modifiers, expression }, ));
-Alpine.directive('sortable', (el, { value, modifiers, expression }, { Alpine, evaluate, effect, cleanup }) => {
-    const data = evaluate(expression);
-    console.log(data.url, data.options);
-
-})
-Alpine.start();
-
