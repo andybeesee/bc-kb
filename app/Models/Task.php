@@ -13,4 +13,9 @@ class Task extends Model
     {
         return !empty($this->completed_date);
     }
+
+    public function assignedTo()
+    {
+        return $this->belongsTo(User::class, 'assigned_to');
+    }
 }

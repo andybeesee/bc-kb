@@ -1,7 +1,10 @@
 import './bootstrap';
 
+import { createPopper } from '@popperjs/core';
 import addActiveToLinks from "./utils/add-active-to-links";
 import sortableDirective from './directives/sortable.js';
+
+window.createPopper = createPopper;
 
 import Alpine from 'alpinejs';
 

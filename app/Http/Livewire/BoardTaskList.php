@@ -11,7 +11,10 @@ class BoardTaskList extends Component
 {
     public Board $board;
 
-    protected $listeners = ['sorted' => 'handleSort'];
+    protected $listeners = [
+        'sorted' => 'handleSort',
+        'assigned' => 'handleAssignment',
+    ];
 
     public function render()
     {
@@ -21,6 +24,16 @@ class BoardTaskList extends Component
 
         return view('livewire.board-task-list')
             ->with('tasks', $tasks);
+    }
+
+    public function handleAssignment($taskId, $newOwner)
+    {
+        \Log::debug("handling...", [$taskId, $newOwner]);
+        // TODO: track activitiy, send notifications and whatever else
+        DB::table('tasks')
+            ->where('id', $taskId)
+            ->where('board_id', $this->board->id)
+            ->update(['assigned_to' => $newOwner, 'updated_at' => now()]);
     }
 
     public function handleSort($items)

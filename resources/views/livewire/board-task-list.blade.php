@@ -46,6 +46,15 @@
                         <span class="cursor-pointer" wire:click="toggleTask({{$task->id}})">
                             {{ $task->name }}
                         </span>
+
+                        <div class="ml-auto">
+                            <livewire:assign-to-selector
+                                wire:key="assing-to-task-{{ $task->id }}-{{ $task->updated_at }}"
+                                :model-id="$task->id"
+                                :team-id="$board->team_id"
+                                :assigned-to="$task->assignedTo"
+                            />
+                        </div>
                     </div>
                 </div>
             @endforeach

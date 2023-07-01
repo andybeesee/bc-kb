@@ -18,6 +18,7 @@
     "dependencies": {
         "@hotwired/stimulus": "^3.2.1",
         "@hotwired/turbo": "^7.3.0",
+        "@popperjs/core": "^2.11.8",
         "@stencil/core": "^3.4.0",
         "htmx.org": "^1.9.2",
         "lodash": "^4.17.21",
