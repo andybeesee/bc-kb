@@ -15,7 +15,7 @@
                     {{ $assignedTo->name }}
                     {{-- TODO: some better wayt o show it is assigned to the current user --}}
                     @if($assignedToCurrentUser)
-                        <span class="text-xs text-blue-700">(You)</span>
+                        <span class="ml-1 text-xs text-blue-700">(You)</span>
                     @endif
                 @else
                     <span class="text-zinc-300">Not Assigned</span>
@@ -31,12 +31,31 @@
                 style="display: none;"
             >
                 <div class="grid divide-y divide-zinc-400">
+                    @if(!empty($assignedTo))
+                        <button
+                            wire:click="$emit('removeAssigned', {{$modelId}})"
+                            class="p-1 flex items-center text-left text-sm bg-red-50 hover:bg-red-100"
+                            type="button"
+                        >
+                            Remove Assignment
+
+                            <x-icon icon="x-circle" class="ml-auto h-4 w-4" />
+                        </button>
+                    @endif
                     @foreach($this->userOptions as $userOpt)
+                        @php $assignedToThisUser =  $assignedTo?->id === $userOpt->id; @endphp
                         <button
                             wire:click="$emit('assigned', {{$modelId}}, {{$userOpt->id}})"
-                            class="p-1 text-left text-sm hover:bg-zinc-100"
-                            type="button">
+                            class="{{ $assignedToThisUser ? 'bg-indigo-100' : '' }} p-1 flex items-center text-left text-sm hover:bg-zinc-100"
+                            type="button"
+                        >
                             {{ $userOpt->name }}
+                            @if($userOpt->id === auth()->user()->id)
+                                <span class="text-xs text-blue-700">(You)</span>
+                            @endif
+                            @if($assignedToThisUser)
+                                <x-icon icon="check-circle" class="ml-auto h-4 w-4" />
+                            @endif
                         </button>
                     @endforeach
                 </div>

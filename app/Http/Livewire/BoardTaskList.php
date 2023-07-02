@@ -14,6 +14,7 @@ class BoardTaskList extends Component
     protected $listeners = [
         'sorted' => 'handleSort',
         'assigned' => 'handleAssignment',
+        'removeAssigned' => 'removeAssignment',
     ];
 
     public function render()
@@ -34,6 +35,16 @@ class BoardTaskList extends Component
             ->where('id', $taskId)
             ->where('board_id', $this->board->id)
             ->update(['assigned_to' => $newOwner, 'updated_at' => now()]);
+    }
+
+    public function removeAssignment($taskId)
+    {
+        \Log::debug("handling removal...", [$taskId]);
+        // TODO: track activitiy, send notifications and whatever else
+        DB::table('tasks')
+            ->where('id', $taskId)
+            ->where('board_id', $this->board->id)
+            ->update(['assigned_to' => null, 'updated_at' => now()]);
     }
 
     public function handleSort($items)
