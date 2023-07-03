@@ -11,20 +11,20 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('board_templates', function (Blueprint $table) {
+        Schema::create('board_project', function (Blueprint $table) {
             $table->id();
 
-            $table->string('name')->unique();
+            $table->foreignId('board_id')
+                ->references('id')
+                ->on('boards')
+                ->onUpdate('cascade')
+                ->onDelete('cascade');
 
-            $table->foreignId('project_template_id')
-                ->nullable()
-                ->default(null)
+            $table->foreignId('project_id')
                 ->references('id')
                 ->on('projects')
-                ->onDelete('set null')
-                ->onUpdate('cascade');
-
-            $table->json('tasks');
+                ->onUpdate('cascade')
+                ->onDelete('cascade');
 
             $table->timestamps();
         });
@@ -35,6 +35,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('board_templates');
+        Schema::dropIfExists('board_project');
     }
 };

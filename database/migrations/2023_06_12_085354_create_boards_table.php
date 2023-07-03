@@ -14,17 +14,14 @@ return new class extends Migration
         Schema::create('boards', function (Blueprint $table) {
             $table->id();
 
-            $table->foreignId('project_id')
-                ->references('id')
-                ->on('projects')
-                ->onDelete('cascade')
-                ->onUpdate('cascade');
+            // team or user
+            $table->morphs('owner');
 
             $table->string('name');
 
             $table->unsignedInteger('sort')->default(0);
 
-            $table->unique(['name', 'project_id']);
+            $table->unique(['name', 'owner_type', 'owner_id']);
 
             $table->date('due_date')->nullable()->default(null);
 

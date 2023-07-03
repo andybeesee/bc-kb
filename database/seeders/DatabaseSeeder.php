@@ -63,7 +63,16 @@ class DatabaseSeeder extends Seeder
 
         $this->teams = Team::with('members')->get();
 
+        $this->teams->each(function(Team $team) {
+            $boardsToMake = random_int(2, 50);
+            for($i = 0; $i < $boardsToMake; $i++) {
+                Board::factory()->create(['owner_id' => $team->id, 'owner_type' => 'team']);
+            }
+        });
 
+        $this->teams->load('boards');
+
+        dd("SNAP");
 
         Project::factory()->count(random_int(100, 500))->create()
             ->each(function(Project $project) {

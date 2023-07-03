@@ -13,4 +13,9 @@ class Team extends Model
     {
         return $this->belongsToMany(User::class)->withTimestamps();
     }
+
+    public function boards()
+    {
+        return $this->morphMany(Board::class, 'owner')->orderBy('sort');
+    }
 }

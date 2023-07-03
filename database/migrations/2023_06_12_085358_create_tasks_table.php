@@ -16,9 +16,11 @@ return new class extends Migration
 
             $table->string('name');
 
-            $table->foreignId('board_id')
+            $table->enum('type', ['task', 'title']);
+
+            $table->foreignId('project_id')
                 ->references('id')
-                ->on('boards')
+                ->on('projects')
                 ->onUpdate('cascade')
                 ->onDelete('cascade');
 

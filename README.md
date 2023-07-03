@@ -1,4 +1,15 @@
-We're going to have 
+We're going to have
+
+* Project boards/lanes
+  * task list on projects - simpler re-use of task lists that way I think
+  * and it narrows down the page depth on projects
+  * team based board list helps
+    * replicates my Excel structure upcoming, this year, in progress, etc.
+    * each team can have their own boards
+  * project (may belong to many boards and teams)
+  * task - belogns to project (project has many tasks)
+  * project task list has titles in them for sorting (easier than separate board object)
+    * mostly for organizational purposes - collapse/expand and whatnot
 
 * Projects
   * which may have many boards
