@@ -45,6 +45,7 @@ class DatabaseSeeder extends Seeder
         }
 
         $this->users = User::all('id');
+        $this->admin = User::where('email', 'admin@example.com')->first();
 
         if(Team::count() < 25) {
             Team::factory(25)
@@ -52,13 +53,17 @@ class DatabaseSeeder extends Seeder
                 ->each(function(Team $team) {
                     $toAdd = random_int(3, $this->users->count() / 10);
                     $ids = $this->users->random($toAdd)->pluck('id')->toArray();
+                    if($this->faker->boolean(65)) {
+                        $ids[] = $this->admin->id;
+                        $ids = array_unique($ids);
+                    }
                     $team->members()->sync($ids);
                 });
         }
 
         $this->teams = Team::with('members')->get();
 
-        $this->admin = User::where('email', 'admin@example.com')->first();
+
 
         Project::factory()->count(random_int(100, 500))->create()
             ->each(function(Project $project) {
@@ -75,20 +80,30 @@ class DatabaseSeeder extends Seeder
                 for($i = 0; $i < $numBoards; $i++) {
                     $board = Board::factory()->create(['project_id' => $project->id, 'sort' => $i]);
 
-                    Task::factory()
-                        ->create([
-                            'board_id' => $board->id,
-                            'assigned_to' => $this->admin->id,
-                            'sort' => 0,
-                        ]);
+                    if($this->faker->boolean(40)) {
+                        $dueDate = $this->faker->dateTimeBetween('-1 year', '+11 years')->format('Y-m-d');
+                        $completeDated = $this->faker->dateTimeBetween('-6 months', '+10 years')->format('Y-m-d');
+
+                        Task::factory()
+                            ->create([
+                                'board_id' => $board->id,
+                                'assigned_to' => $this->admin->id,
+                                'sort' => 0,
+                                'due_date' => $this->faker->boolean() ? $dueDate : null,
+                                'completed_date' => $this->faker->boolean() ? $completeDated : null,
+                            ]);
+                    }
 
                     for($t = 0; $t < random_int(20, 100); $t++) {
+                        $dueDate = $this->faker->dateTimeBetween('-1 year', '+11 years')->format('Y-m-d');
+                        $completeDated = $this->faker->dateTimeBetween('-6 months', '+10 years')->format('Y-m-d');
                         Task::factory()
                             ->create([
                                 'sort' => $t + 1,
                                 'board_id' => $board->id,
+                                'due_date' => $this->faker->boolean() ? $dueDate : null,
                                 'assigned_to' => $this->faker->boolean(40) ? $team->members->random()->id : null,
-                                'completed_date' => $this->faker->boolean() ? $this->faker->date() : null,
+                                'completed_date' => $this->faker->boolean() ? $completeDated : null,
                             ]);
                     }
                 }

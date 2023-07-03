@@ -26,6 +26,10 @@ We're going to have
 * Board Templates
 
 # MVP
+* user dashboard
+  * currently assigned, incomplete tasks
+  * links to team dashboards
+  * currently 'owned' projects
 * Teams
   * ~~CRUD~~
   * Team dashboards

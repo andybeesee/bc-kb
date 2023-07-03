@@ -7,7 +7,7 @@ return [
     'planned' => 'Planned',
     'in_progress' => 'In Progress',
     'complete' => 'Complete',
-    'incomplete' => 'Incomplete',
+    // 'incomplete' => 'Incomplete',
     'late' => 'Late',
     'abandoned' => 'Abandoned',
 ];

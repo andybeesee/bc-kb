@@ -27,6 +27,7 @@
         <div class="list-group hover" x-sortable="{ options: { handle: '.handle' } }">
             @foreach($tasks as $task)
                 <div
+                    id="task-{{ $task->id }}"
                     class="list-group-item"
                     data-sort-id="{{ $task->id }}"
                     x-filedrop="{ eventParams: [{{ $task->id }}] }"

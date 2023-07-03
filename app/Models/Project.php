@@ -9,6 +9,19 @@ class Project extends Model
 {
     use HasFactory;
 
+    const CLOSED_PROJECT_STATUSES = [
+        'complete',
+        'abandoned',
+    ];
+
+    const IN_PROGRESS_PROJECT_STATUSES = [
+        'planning',
+        'planned',
+        'in_progress',
+        'late',
+    ];
+
+
     protected $casts = [
         'due_date' => 'date',
         'completed_date' => 'date',
