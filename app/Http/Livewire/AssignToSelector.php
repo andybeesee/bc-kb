@@ -11,7 +11,7 @@ class AssignToSelector extends Component
 
     public int|null $teamId;
 
-    public User|null $assignedTo;
+    public User|null $assignedTo = null;
 
     public bool $open = false;
 
