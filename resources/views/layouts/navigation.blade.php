@@ -1,6 +1,6 @@
 @php
     $links = [
-        ['name' => 'Dashboard', 'href' => '#'],
+        ['name' => 'Dashboard', 'href' => route('dashboard')],
         ['name' => 'Projects', 'href' => route('projects.index')],
         ['name' => 'Boards', 'href' => route('boards.index')],
         ['name' => 'Templates', 'href' => '#'],

@@ -34,10 +34,13 @@ We're going to have
     * add team/owner stuff
   * Start date/due date?
   * 'Last Update' field
+  * Easy status update button
 * Boards
   * CRUD
   * Dashboard (boards.index) - all boards with open tasks?
   * Move boards between projects
+  * Files/comments?
+  * 'last update' field?
 * Tasks
   * CRUD
   * complete/due date/start date
@@ -46,8 +49,12 @@ We're going to have
   * assign
   * complete
 * Files?
+  * we have upload working on tasks, need to display and allow for download
+  * 
 * Comments?
+  * everywhere? just on tasks? 
 * Global status options & colors
+  * do we weant statuses to filter down through boards and tasks? Or just on projects?
 
 # MVP.2
 * project/board templates
