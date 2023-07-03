@@ -70,7 +70,8 @@ class DatabaseSeeder extends Seeder
                 $project->owner_id = $this->faker->boolean() ? $owner->id : null;
                 $project->save();
 
-                $numBoards = random_int(2, 15);
+                $numBoards = random_int(1, 20);
+                \Log::debug("WE ARE GOING TO MAKE: ".$numBoards." BOARDS?");
                 for($i = 0; $i < $numBoards; $i++) {
                     $board = Board::factory()->create(['project_id' => $project->id, 'sort' => $i]);
 
@@ -81,10 +82,10 @@ class DatabaseSeeder extends Seeder
                             'sort' => 0,
                         ]);
 
-                    for($i = 0; $i < random_int(10, 100); $i++) {
+                    for($t = 0; $t < random_int(20, 100); $t++) {
                         Task::factory()
                             ->create([
-                                'sort' => $i + 1,
+                                'sort' => $t + 1,
                                 'board_id' => $board->id,
                                 'assigned_to' => $this->faker->boolean(40) ? $team->members->random()->id : null,
                                 'completed_date' => $this->faker->boolean() ? $this->faker->date() : null,
