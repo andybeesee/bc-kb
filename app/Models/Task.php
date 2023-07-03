@@ -9,13 +9,18 @@ class Task extends Model
 {
     use HasFactory;
 
-    public function getIsCompleteAttribute()
+    public function files()
     {
-        return !empty($this->completed_date);
+        return $this->morphMany(File::class, 'attached');
     }
 
     public function assignedTo()
     {
         return $this->belongsTo(User::class, 'assigned_to');
+    }
+
+    public function getIsCompleteAttribute()
+    {
+        return !empty($this->completed_date);
     }
 }

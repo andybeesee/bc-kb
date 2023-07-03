@@ -2,6 +2,7 @@
 
 namespace App\Providers;
 
+use Illuminate\Database\Eloquent\Relations\Relation;
 use Illuminate\Pagination\Paginator;
 use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\ServiceProvider;
@@ -30,5 +31,13 @@ class AppServiceProvider extends ServiceProvider
         Blade::directive('number', function ($expression) {
             return "<?php echo number_format($expression); ?>";
         });
+
+        Relation::morphMap([
+            'board' => \App\Models\Board::class,
+            'project' => \App\Models\Project::class,
+            'task' => \App\Models\Task::class,
+            'team' => \App\Models\Team::class,
+            'user' => \App\Models\User::class,
+        ]);
     }
 }

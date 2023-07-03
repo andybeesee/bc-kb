@@ -26,7 +26,11 @@
         </form>
         <div class="list-group hover" x-sortable="{ options: { handle: '.handle' } }">
             @foreach($tasks as $task)
-                <div class="list-group-item" data-sort-id="{{ $task->id }}">
+                <div
+                    class="list-group-item"
+                    data-sort-id="{{ $task->id }}"
+                    x-filedrop="{ eventParams: [{{ $task->id }}] }"
+                >
                     <div class="flex items-center">
                         <div class="handle mr-1.5 text-zinc-400 hover:text-zinc-700 cursor-move" title="Click and drag to rearrange tasks">
                             <x-icon icon="grip-vertical" class="h-4 w-4" />
@@ -47,13 +51,23 @@
                             {{ $task->name }}
                         </span>
 
-                        <div class="ml-auto">
-                            <livewire:assign-to-selector
-                                wire:key="assing-to-task-{{ $task->id }}-{{ $task->updated_at }}"
-                                :model-id="$task->id"
-                                :team-id="$board->team_id"
-                                :assigned-to="$task->assignedTo"
-                            />
+                        <div class="ml-auto w-1/3 grid grid-cols-2">
+                            <div>
+                                @if($task->files_count > 0)
+                                    <div class="flex items-center">
+                                        <x-icon icon="paperclip" class="h-5 mr-1  w-5" />
+                                        {{ $task->files_count }} File{{ $task->files_count !== 1 ? 's' : '' }}
+                                    </div>
+                                @endif
+                            </div>
+                            <div>
+                                <livewire:assign-to-selector
+                                    wire:key="assing-to-task-{{ $task->id }}-{{ $task->updated_at }}"
+                                    :model-id="$task->id"
+                                    :team-id="$board->team_id"
+                                    :assigned-to="$task->assignedTo"
+                                />
+                            </div>
                         </div>
                     </div>
                 </div>

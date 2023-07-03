@@ -3,28 +3,56 @@
 namespace App\Http\Livewire;
 
 use App\Models\Board;
+use App\Models\File;
 use App\Models\Task;
 use Illuminate\Support\Facades\DB;
 use Livewire\Component;
+use Livewire\TemporaryUploadedFile;
+use Livewire\WithFileUploads;
 
 class BoardTaskList extends Component
 {
+    use WithFileUploads;
+
     public Board $board;
+
+    public $files;
 
     protected $listeners = [
         'sorted' => 'handleSort',
         'assigned' => 'handleAssignment',
         'removeAssigned' => 'removeAssignment',
+        'saveFiles' => 'storeFiles',
     ];
 
     public function render()
     {
-        $tasks = Task::where('board_id', $this->board->id)
+        $tasks = Task::withCount('files')
+            ->where('board_id', $this->board->id)
             ->orderBy('sort')
             ->get();
 
         return view('livewire.board-task-list')
             ->with('tasks', $tasks);
+    }
+
+    public function storeFiles($taskId)
+    {
+        \Log::debug("WE DID IT ".$taskId, [$this->files]);
+
+        /** @var TemporaryUploadedFile $tempFile */
+        foreach($this->files as $tempFile) {
+            $path = 'tasks/'.$taskId.'/'.$tempFile->getFilename();
+            $tempFile->store($path);
+            $file = new File();
+            $file->filename = $tempFile->getClientOriginalName();
+            $file->location = $path;
+            $file->attached_type = 'task';
+            $file->attached_id = $taskId;
+            $file->save();
+        }
+
+        $this->files = [];
     }
 
     public function handleAssignment($taskId, $newOwner)

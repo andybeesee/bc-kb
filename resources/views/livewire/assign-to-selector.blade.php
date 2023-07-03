@@ -8,7 +8,7 @@
         <x-slot name="trigger">
             <button
                 title="Change who this is assigned to"
-                class="flex items-center hover:bg-zinc-100 dark:hover:bg-zinc-600 rounded-md px-1 py-0.5"
+                class="flex truncate items-center hover:bg-zinc-100 dark:hover:bg-zinc-600 rounded-md px-1 py-0.5"
                 type="button"
             >
                 @if(!empty($assignedTo))
