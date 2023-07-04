@@ -49,4 +49,9 @@ class User extends Authenticatable
     {
         return $this->belongsToMany(Team::class);
     }
+
+    public function boards()
+    {
+        return $this->morphMany(Board::class, 'owner');
+    }
 }

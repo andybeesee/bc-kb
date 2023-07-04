@@ -19,9 +19,9 @@ class Task extends Model
         return $this->morphMany(File::class, 'attached');
     }
 
-    public function board()
+    public function Project()
     {
-        return $this->belongsTo(Board::class);
+        return $this->belongsTo(Project::class);
     }
 
     public function assignedTo()
@@ -46,12 +46,11 @@ class Task extends Model
     public function scopeIncomplete($q)
     {
         return $q->where(function($eq) {
-            $eq->whereNull('completed_date')
-                // only use in progress projects
-                ->whereHas('board', function($bq) {
-                    return $bq->whereHas('project', function($pq) {
-                        return $pq->whereIn('projects.status', Project::IN_PROGRESS_PROJECT_STATUSES);
-                    });
+            $eq->where('type', 'task')
+                ->whereNull('completed_date')
+                // only use in progress projects - more to do on this later?
+                ->whereHas('project', function($pq) {
+                    return $pq->whereIn('projects.status', Project::IN_PROGRESS_PROJECT_STATUSES);
                 });
         });
     }

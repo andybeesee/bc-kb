@@ -23,25 +23,25 @@ class DashboardController extends Controller
             ->get();
 
         $pastDueTasks = Task::incomplete()
-            ->with('board', 'board.project')
+            ->with('project')
             ->where('due_date', '<', date('Y-m-d'))
             ->where('assigned_to', $request->user()->id)
             ->orderBy('due_date', 'ASC')
             ->get();
 
         $upcomingDueTasks = Task::incomplete()
+            ->with('project')
             ->whereNotNull('due_date')
             ->whereBetween('due_date', [
                 date('Y-m-d'),
                 date('Y-m-d', strtotime('+2 weeks'))
             ])
-            ->with(['board', 'board.project'])
             ->orderBy('due_date', 'ASC')
             ->where('assigned_to', $request->user()->id)
             ->get();
 
         $incompleteTasks = Task::incomplete()
-            ->with('board', 'board.project')
+            ->with('project')
             ->whereNull('due_date')
             ->where('assigned_to', $request->user()->id)
             ->get();

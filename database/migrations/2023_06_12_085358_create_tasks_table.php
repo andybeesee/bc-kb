@@ -16,7 +16,7 @@ return new class extends Migration
 
             $table->string('name');
 
-            $table->enum('type', ['task', 'title']);
+            $table->enum('type', ['task', 'title'])->default('task');
 
             $table->foreignId('project_id')
                 ->references('id')

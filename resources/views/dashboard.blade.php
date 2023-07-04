@@ -70,12 +70,8 @@
                                     @endif
                                 </div>
                                 <div class="text-xs">
-                                    <a class="link" title="Go to project" href="{{ route('projects.show', $pastDueTask->board->project) }}">
-                                        {{ $pastDueTask->board->project->name }}
-                                    </a>
-                                    /
-                                    <a class="link" title="Go to board" href="{{ route('projects.boards.show', [$pastDueTask->board, $pastDueTask->board->project]) }}#task-{{ $pastDueTask->id }}">
-                                        {{ $pastDueTask->board->name }}
+                                    <a class="link" title="Go to project" href="{{ route('projects.show', $pastDueTask->project) }}">
+                                        {{ $pastDueTask->project->name }}
                                     </a>
                                 </div>
 
@@ -106,12 +102,8 @@
                                     @endif
                                 </div>
                                 <div class="text-xs">
-                                    <a class="link" title="Go to project" href="{{ route('projects.show', $dueTask->board->project) }}">
-                                        {{ $dueTask->board->project->name }}
-                                    </a>
-                                    /
-                                    <a class="link" title="Go to board" href="{{ route('projects.boards.show', [$dueTask->board, $dueTask->board->project]) }}#task-{{ $dueTask->id }}">
-                                        {{ $dueTask->board->name }}
+                                    <a class="link" title="Go to project" href="{{ route('projects.show', $dueTask->project) }}">
+                                        {{ $dueTask->project->name }}
                                     </a>
                                 </div>
 
@@ -140,12 +132,8 @@
                                 @endif
                             </div>
                             <div class="text-xs">
-                                <a class="link" title="Go to project" href="{{ route('projects.show', $incompleteTask->board->project) }}">
-                                    {{ $incompleteTask->board->project->name }}
-                                </a>
-                                /
-                                <a class="link" title="Go to board" href="{{ route('projects.boards.show', [$incompleteTask->board, $incompleteTask->board->project]) }}#task-{{ $incompleteTask->id }}">
-                                    {{ $incompleteTask->board->name }}
+                                <a class="link" title="Go to project" href="{{ route('projects.show', $incompleteTask->project) }}">
+                                    {{ $incompleteTask->project->name }}
                                 </a>
                             </div>
 

@@ -14,45 +14,13 @@ class Board extends Model
         'completed_date' => 'date',
     ];
 
-    public function project()
+    public function user()
     {
-        return $this->belongsTo(Project::class);
+        return $this->morphTo(User::class, 'owner');
     }
 
-    public function tasks()
+    public function team()
     {
-        return $this->hasMany(Task::class);
-    }
-
-    public function incompleteTasks()
-    {
-        return $this->tasks()->whereNull('completed_date');
-    }
-
-    public function pastDueTasks()
-    {
-        return $this->incompleteTasks()->whereNotNull('due_date')->where('due_date', '<', date('Y-m-d'));
-    }
-
-    public function tasksAssignedToUser($userId = null)
-    {
-        $userId = $userId ?? auth()->user()->id;
-
-        return $this->tasks()->where('assigned_to', $userId);
-    }
-
-    public function incompleteUserTasks($userId = null)
-    {
-        return $this->tasksAssignedToUser($userId)->whereNull('completed_date');
-    }
-
-    public function scopeAddTaskCounts($q)
-    {
-        return $q->withCount(['pastDueTasks', 'incompleteTasks', 'incompleteUserTasks']);
-    }
-
-    public function scopeWithOpenTasks($q)
-    {
-        return $q->whereHas('incompleteTasks');
+        return $this->morphTo(Team::class, 'owner');
     }
 }
