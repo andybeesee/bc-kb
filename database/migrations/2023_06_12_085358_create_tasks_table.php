@@ -16,11 +16,17 @@ return new class extends Migration
 
             $table->string('name');
 
-            $table->enum('type', ['task', 'title'])->default('task');
-
             $table->foreignId('project_id')
                 ->references('id')
                 ->on('projects')
+                ->onUpdate('cascade')
+                ->onDelete('cascade');
+
+            $table->foreignId('task_group_id')
+                ->nullable()
+                ->default(null)
+                ->references('id')
+                ->on('task_groups')
                 ->onUpdate('cascade')
                 ->onDelete('cascade');
 

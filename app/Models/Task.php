@@ -19,7 +19,7 @@ class Task extends Model
         return $this->morphMany(File::class, 'attached');
     }
 
-    public function Project()
+    public function project()
     {
         return $this->belongsTo(Project::class);
     }

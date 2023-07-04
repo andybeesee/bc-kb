@@ -16,6 +16,8 @@ class Icon extends Component
 
     public $inline = true;
 
+    public $style = '';
+
     const CUSTOM_ICONS = [
         'transfer' => [
             // Heroicons arrows-right-left

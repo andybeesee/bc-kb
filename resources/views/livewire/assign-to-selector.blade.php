@@ -8,11 +8,14 @@
         <x-slot name="trigger">
             <button
                 title="Change who this is assigned to"
-                class="flex truncate items-center hover:bg-zinc-100 dark:hover:bg-zinc-600 rounded-md px-1 py-0.5"
+                class="flex items-center hover:bg-zinc-100 dark:hover:bg-zinc-600 rounded-md px-1 py-0.5"
                 type="button"
             >
                 @if(!empty($assignedTo))
-                    {{ $assignedTo->name }}
+                    <span title="{{ $assignedTo->name }}" class="truncate">
+                        {{ $assignedTo->name }}
+                    </span>
+
                     {{-- TODO: some better wayt o show it is assigned to the current user --}}
                     @if($assignedToCurrentUser)
                         <span class="ml-1 text-xs text-blue-700">(You)</span>

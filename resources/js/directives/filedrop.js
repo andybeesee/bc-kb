@@ -24,9 +24,14 @@ export default function(el, { expression }, { evaluate, cleanup }) {
     }
 
     const dropHandler = (e) => {
+        // TODO: Don't fire when a sortable drop happens...?
+        if(e.dataTransfer.files.length === 0) {
+            return;
+        }
+        console.log('dropped', e);
         e.preventDefault();
         el.classList.remove(...options.dragoverClass);
-        console.log('cakked dropHandler', e, e.dataTransfer.files);
+        // console.log('cakked dropHandler', e, e.dataTransfer.files);
         livewireComponent.uploadMultiple('files', e.dataTransfer.files, (succ) => {
             console.log("usccess", succ, ...options.eventParams)
             Livewire.emit('saveFiles', ...options.eventParams);

@@ -14,6 +14,7 @@ class ProjectController extends Controller
     public function index()
     {
         $projects = Project::with(['team', 'owner'])
+            ->withCount(['pastDueTasks', 'incompleteTasks'])
             ->orderBy('name')
             ->paginate(25);
 
@@ -57,7 +58,6 @@ class ProjectController extends Controller
         $board->save();
 
         return redirect()->route('projects.show', $project);
-
     }
 
     /**
@@ -65,10 +65,6 @@ class ProjectController extends Controller
      */
     public function show(Project $project)
     {
-        $project->load([
-            'boards' => fn($q) => $q->withOpenTasks()->addTaskCounts(),
-        ]);
-
         return view('projects.show')->with('project', $project);
     }
 

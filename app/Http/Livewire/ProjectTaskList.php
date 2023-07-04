@@ -2,38 +2,80 @@
 
 namespace App\Http\Livewire;
 
-use App\Models\Board;
 use App\Models\File;
 use App\Models\Task;
+use App\Models\TaskGroup;
 use Illuminate\Support\Facades\DB;
 use Livewire\Component;
 use Livewire\TemporaryUploadedFile;
 use Livewire\WithFileUploads;
 
-class BoardTaskList extends Component
+class ProjectTaskList extends Component
 {
     use WithFileUploads;
 
-    public Board $board;
+    public int $projectId;
 
     public $files;
 
     protected $listeners = [
-        'sorted' => 'handleSort',
         'assigned' => 'handleAssignment',
         'removeAssigned' => 'removeAssignment',
         'saveFiles' => 'storeFiles',
+        'sorted' => 'handleSort',
     ];
 
     public function render()
     {
-        $tasks = Task::withCount('files')
-            ->where('board_id', $this->board->id)
+        $groups = TaskGroup::with('tasks')
+            ->where('project_id', $this->projectId)
             ->orderBy('sort')
             ->get();
 
-        return view('livewire.board-task-list')
-            ->with('tasks', $tasks);
+        $tasks = Task::with(['assignedTo'])
+            ->where('project_id', $this->projectId)
+            ->whereNull('task_group_id')
+            ->orderBy('sort')
+            ->get();
+
+        return view('livewire.project-task-list')
+            ->with('tasks', $tasks)
+            ->with('groups', $groups);
+    }
+
+
+    public function handleSort($items)
+    {
+        $boards = DB::table('tasks')
+            ->where('project_id', $this->projectId)
+            ->get()
+            ->pluck('id', 'sort')
+            ->toArray();
+
+        foreach($items as $data) {
+            $taskId = $data['id'];
+            $newSort = $data['sort'];
+
+            $curSort = $boards[$taskId] ?? 0;
+            if($curSort === $newSort) {
+                continue;
+            }
+
+            DB::table('tasks')
+                ->where('project_id', $this->projectId)
+                ->where('id', $taskId)
+                ->update([
+                    'sort' => $newSort,
+                ]);
+        }
+    }
+
+    public function deleteGroup($id)
+    {
+        // TODO: Shoudl this delete all nested items? it should probably be an option when clicked
+        DB::table('tasks')
+            ->where('id', $id)
+            ->delete();
     }
 
     public function storeFiles($taskId)
@@ -61,7 +103,6 @@ class BoardTaskList extends Component
         // TODO: track activitiy, send notifications and whatever else
         DB::table('tasks')
             ->where('id', $taskId)
-            ->where('board_id', $this->board->id)
             ->update(['assigned_to' => $newOwner, 'updated_at' => now()]);
     }
 
@@ -71,42 +112,16 @@ class BoardTaskList extends Component
         // TODO: track activitiy, send notifications and whatever else
         DB::table('tasks')
             ->where('id', $taskId)
-            ->where('board_id', $this->board->id)
             ->update(['assigned_to' => null, 'updated_at' => now()]);
     }
 
-    public function handleSort($items)
-    {
-        $boards = DB::table('tasks')
-            ->where('board_id', $this->board->id)
-            ->get()
-            ->pluck('id', 'sort')
-            ->toArray();
-
-        foreach($items as $data) {
-            $taskId = $data['id'];
-            $newSort = $data['sort'];
-
-            $curSort = $boards[$taskId] ?? 0;
-            if($curSort === $newSort) {
-                continue;
-            }
-
-            DB::table('tasks')
-                ->where('board_id', $this->board->id)
-                ->where('id', $taskId)
-                ->update([
-                    'sort' => $newSort,
-                ]);
-        }
-    }
 
     public function toggleTask($taskId)
     {
         $isComplete = DB::table('tasks')
-            ->where('id', $taskId)
-            ->whereNull('completed_date')
-            ->count() === 0;
+                ->where('id', $taskId)
+                ->whereNull('completed_date')
+                ->count() === 0;
 
         \Log::debug("{$taskId}: ISCOMPEL ".($isComplete ? 'YES' : 'no'));
 

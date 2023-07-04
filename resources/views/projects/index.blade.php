@@ -25,7 +25,26 @@
                     @if(!empty($project->owner))
                         <span class="md:ml-3 text-sm" title="Owner">{{ $project->owner->name }}</span>
                     @endif
-                    <span class="hidden md:block md:ml-auto status-badge {{ $project->status }}" title="Status">{{ config('statuses.'.$project->status) }}</span>
+
+                    <div class="ml-auto grid grid-cols-3 gap-4">
+                        <div>
+                            @if($project->past_due_tasks_count > 0)
+                                <div class="badge text-center badge-danger" title="Incomplete Tasks">
+                                    {{ $project->past_due_tasks_count }} Past Due
+                                </div>
+                            @endif
+                        </div>
+                        <div>
+                            @if($project->incomplete_tasks_count > 0)
+                                <div class="badge text-center badge-primary" title="Incomplete Tasks">
+                                    {{ $project->incomplete_tasks_count }} Incomplete
+                                </div>
+                            @endif
+                        </div>
+                        <div class="status-badge text-center {{ $project->status }}" title="Status">
+                            {{ config('statuses.'.$project->status) }}
+                        </div>
+                    </div>
                 </div>
             @endforeach
         </div>

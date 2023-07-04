@@ -6,9 +6,11 @@ namespace Database\Seeders;
 use App\Models\Project;
 use App\Models\Board;
 use App\Models\Task;
+use App\Models\TaskGroup;
 use App\Models\Team;
 use App\Models\User;
 use Database\Factories\BoardFactory;
+use Database\Factories\TaskGroupFactory;
 use Illuminate\Database\Seeder;
 use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Support\Facades\DB;
@@ -95,35 +97,27 @@ class DatabaseSeeder extends Seeder
                         ]);
                 }
 
-                $tasksToMake = random_int(20, 100);
-                $titlesToMake = $tasksToMake > 40 ? random_int(1, 4) : 0;
+                $tasksToMake = random_int(20, 200);
+
+                $groups = $tasksToMake > 50 ? TaskGroup::factory()->count(random_int(2, 20))->create(['project_id' => $project->id]) : collect();
 
                 for($t = 0; $t < random_int(20, 100); $t++) {
                     $dueDate = $this->faker->dateTimeBetween('-1 year', '+11 years')->format('Y-m-d');
                     $completeDated = $this->faker->dateTimeBetween('-6 months', '+10 years')->format('Y-m-d');
 
-                    if($t > 10 && $titlesToMake > 0 && $this->faker->boolean()) {
-                        Task::factory()
-                            ->create([
-                                'sort' => $t + 1,
-                                'project_id' => $project->id,
-                                'type' => 'title',
-                            ]);
+                    $groupId = $groups->count() > 0 && $this->faker->boolean(75) ? $groups->random()->id : null;
 
-                        $titlesToMake--;
-                    } else {
-                        Task::factory()
-                            ->create([
-                                'sort' => $t + 1,
-                                'project_id' => $project->id,
-                                'due_date' => $this->faker->boolean() ? $dueDate : null,
-                                'assigned_to' => $this->faker->boolean(40) ? $team->members->random()->id : null,
-                                'completed_date' => $this->faker->boolean() ? $completeDated : null,
-                            ]);
-                    }
+                    Task::factory()
+                        ->create([
+                            'sort' => $t + 1,
+                            'project_id' => $project->id,
+                            'task_group_id' => $groupId,
+                            'due_date' => $this->faker->boolean() ? $dueDate : null,
+                            'assigned_to' => $this->faker->boolean(40) ? $team->members->random()->id : null,
+                            'completed_date' => $this->faker->boolean() ? $completeDated : null,
+                        ]);
+
                 }
-
-                // TODO: seed boards, put projects, owners, teams and all that jazz on them
             });
 
 
