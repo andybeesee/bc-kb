@@ -44,7 +44,7 @@ class Project extends Model
 
     public function incompleteTasks()
     {
-        return $this->tasks()->where('type', 'task')->whereNull('completed_date');
+        return $this->tasks()->whereNull('completed_date');
     }
 
     public function pastDueTasks()

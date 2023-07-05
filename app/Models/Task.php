@@ -46,8 +46,7 @@ class Task extends Model
     public function scopeIncomplete($q)
     {
         return $q->where(function($eq) {
-            $eq->where('type', 'task')
-                ->whereNull('completed_date')
+            $eq->whereNull('completed_date')
                 // only use in progress projects - more to do on this later?
                 ->whereHas('project', function($pq) {
                     return $pq->whereIn('projects.status', Project::IN_PROGRESS_PROJECT_STATUSES);
