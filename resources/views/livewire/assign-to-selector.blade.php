@@ -3,7 +3,7 @@
     {{-- TODO: search users --}}
     <x-dropdown
         wire:model="open"
-        content-classes="rounded-md border min-h-[50px] min-w-[200px] z-[10] bg-white border-zinc-500 shadow-sm max-h-[250px] overflow-y-scroll"
+        content-classes="rounded-md border min-h-[50px] min-w-[200px] z-[10] bg-white dark:bg-zinc-900 border-zinc-500 shadow-sm max-h-[250px] overflow-y-scroll"
     >
         <x-slot name="trigger">
             <button
@@ -37,7 +37,7 @@
                     @if(!empty($assignedTo))
                         <button
                             wire:click="$emit('removeAssigned', {{$modelId}})"
-                            class="p-1 flex items-center text-left text-sm bg-red-50 hover:bg-red-100"
+                            class="p-1 flex items-center text-left text-sm bg-red-50 dark:bg-red-800 dark:hover:bg-red-600 hover:bg-red-100"
                             type="button"
                         >
                             Remove Assignment
@@ -49,7 +49,7 @@
                         @php $assignedToThisUser =  $assignedTo?->id === $userOpt->id; @endphp
                         <button
                             wire:click="$emit('assigned', {{$modelId}}, {{$userOpt->id}})"
-                            class="{{ $assignedToThisUser ? 'bg-indigo-100' : '' }} p-1 flex items-center text-left text-sm hover:bg-zinc-100"
+                            class="{{ $assignedToThisUser ? 'dark:bg-indigo-700 bg-indigo-100' : '' }} p-1 flex items-center text-left text-sm hover:bg-zinc-100 dark:hover:bg-zinc-600"
                             type="button"
                         >
                             {{ $userOpt->name }}
@@ -62,8 +62,6 @@
                         </button>
                     @endforeach
                 </div>
-
-                select users up in her
             </div>
         </x-slot>
     </x-dropdown>
