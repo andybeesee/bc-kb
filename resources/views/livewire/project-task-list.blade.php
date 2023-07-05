@@ -4,7 +4,7 @@
         <div class="card-title">
             Tasks <span class="text-sm font-normal text-zinc-500">Ungrouped tasks</span>
         </div>
-        <div class="card-body divide-y divide-zinc-300" x-sortable="{ options: { handle: '.handle' } }">
+        <div class="card-body divide-y divide-zinc-300" x-sortable="{ options: { handle: '.handle', group: 'tasks' } }">
             @foreach($tasks as $task)
                 <x-task.list-item class="py-2 px-1" :task="$task" :sortable="true" />
             @endforeach
@@ -36,23 +36,26 @@
     {{-- TODO: Group Sorting --}}
     {{-- TODO: Moving tasks between groups --}}
 
-    @foreach($groups as $group)
-        {{-- TODO: Dropdown to change color of section --}}
-        <div class="mt-4 grid gap-4">
-            <div class="card">
-                <div class="card-title flex items-center">
-                    <div class="mr-1 cursor-move handle">
-                        <x-icon icon="grip-vertical" class="h-4 w-4" />
+    <div x-sortable="{ event: 'groupSorted', idAttribute: 'data-group-sort-id', options: { handle: '.handle', group: 'groups' } }">
+        @foreach($groups as $group)
+            {{-- TODO: Dropdown to change color of section --}}
+            <div data-group-sort-id="{{ $group->id }}" class="mt-4 grid gap-4">
+                <div class="card">
+                    <div class="card-title flex items-center">
+                        <div class="mr-1 cursor-move handle">
+                            <x-icon icon="grip-vertical" class="h-4 w-4" />
+                        </div>
+                        {{ $group->name }}
                     </div>
-                    {{ $group->name }}
-                </div>
 
-                <div class="card-body divide-y divide-zinc-300" x-sortable="{ options: { handle: '.handle' } }">
-                    @foreach($group->tasks as $task)
-                        <x-task.list-item class="py-2 px-1" :task="$task" :sortable="true" />
-                    @endforeach
+                    <div class="card-body divide-y divide-zinc-300" x-sortable="{ options: { handle: '.handle',  group: 'tasks' } }">
+                        @foreach($group->tasks as $task)
+                            <x-task.list-item class="py-2 px-1" :task="$task" :sortable="true" />
+                        @endforeach
+                    </div>
                 </div>
             </div>
-        </div>
-    @endforeach
+        @endforeach
+    </div>
+
 </div>

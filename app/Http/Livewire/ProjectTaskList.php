@@ -23,6 +23,7 @@ class ProjectTaskList extends Component
         'removeAssigned' => 'removeAssignment',
         'saveFiles' => 'storeFiles',
         'sorted' => 'handleSort',
+        'groupSorted' => 'handleGroupSorted',
     ];
 
     public function render()
@@ -47,7 +48,8 @@ class ProjectTaskList extends Component
 
     public function handleSort($items)
     {
-        $boards = DB::table('tasks')
+        \Log::debug("Task sort got hit");
+        $tasks = DB::table('tasks')
             ->where('project_id', $this->projectId)
             ->get()
             ->pluck('id', 'sort')
@@ -57,7 +59,7 @@ class ProjectTaskList extends Component
             $taskId = $data['id'];
             $newSort = $data['sort'];
 
-            $curSort = $boards[$taskId] ?? 0;
+            $curSort = $tasks[$taskId] ?? 0;
             if($curSort === $newSort) {
                 continue;
             }
@@ -65,6 +67,34 @@ class ProjectTaskList extends Component
             DB::table('tasks')
                 ->where('project_id', $this->projectId)
                 ->where('id', $taskId)
+                ->update([
+                    'sort' => $newSort,
+                ]);
+        }
+    }
+
+    public function handleGroupSorted($groupIds)
+    {
+        \Log::debug("group sort got hit!", $groupIds);
+
+        $groups = DB::table('task_groups')
+            ->where('project_id', $this->projectId)
+            ->get()
+            ->pluck('id', 'sort')
+            ->toArray();
+
+        foreach($groupIds as $data) {
+            $groupId = $data['id'];
+            $newSort = $data['sort'];
+
+            $curSort = $groups[$groupId] ?? 0;
+            if($curSort === $newSort) {
+                continue;
+            }
+
+            DB::table('task_groups')
+                ->where('project_id', $this->projectId)
+                ->where('id', $groupId)
                 ->update([
                     'sort' => $newSort,
                 ]);

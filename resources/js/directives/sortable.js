@@ -8,9 +8,10 @@ export default function(el, { expression }, { evaluate, cleanup }) {
         animation: 120,
         onUpdate: () => {
             // TODO: option for Livewire event?
-            const items = Array.from(el.querySelectorAll(`[data-sort-id]`)).map((el, index) => {
+            const attribute = data.idAttribute ?? 'data-sort-id';
+            const items = Array.from(el.querySelectorAll(`[${attribute}]`)).map((el, index) => {
                 return {
-                    id: el.getAttribute('data-sort-id'),
+                    id: el.getAttribute(attribute),
                     sort: index + 1,
                 };
             })
@@ -18,6 +19,7 @@ export default function(el, { expression }, { evaluate, cleanup }) {
             if(data.url) {
                 axios.put(data.url, { items });
             } else {
+                console.log('event name is ', data.event ?? 'sorted');
                 Livewire.emit(data.event ?? 'sorted', items);
             }
         },
