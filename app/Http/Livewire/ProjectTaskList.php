@@ -27,12 +27,13 @@ class ProjectTaskList extends Component
 
     public function render()
     {
-        $groups = TaskGroup::with('tasks')
+        $groups = TaskGroup::with(['tasks' => fn($tq) => $tq->with('assignedTo')->withCount('files')])
             ->where('project_id', $this->projectId)
             ->orderBy('sort')
             ->get();
 
         $tasks = Task::with(['assignedTo'])
+            ->withCount('files')
             ->where('project_id', $this->projectId)
             ->whereNull('task_group_id')
             ->orderBy('sort')

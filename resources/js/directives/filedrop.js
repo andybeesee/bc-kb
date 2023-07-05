@@ -4,7 +4,7 @@ import axios from 'axios';
 export default function(el, { expression }, { evaluate, cleanup }) {
 
     const baseOptions = {
-        dragoverClass: ['bg-indigo-100'],
+        dragoverClass: ['bg-indigo-100', 'dark:bg-indigo-700'],
         eventParams: [],
     }
 
