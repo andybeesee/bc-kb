@@ -47,28 +47,28 @@ class ProjectTaskList extends Component
             ->with('groups', $groups);
     }
 
-    public function handleTaskMove($taskId, $groupId, $position)
+    public function handleTaskMove($taskId, $groupId, $items)
     {
-        \Log::debug("TASK MOVE", func_get_args());
         DB::table('tasks')
             ->where('id', $taskId)
             ->update([
                 'task_group_id' => empty($groupId) ? null : $groupId,
             ]);
 
-        // TODO: lets write something to sort the given ID to proper position?
-        // loop through all tasks and sort them out?
-        // we could use the same algorithm below, just pass a task id and position..
+        $this->handleSort($items, $groupId);
     }
 
     public function handleSort($items, $groupId = null)
     {
-        \Log::debug("Task ungrouped sort got hit", $items);
-        $tasks = DB::table('tasks')
-            ->where('project_id', $this->projectId)
-            ->get()
-            ->pluck('id', 'sort')
-            ->toArray();
+        $taskQuery = DB::table('tasks')->where('project_id', $this->projectId);
+
+        if(!empty($groupId)) {
+            $taskQuery = $taskQuery->whereNull('task_group_id');
+        } else {
+            $taskQuery = $taskQuery->where('task_group_id', $groupId);
+        }
+
+        $tasks = $taskQuery->get()->pluck('id', 'sort')->toArray();
 
         foreach($items as $data) {
             $taskId = $data['id'];
@@ -90,8 +90,6 @@ class ProjectTaskList extends Component
 
     public function handleGroupSorted($groupIds)
     {
-        \Log::debug("group sort got hit!", $groupIds);
-
         $groups = DB::table('task_groups')
             ->where('project_id', $this->projectId)
             ->get()

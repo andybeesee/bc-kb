@@ -3,6 +3,16 @@ import axios from 'axios';
 
 export default function(el, { expression }, { evaluate, cleanup }) {
     const data = evaluate(expression);
+
+    const pullItems = function(element, attribute) {
+        return Array.from(element.querySelectorAll(`[${attribute}]`)).map((el, index) => {
+            return {
+                id: el.getAttribute(attribute),
+                sort: index + 1,
+            };
+        })
+    }
+
     // console.log(data.url, data.options);
     const options = Object.assign({
         animation: 120,
@@ -11,10 +21,11 @@ export default function(el, { expression }, { evaluate, cleanup }) {
         },
         onAdd(e) {
             console.log('item added from another list', e);
-            const itemId = e.item.getAttribute(data.idAttribute ?? 'data-sort-id');
+            const itemAttribute = data.idAttribute ?? 'data-sort-id';
+            const itemId = e.item.getAttribute(itemAttribute);
             const groupId = e.to.getAttribute('data-group-id') ?? null
-            // console.log('movedList', itemId, groupId)
-            Livewire.emit('movedList', itemId, groupId, e.newIndex)
+
+            Livewire.emit('movedList', itemId, groupId, pullItems(e.to, itemAttribute));
         },
         onEnd(e) {
             if(e.type === 'add') {
@@ -28,12 +39,7 @@ export default function(el, { expression }, { evaluate, cleanup }) {
 
             const groupId = e.to.hasAttribute('data-group-id') ? e.to.getAttribute('data-group-id') : null;
 
-            const items = Array.from(e.target.querySelectorAll(`[${attribute}]`)).map((el, index) => {
-                return {
-                    id: el.getAttribute(attribute),
-                    sort: index + 1,
-                };
-            })
+            const items = pullItems(e.target, attribute);
 
             if(data.url) {
                 axios.put(data.url, { items });
