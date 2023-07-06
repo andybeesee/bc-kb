@@ -59,6 +59,7 @@ h2 {
 .full-body-scroll-column {
     @apply overflow-y-scroll;
     /** 65px is the approximate height of the navbar **/
+
     /** TODO: we need a better value for calc **/
     max-height:  calc(100vh - 65px);
 }
@@ -73,6 +74,10 @@ h2 {
 
 .meta-item .icon {
     @apply mr-1.5 h-4 w-4;
+}
+
+.sortable-chosen .sortable-chosen-hide {
+    display: none;
 }
 
 @media(prefers-color-scheme: dark) {
