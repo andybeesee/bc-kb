@@ -15,7 +15,13 @@ export default function(el, { expression }, { evaluate, cleanup }) {
 
     const dragoverHandler = (e) => {
         e.preventDefault();
-        el.classList.add(...options.dragoverClass)
+        // we detect if there are files because we don't want to highlight when sortable happens
+        const hasFiles = Array.from(e.dataTransfer.items).filter(i => i.kind === 'file').length > 0;
+
+        if(hasFiles) {
+            el.classList.add(...options.dragoverClass)
+        }
+
     }
 
     const dragexitHandler = (e) => {
