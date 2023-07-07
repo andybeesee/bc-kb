@@ -15,7 +15,8 @@
         <button
             wire:click="toggleTask({{$task->id}})"
             type="button"
-            class="mr-2 {{ $task->isComplete ? 'hover:bg-green-100 bg-green-300 text-green-800' : 'hover:bg-zinc-200' }}"
+            class="mr-2 {{ $task->isComplete ? 'rounded hover:bg-green-100 bg-green-300 text-green-800' : 'hover:bg-zinc-200' }}"
+            title="{{ $task->isComplete ? 'Completed by '.$task->completedBy->name.' on '.$task->completed_date->format(config('app.date_display')) : 'Click to Mark Complete' }}"
         >
             @if($task->isComplete)
                 <x-icon icon="check-square" class="h-4 w-4" />
@@ -28,11 +29,6 @@
             {{ $task->name }}
         </div>
 
-        @if($task->isComplete)
-            <div class="text-green-600 text-sm ml-3">
-                Completed {{ $task->completed_date->format(config('app.date_display')) }} by {{ $task->completedBy->name }}
-            </div>
-        @endif
 
         <div class="ml-auto space-x-4 flex items-center text-sm">
             @if($task->files_count > 0)
@@ -42,11 +38,18 @@
                 </div>
             @endif
             <div>
-                <livewire:assign-to-selector
-                    wire:key="assing-to-task-{{ $task->id }}-{{ $task->updated_at }}"
-                    :model-id="$task->id"
-                    :assigned-to="$task->assignedTo"
-                />
+
+                @if($task->isComplete)
+                    <div class="text-green-600 dark:text-green-400 text-sm ml-3">
+                        {{ $task->completedBy->name }} {{ $task->completed_date->format(config('app.date_display')) }}
+                    </div>
+                @else
+                    <livewire:assign-to-selector
+                        wire:key="assing-to-task-{{ $task->id }}-{{ $task->updated_at }}"
+                        :model-id="$task->id"
+                        :assigned-to="$task->assignedTo"
+                    />
+                @endif
             </div>
         </div>
     </div>
