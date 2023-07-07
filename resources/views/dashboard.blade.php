@@ -23,7 +23,7 @@
             </div>
 
             @if($currentProjects->count() > 0)
-                <div class="card">
+                <div class="card mb-5">
                     <div class="card-title">
                         Your Current Projects
                         <p class="font-normal text-sm">These are projects you are in charge of moving forward and accountable for. Does not include completed projects, or 'idea' projects</p>
@@ -58,7 +58,7 @@
                     </div>
                     <div class="grid divide-y divide-zinc-300">
                         @foreach($pastDueTasks as $pastDueTask)
-                            <div class="p-2 hover:bg-zinc-50">
+                            <div class="p-2 hover:bg-zinc-50 dark:hover:bg-zinc-900">
                                 <div class="flex items-center">
                                     {{--TODO: We want complete toggle here --}}
                                     {{ $pastDueTask->name }}
@@ -120,7 +120,7 @@
                 </div>
                 <div class="grid divide-y divide-zinc-300">
                     @foreach($incompleteTasks as $incompleteTask)
-                        <div class="p-2 hover:bg-zinc-50">
+                        <div class="p-2 hover:bg-zinc-50 dark:hover:bg-zinc-900">
                             <div class="flex items-center">
                                 {{--TODO: We want complete toggle here --}}
                                 {{ $incompleteTask->name }}

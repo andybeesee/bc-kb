@@ -18,7 +18,7 @@ return new class extends Migration
 
             $table->text('description')->nullable()->default(null);
 
-            $table->string('status')->default('incomplete');
+            $table->string('status')->default('idea');
 
             $table->date('due_date')->nullable()->default(null);
 

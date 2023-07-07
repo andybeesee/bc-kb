@@ -27,12 +27,16 @@ class DatabaseSeeder extends Seeder
 
     protected User $admin;
 
+    protected $statuses;
+
     /**
      * Seed the application's database.
      */
     public function run(): void
     {
         $this->setUpFaker();
+
+        $this->statuses = collect(array_keys(config('statuses')));
 
         if(User::where('email', 'admin@example.com')->count() === 0) {
             \App\Models\User::factory()->create([
@@ -79,7 +83,7 @@ class DatabaseSeeder extends Seeder
                 $team = $this->teams->random();
                 $owner = $team->members->random();
 
-                $project->status = collect(array_keys(config('statuses')))->random();
+                $project->status = $this->statuses->random();
                 $project->team_id = $this->faker->boolean(65) ? $team->id : null;
                 $project->owner_id = $this->faker->boolean() ? $owner->id : null;
                 $project->save();
@@ -87,13 +91,16 @@ class DatabaseSeeder extends Seeder
                 if($this->faker->boolean(70)) {
                     $dueDate = $this->faker->dateTimeBetween('-1 year', '+11 years')->format('Y-m-d');
                     $completeDated = $this->faker->dateTimeBetween('-6 months', '+10 years')->format('Y-m-d');
+                    $isComplete = $this->faker->boolean();
+
                     Task::factory()
                         ->create([
                             'sort' => random_int(1, 50),
                             'project_id' => $project->id,
                             'due_date' => $this->faker->boolean() ? $dueDate : null,
                             'assigned_to' => $this->admin->id,
-                            'completed_date' => $this->faker->boolean() ? $completeDated : null,
+                            'completed_date' =>$isComplete ? $completeDated : null,
+                            'completed_by' => $isComplete ? $this->admin->id : null,
                         ]);
                 }
 
