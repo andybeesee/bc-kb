@@ -4,6 +4,40 @@
 
     <div class="grid grid-cols-2 gap-3">
         <div>
+            @if($pastDueTasks->count() > 0)
+                <div class="card mb-5">
+                    <div class="card-title bg-red-800 text-white">
+                        Past Due Tasks
+                        <p class="text-sm font-normal">Does not include tasks from completed, abandoned or 'idea' projects</p>
+                    </div>
+                    <div class="grid divide-y divide-zinc-300">
+                        @foreach($pastDueTasks as $pastDueTask)
+                            <div class="p-2 hover:bg-zinc-50 dark:hover:bg-zinc-900">
+                                <div class="flex items-center">
+                                    {{--TODO: We want complete toggle here --}}
+                                    <a href="{{ route('projects.show', [$pastDueTask->project_id]) }}#task-{{ $pastDueTask->id }}" class="link">
+                                        {{ $pastDueTask->name }}
+                                    </a>
+
+
+                                    @if($pastDueTask->due_date)
+                                        <span class="ml-3 {{ $pastDueTask->isLate ? 'dark:text-red-400 text-red-700' : '' }}">
+                                            {{ $pastDueTask->due_date->format(config('app.date_display')) }}
+                                        </span>
+                                    @endif
+                                </div>
+                                <div class="text-xs">
+                                    <a class="link" title="Go to project" href="{{ route('projects.show', $pastDueTask->project) }}">
+                                        {{ $pastDueTask->project->name }}
+                                    </a>
+                                </div>
+
+                            </div>
+                        @endforeach
+                    </div>
+                </div><!-- end of past due task list -->
+            @endif
+
             <div class="card mb-5">
                 <div class="card-title">
                     Your Teams
@@ -48,37 +82,6 @@
                         </div>
                     </div>
                 </div><!-- end of current project list -->
-            @endif
-
-            @if($pastDueTasks->count() > 0)
-                <div class="card mb-5">
-                    <div class="card-title bg-red-800 text-white">
-                        Past Due Tasks
-                        <p class="text-sm font-normal">Does not include tasks from completed, abandoned or 'idea' projects</p>
-                    </div>
-                    <div class="grid divide-y divide-zinc-300">
-                        @foreach($pastDueTasks as $pastDueTask)
-                            <div class="p-2 hover:bg-zinc-50 dark:hover:bg-zinc-900">
-                                <div class="flex items-center">
-                                    {{--TODO: We want complete toggle here --}}
-                                    {{ $pastDueTask->name }}
-
-                                    @if($pastDueTask->due_date)
-                                        <span class="ml-3 {{ $pastDueTask->isLate ? 'text-red-700' : '' }}">
-                                            {{ $pastDueTask->due_date->format(config('app.date_display')) }}
-                                        </span>
-                                    @endif
-                                </div>
-                                <div class="text-xs">
-                                    <a class="link" title="Go to project" href="{{ route('projects.show', $pastDueTask->project) }}">
-                                        {{ $pastDueTask->project->name }}
-                                    </a>
-                                </div>
-
-                            </div>
-                        @endforeach
-                    </div>
-                </div><!-- end of past due task list -->
             @endif
         </div><!-- end of column 1 -->
         <div>

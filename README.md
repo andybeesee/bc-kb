@@ -11,63 +11,74 @@ We're going to have
   * project task list has titles in them for sorting (easier than separate board object)
     * mostly for organizational purposes - collapse/expand and whatnot
 
-* Projects
-  * which may have many boards
-  * has a due date
-  * has an owner
-  * has a status
-  * complete/incomplete
-  * has files
-  * has discussion
-* Boards
-  * may contain tasks
-  * has a due date
-  * has a status
-  * has an owner
-  * complete/incomplete
-  * has files
-  * has discussion
+CLEANED UP VERSION
+
+* Team
+  * has many members
+  * has many projects
+* User
+  * belongs to many teams
+  * assigned to many projects
+  * assigned to many tasks
+* Project
+  * has many task groups
+  * has many tasks
+  * has many files ** not implemented
+  * comments/discussion? ** not implemented
 * Task
-  * has an owner
-  * has a due date
-  * has a status
-  * complete/incomplete
-  * has comments ( list of words, not a discussion board)
-* Project Templates
-* Board Templates
+  * belongs to a project
+  * may belong to a task group
+  * may be assigned
+  * may be completed
+  * has many files
+  * due date
+  * status
+  * comments/discussion *** not implemented
+* Task group
+  * belongs to a project
+  * may have many tasks
+  * may be assigned? *** not implemented, do we want this?
+  * files?
+  * comments/discussion?
+* Project Templates ** TODO
+* Board Templates ** TODO
 
 # MVP
 * user dashboard
-  * currently assigned, incomplete tasks
+  * ~~currently assigned tasks~~
+  * ~~incomplete tasks~~
   * links to team dashboards
-  * currently 'owned' projects
+  * ~~late tasks~~
+  * ~~currently 'owned' projects~~
 * Teams
   * ~~CRUD~~
   * Team dashboards
 * Projects
   * CRUD
-    * add team/owner stuff
-  * Start date/due date?
+    * ~~add team/owner stuff~~ in the create/edit form
+    * ~~Start date/due date?~~ in the create/edit form
   * 'Last Update' field
+    * not sure how I want this - but I want it to be easy to see the last progress made and if there are blockers on it
   * Easy status update button
-* Boards
-  * CRUD
-  * Dashboard (boards.index) - all boards with open tasks?
-  * Move boards between projects
-  * Files/comments?
-  * 'last update' field?
+    * this is in the create/edit form - it should be easier though
 * Tasks
   * CRUD
-  * complete/due date/start date
   * Dashboard (tasks.index) - all tasks
-  * move tasks between boards
-  * assign
-  * complete
+  * Change due date inline
+  * ~~move tasks between groups~~
+  * ~~assign~~
+  * ~~complete~~
 * Files?
   * we have upload working on tasks, need to display and allow for download
-  * 
+  * this should be similar to comments/discussion boards
+    * maybe on file we'll do a weird simple thing and just hav eall columns
+      * project_id, task_id, task_group_id, discussion_board_id, comment_id?
+      * this is an annoying thing to do - but it makes the querying a lot easier?
 * Comments?
   * everywhere? just on tasks? 
+  * If we re-frame this as 'discussion boards' I think it is better
+  * Every discussion board can be attached to some things - project/task/task group/team
+    * then visiting the project you can see all boards, and also a note that the discussion is about task 1234
 * Global status options & colors
   * do we weant statuses to filter down through boards and tasks? Or just on projects?
 
@@ -78,11 +89,19 @@ We're going to have
 * Track status changes (across proejct/task/all that jazz)
 * Project/Board create - add from template
 * Board/Tasks - import tasks from a template
+* Tasks
+  * modify complete date
+  * modify who completed a task
+  * add a start date
 
 # MVP.3
 * per project status options
   * pulled from template OR team default
   * colors on status
+* task/group dependencies - can't start until other item is completed
+  * due date is dependent on completion of other item (eg due x days after item 'z' is completed)
+* template relative due date
+  * in template 'x days' after start date on project
 
 # Page design
 
