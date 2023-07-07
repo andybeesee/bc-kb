@@ -19,6 +19,11 @@ class Task extends Model
         return $this->morphMany(File::class, 'attached');
     }
 
+    public function completedBy()
+    {
+        return $this->belongsTo(User::class, 'completed_by');
+    }
+
     public function project()
     {
         return $this->belongsTo(Project::class);

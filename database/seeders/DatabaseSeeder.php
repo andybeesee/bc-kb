@@ -104,7 +104,8 @@ class DatabaseSeeder extends Seeder
                 for($t = 0; $t < random_int(20, 100); $t++) {
                     $dueDate = $this->faker->dateTimeBetween('-1 year', '+11 years')->format('Y-m-d');
                     $completeDated = $this->faker->dateTimeBetween('-6 months', '+10 years')->format('Y-m-d');
-
+                    $completedBy = $this->users->random()->id;
+                    $isComplete = $this->faker->boolean();
                     $groupId = $groups->count() > 0 && $this->faker->boolean(75) ? $groups->random()->id : null;
 
                     Task::factory()
@@ -114,7 +115,8 @@ class DatabaseSeeder extends Seeder
                             'task_group_id' => $groupId,
                             'due_date' => $this->faker->boolean() ? $dueDate : null,
                             'assigned_to' => $this->faker->boolean(40) ? $team->members->random()->id : null,
-                            'completed_date' => $this->faker->boolean() ? $completeDated : null,
+                            'completed_date' => $isComplete ? $completeDated : null,
+                            'completed_by' => $isComplete ? $completedBy : null,
                         ]);
 
                 }

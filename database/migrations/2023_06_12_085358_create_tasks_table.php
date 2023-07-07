@@ -32,11 +32,19 @@ return new class extends Migration
 
             $table->unsignedInteger('sort')->default(0);
 
+            $table->foreignId('assigned_to')
+                ->nullable()
+                ->default(null)
+                ->references('id')
+                ->on('users')
+                ->onUpdate('cascade')
+                ->onDelete('set null');
+
             $table->date('due_date')->nullable()->default(null);
 
             $table->date('completed_date')->nullable()->default(null);
 
-            $table->foreignId('assigned_to')
+            $table->foreignId('completed_by')
                 ->nullable()
                 ->default(null)
                 ->references('id')

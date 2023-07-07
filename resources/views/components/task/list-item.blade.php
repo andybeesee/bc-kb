@@ -24,25 +24,31 @@
             @endif
         </button>
 
-        <span class="cursor-pointer" wire:click="toggleTask({{$task->id}})">
+        <div class="cursor-pointer" wire:click="toggleTask({{$task->id}})" title="Click to toggle complete/incomplete">
             {{ $task->name }}
-        </span>
+        </div>
 
-            <div class="ml-auto space-x-4 flex items-center text-sm">
-                @if($task->files_count > 0)
-                    <div class="flex items-center">
-                        <x-icon icon="paperclip" class="h-5 mr-1  w-5" />
-                        {{ $task->files_count }} File{{ $task->files_count !== 1 ? 's' : '' }}
-                    </div>
-                @endif
-                <div>
-                    <livewire:assign-to-selector
-                        wire:key="assing-to-task-{{ $task->id }}-{{ $task->updated_at }}"
-                        :model-id="$task->id"
-                        :assigned-to="$task->assignedTo"
-                    />
-                </div>
+        @if($task->isComplete)
+            <div class="text-green-600 text-sm ml-3">
+                Completed {{ $task->completed_date->format(config('app.date_display')) }} by {{ $task->completedBy->name }}
             </div>
+        @endif
+
+        <div class="ml-auto space-x-4 flex items-center text-sm">
+            @if($task->files_count > 0)
+                <div class="flex items-center">
+                    <x-icon icon="paperclip" class="h-5 mr-1  w-5" />
+                    {{ $task->files_count }} File{{ $task->files_count !== 1 ? 's' : '' }}
+                </div>
+            @endif
+            <div>
+                <livewire:assign-to-selector
+                    wire:key="assing-to-task-{{ $task->id }}-{{ $task->updated_at }}"
+                    :model-id="$task->id"
+                    :assigned-to="$task->assignedTo"
+                />
+            </div>
+        </div>
     </div>
 
 </div>

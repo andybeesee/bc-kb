@@ -30,12 +30,12 @@ class ProjectTaskList extends Component
 
     public function render()
     {
-        $groups = TaskGroup::with(['tasks' => fn($tq) => $tq->with('assignedTo')->withCount('files')])
+        $groups = TaskGroup::with(['tasks' => fn($tq) => $tq->with(['completedBy', 'assignedTo'])->withCount('files')])
             ->where('project_id', $this->projectId)
             ->orderBy('sort')
             ->get();
 
-        $tasks = Task::with(['assignedTo'])
+        $tasks = Task::with(['completedBy', 'assignedTo'])
             ->withCount('files')
             ->where('project_id', $this->projectId)
             ->whereNull('task_group_id')
@@ -170,9 +170,9 @@ class ProjectTaskList extends Component
         \Log::debug("{$taskId}: ISCOMPEL ".($isComplete ? 'YES' : 'no'));
 
         if($isComplete) {
-            $update = ['completed_date' => null];
+            $update = ['completed_date' => null, 'completed_by' => null];
         } else {
-            $update = ['completed_date' => date('Y-m-d')];
+            $update = ['completed_date' => date('Y-m-d'), 'completed_by' => auth()->user()->id];
         }
 
         \Log::debug("{$taskId}: UPDATING WITH: ", $update);
