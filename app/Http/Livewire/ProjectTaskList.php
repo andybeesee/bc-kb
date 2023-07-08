@@ -26,6 +26,8 @@ class ProjectTaskList extends Component
         'groupSorted' => 'handleGroupSorted',
         // 'sortedUngroupedTasks' => 'handleSortingUngroupedTasks',
         'movedList' => 'handleTaskMove',
+        'setTaskDue' => 'handleSetTaskDue',
+        'removeTaskDue' => 'handleRemoveTaskDue',
     ];
 
     public function render()
@@ -46,6 +48,21 @@ class ProjectTaskList extends Component
             ->with('tasks', $tasks)
             ->with('groups', $groups);
     }
+
+    public function handleSetTaskDue($taskId, $date)
+    {
+        DB::table('tasks')
+            ->where('id', $taskId)
+            ->update(['due_date' => $date]);
+    }
+
+    public function handleRemoveTaskDue($taskId)
+    {
+        DB::table('tasks')
+            ->where('id', $taskId)
+            ->update(['due_date' => null]);
+    }
+
 
     public function handleTaskMove($taskId, $groupId, $items)
     {

@@ -59,8 +59,9 @@ CLEANED UP VERSION
     * ~~Start date/due date?~~ in the create/edit form
   * 'Last Update' field
     * not sure how I want this - but I want it to be easy to see the last progress made and if there are blockers on it
-  * Easy status update button
-    * this is in the create/edit form - it should be easier though
+  * ~~Easy status update button~~
+    * ~~this is in the create/edit form - it should be easier though~~
+    * put on the dashboard, anywhere else?
 * Tasks
   * CRUD
   * Dashboard (tasks.index) - all tasks

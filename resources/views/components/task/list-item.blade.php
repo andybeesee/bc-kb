@@ -29,7 +29,6 @@
             {{ $task->name }}
         </div>
 
-
         <div class="ml-auto space-x-4 flex items-center text-sm">
             @if($task->files_count > 0)
                 <div class="flex items-center">
@@ -37,20 +36,31 @@
                     {{ $task->files_count }} File{{ $task->files_count !== 1 ? 's' : '' }}
                 </div>
             @endif
-            <div>
 
-                @if($task->isComplete)
-                    <div class="text-green-600 dark:text-green-400 text-sm ml-3">
-                        {{ $task->completedBy->name }} {{ $task->completed_date->format(config('app.date_display')) }}
-                    </div>
-                @else
-                    <livewire:assign-to-selector
-                        wire:key="assing-to-task-{{ $task->id }}-{{ $task->updated_at }}"
-                        :model-id="$task->id"
-                        :assigned-to="$task->assignedTo"
-                    />
-                @endif
-            </div>
+            @if($task->isComplete)
+                <div class="text-green-600 dark:text-green-400 text-sm ml-3">
+                    {{ $task->completedBy->name }} {{ $task->completed_date->format(config('app.date_display')) }}
+                </div>
+            @else
+                <x-date-change
+                    class="{{ $task->isLate ? 'text-red-600' : '' }}"
+                    suffix="{{ $task->isLate ? '(Late)' : '' }}"
+                    wire:key="task-{{ $task->id }}-due-date-{{ $task->due_date?->getTimestamp() }}"
+                    title="Due Date"
+                    prefix="Due"
+                    :date="$task->due_date"
+                    :model-id="$task->id"
+                    placeholder="No Due Date"
+                    changeEvent="setTaskDue"
+                    removeEvent="removeTaskDue"
+                />
+                <livewire:assign-to-selector
+                    wire:key="assing-to-task-{{ $task->id }}-{{ $task->updated_at }}"
+                    :model-id="$task->id"
+                    :assigned-to="$task->assignedTo"
+                />
+            @endif
+
         </div>
     </div>
 

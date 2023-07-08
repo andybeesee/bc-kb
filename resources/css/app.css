@@ -6,6 +6,8 @@
 @import "sub-nav.css";
 @import "text.css";
 
+@import "flatpickr/dist/flatpickr.min.css";
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;

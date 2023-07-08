@@ -4,6 +4,8 @@ import { createPopper } from '@popperjs/core';
 import addActiveToLinks from "./utils/add-active-to-links";
 import sortableDirective from './directives/sortable.js';
 import filedropDirective from './directives/filedrop.js';
+import flatpickr from "flatpickr";
+window.flatpickr = flatpickr;
 
 window.createPopper = createPopper;
 
