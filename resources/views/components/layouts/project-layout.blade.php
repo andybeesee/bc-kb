@@ -1,8 +1,5 @@
 @props(['project', 'board' => null])
 <x-app-layout title="Project Detail">
-    <div class="">
-
-    </div>
     <div class="container">
 
         <h1>{{ $project->name }}</h1>
@@ -42,10 +39,10 @@
         <div>
             <div class="mb-5">
                  <div class="sub-nav">
-                    <a class="link" href="{{ route('projects.show', $project) }}" data-exact-active="y">Dashboard</a>
-                    <a class="link" data-exact-active="yes" href="{{ route('projects.boards.index', $project) }}">All Boards</a>
+                    <a class="link" href="{{ route('projects.show', $project) }}" data-exact-active="y">Tasks</a>
                     <a class="link" href="{{ route('projects.edit', $project) }}">Edit</a>
-                    <a class="link" href="{{ route('projects.boards.create', $project) }}">Add a Board</a>
+                    <a class="link" href="#">Files</a>
+                     <a class="link" href="#">Discussion</a>
                 </div>
             </div>
 
