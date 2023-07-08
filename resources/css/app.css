@@ -1,5 +1,4 @@
 @import "list-group.css";
-@import "./status.css";
 @import "badge.css";
 @import "btn.css";
 @import "card.css";
@@ -69,7 +68,7 @@ h2 {
 }
 
 .meta-item {
-    @apply flex items-center;
+    @apply px-2 py-0.5 flex items-center;
 }
 
 .meta-item .icon {

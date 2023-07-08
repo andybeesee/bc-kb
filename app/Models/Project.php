@@ -87,4 +87,9 @@ class Project extends Model
             return $tq->where('assigned_to', $user);
         });
     }
+
+    public function getIsCompleteAttribute()
+    {
+        return !empty($this->completed_date);
+    }
 }

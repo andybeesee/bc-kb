@@ -4,9 +4,9 @@
 
         <h1>{{ $project->name }}</h1>
 
-        <div class="meta">
-            <div class="meta-item">
-                {{ str($project->status)->title() }}
+        <div class="meta mb-4">
+            <div>
+                <livewire:project-status-button :project="$project" />
             </div>
             @if(!empty($project->due_date))
                 <div class="meta-item">

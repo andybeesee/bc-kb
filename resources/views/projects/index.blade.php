@@ -26,7 +26,7 @@
                         <span class="md:ml-3 text-sm" title="Owner">{{ $project->owner->name }}</span>
                     @endif
 
-                    <div class="ml-auto grid grid-cols-3 gap-4">
+                    <div class="ml-auto grid grid-cols-3 justify-end text-center gap-4">
                         <div>
                             @if($project->past_due_tasks_count > 0)
                                 <div class="badge text-center badge-danger" title="Incomplete Tasks">
@@ -41,9 +41,8 @@
                                 </div>
                             @endif
                         </div>
-                        <div class="status-badge text-center {{ $project->status }}" title="Status">
-                            {{ config('statuses.'.$project->status) }}
-                        </div>
+
+                            <livewire:project-status-button :project="$project" />
                     </div>
                 </div>
             @endforeach

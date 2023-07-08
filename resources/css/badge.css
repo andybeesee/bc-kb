@@ -1,5 +1,5 @@
 .badge {
-    @apply text-xs font-semibold px-2 py-0.5 rounded;
+    @apply font-semibold px-2 py-0.5 rounded;
 }
 
 .badge.badge-primary {
