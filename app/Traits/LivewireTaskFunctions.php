@@ -70,6 +70,14 @@ trait LivewireTaskFunctions
             ->update(['completed_by' => $userId, 'updated_at' => now()]);
     }
 
+    public function updateCompletedDate($taskId, $date)
+    {
+        \Log::debug("updateCompletedDate...", [$taskId, $date]);
+        // TODO: track activitiy, send notifications and whatever else
+        DB::table('tasks')
+            ->where('id', $taskId)
+            ->update(['completed_date' => $date, 'updated_at' => now()]);
+    }
 
     public function toggleTaskComplete($taskId)
     {

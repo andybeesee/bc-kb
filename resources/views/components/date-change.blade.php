@@ -7,6 +7,7 @@
     'suffix' => '',
     'changeEvent' => 'updateDate',
     'removeEvent' => 'removeDate',
+    'removable' => true,
 ])
 
 <div
@@ -55,7 +56,7 @@
     </button>
 
     <div  class="absolute shadow bg-white z-[10]" x-show="calendarIsOpen" style="display: none" @click.outside="closeCalendar">
-        @if(!empty($date))
+        @if(!empty($date) && $removable)
             <button @click="removeDate" type="button" class="w-full bg-red-100 hover:bg-red-200 py-0.5 rounded-md mb-0.5">Remove Date</button>
         @endif
         <input type="text" x-ref="input" placeholder="text" class="w-[100px] border" style="display: none"/>

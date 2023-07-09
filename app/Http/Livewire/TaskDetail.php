@@ -24,7 +24,8 @@ class TaskDetail extends Component
         'removeDueDate' => 'handleRemoveTaskDue',
         'assigned' => 'handleAssignment',
         'removeAssigned' => 'removeAssignment',
-        'changeCompleted' => 'updateCompletedBy'
+        'changeCompleted' => 'updateCompletedBy',
+        'completeDateChange' => 'updateCompletedDate',
     ];
 
 

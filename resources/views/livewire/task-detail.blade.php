@@ -16,7 +16,7 @@
             </div>
         @endif
     </div>
-    <div class="grid {{ $modalMode ? '' : 'grid-cols-2 gap-4'}}">
+    <div class="grid {{ $modalMode ? 'gap-4' : 'grid-cols-2 gap-4'}}">
         @if(!$modalMode || $tab === 'detail')
             <div class="card">
                 <div class="card-title">
@@ -27,13 +27,16 @@
                         <div class="px-2 py-1 grid grid-cols-4">
                             <dt>Assigned</dt>
                             <dd class="col-span-3">
-                                <livewire:user-selector
-                                    wire:key="task-detail-{{ $task->id }}-assigned-{{ $task->assigned_to }}"
-                                    :user="$task->assignedTo"
-                                    :model-id="$task->id"
-                                    change-event="assigned"
-                                    remove-event="removeAssigned"
-                                />
+                                <div class="w-1/2">
+                                    <livewire:user-selector
+                                        wire:key="task-detail-{{ $task->id }}-assigned-{{ $task->assigned_to }}"
+                                        :user="$task->assignedTo"
+                                        :model-id="$task->id"
+                                        change-event="assigned"
+                                        remove-event="removeAssigned"
+                                    />
+                                </div>
+
                             </dd>
                         </div>
                         <div class="px-2 py-1 grid grid-cols-4">
@@ -67,7 +70,16 @@
                             <div class="px-2 py-1 grid grid-cols-4 bg-emerald-50 dark:bg-emerald-800">
                                 <dt>Date Completed</dt>
                                 <dd class="col-span-3">
-                                    <x-date-change :model-id="$task->id" :date="$task->completed_date" prefix="Due" title="Due Date" placeholder="Not Set" />
+                                    <x-date-change
+                                        wire:key="task-detail-{{ $task->id }}-completed-{{ $task->completed_date?->getTimestamp() }}"
+                                        :model-id="$task->id"
+                                        :date="$task->completed_date"
+                                        prefix="Due"
+                                        title="Due Date"
+                                        placeholder="Not Set"
+                                        change-event="completeDateChange"
+                                        :removable="false"
+                                    />
                                 </dd>
                             </div>
                             <div class="px-2 py-1 grid grid-cols-4">
