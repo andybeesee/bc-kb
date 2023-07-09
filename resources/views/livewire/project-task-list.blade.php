@@ -4,7 +4,7 @@
         @if(!empty($showDetailTask))
             <x-modal max-width="big" :show="true" name="task-detail-window">
                 <div class="p-4">
-                    <livewire:task-detail :task-id="$showDetailTask" :starting-tab="$startingTab" />
+                    <livewire:task-detail :modal-mode="true" :task-id="$showDetailTask" :starting-tab="$startingTab" />
                 </div>
             </x-modal>
         @endif
@@ -60,7 +60,12 @@
                         {{ $group->name }}
                     </div>
 
-                    <div class="sortable-chosen-hide" data-group-id="{{ $group->id }}" class="card-body divide-y divide-zinc-300" x-sortable="{ options: { handle: '.handle',  group: { name: 'tasks', put: 'tasks', pull: 'tasks' } } }">
+                    <div
+                        class="sortable-chosen-hide"
+                        data-group-id="{{ $group->id }}"
+                        class="card-body divide-y divide-zinc-300"
+                        x-sortable="{ options: { handle: '.handle',  group: { name: 'tasks', put: 'tasks', pull: 'tasks' } } }"
+                    >
                         @foreach($group->tasks as $task)
                             <x-task.list-item class="py-2 px-1" :task="$task" :sortable="true" />
                         @endforeach

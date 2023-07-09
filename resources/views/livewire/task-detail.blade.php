@@ -85,7 +85,7 @@
                             <div class="px-2 py-1 grid grid-cols-4">
                                 <dt>Set Incomplete</dt>
                                 <dd class="col-span-3">
-                                    <button class="btn btn-sm btn-danrt" type="button" wire:click="toggleTaskComplete({{ $task->id }})">
+                                    <button class="btn btn-sm btn-danger" type="button" wire:click="toggleTaskComplete({{ $task->id }})">
                                         Mark Incomplete
                                     </button>
                                 </dd>
