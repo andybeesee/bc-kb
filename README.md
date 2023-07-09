@@ -65,7 +65,7 @@ CLEANED UP VERSION
 * Tasks
   * CRUD
   * Dashboard (tasks.index) - all tasks
-  * Change due date inline
+  * ~~Change due date inline~~
   * ~~move tasks between groups~~
   * ~~assign~~
   * ~~complete~~
