@@ -5,20 +5,27 @@ namespace App\Http\Livewire;
 use App\Models\User;
 use Livewire\Component;
 
-class AssignToSelector extends Component
+class UserSelector extends Component
 {
     public int $modelId;
 
+    public string $changeEvent = 'userSelected';
+
+    public string $removeEvent = 'userRemoved';
+
+    public bool $disableRemove = false;
+
     public int|null $teamId;
 
-    public User|null $assignedTo = null;
+    public User|null $user = null;
 
     public bool $open = false;
 
     public function render()
     {
-        $assignedToCurrentUser = $this->assignedTo?->id === auth()->user()->id;
-        return view('livewire.assign-to-selector')
+        $assignedToCurrentUser = $this->user?->id === auth()->user()->id;
+
+        return view('livewire.user-selector')
             ->with('assignedToCurrentUser', $assignedToCurrentUser);
     }
 
@@ -33,7 +40,7 @@ class AssignToSelector extends Component
         if(!empty($this->teamId)) {
             $q = $q->whereHas('team', fn($tq) => $tq->where('teams.id', $this->teamId));
 
-            if(!empty($this->assignedTo)) {
+            if(!empty($this->user)) {
                 $q = $q->orWhere('users.id', '=', $this->assignedTo->id);
             }
         }

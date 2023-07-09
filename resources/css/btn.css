@@ -6,6 +6,10 @@
     @apply text-sm px-1.5 py-0.5;
 }
 
+.btn-xs {
+    @apply text-xs px-1 py-0.5;
+}
+
 .btn.icon {
     @apply inline-flex items-center;
 }
@@ -46,6 +50,16 @@
     @apply bg-red-800;
 }
 
+
+.btn.btn-success {
+    @apply bg-emerald-600 text-white;
+}
+
+.btn.btn-danger:hover {
+    @apply bg-emerald-800;
+}
+
+
 @media(prefers-color-scheme: dark) {
     .btn {
         @apply bg-zinc-700;
@@ -77,6 +91,14 @@
 
     .btn.btn-danger:hover {
         @apply bg-red-900;
+    }
+
+    .btn.btn-success {
+        @apply bg-emerald-700 text-white;
+    }
+
+    .btn.btn-success:hover {
+        @apply bg-emerald-900;
     }
 
 }

@@ -1,4 +1,15 @@
 <div x-data="{ addingGroup: false }">
+    {{-- This div has to be outside the if/else --}}
+    <div @modal-close="$wire.closeDetail()">
+        @if(!empty($showDetailTask))
+            <x-modal max-width="big" :show="true" name="task-detail-window">
+                <div class="p-4">
+                    <livewire:task-detail :task-id="$showDetailTask" :starting-tab="$startingTab" />
+                </div>
+            </x-modal>
+        @endif
+    </div>
+
     {{--TODO: we need to do groupings on here... and update accordingly when livewire event happens... ick --}}
     <div class="card">
         <div class="card-title">

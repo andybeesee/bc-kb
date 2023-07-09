@@ -16,6 +16,11 @@ Breadcrumbs::for('dashboard', function (BreadcrumbTrail $trail) {
     $trail->push('Dashboard', route('dashboard'));
 });
 
+Breadcrumbs::for('tasks.show', function(BreadcrumbTrail $trail, Task $task) {
+    $trail->parent('projects.show', $task->project);
+   $trail->push('Task Detail', route('tasks.show', $task));
+});
+
 Breadcrumbs::for('projects.index', function (BreadcrumbTrail $trail) {
     $trail->push('Projects', route('projects.index'));
 });
@@ -27,7 +32,8 @@ Breadcrumbs::for('projects.create', function (BreadcrumbTrail $trail) {
 
 Breadcrumbs::for('projects.show', function (BreadcrumbTrail $trail, Project $project) {
     $trail->parent('projects.index');
-    $trail->push('Project Dashboard', route('projects.show', $project));
+    $name = str_contains(url()->current(), '/projects/'.$project->id) ? 'Project Dashboard' : $project->name;
+    $trail->push($name, route('projects.show', $project));
 });
 
 Breadcrumbs::for('projects.edit', function (BreadcrumbTrail $trail, Project $project) {

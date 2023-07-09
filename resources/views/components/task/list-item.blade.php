@@ -13,7 +13,7 @@
             </div>
         @endif
         <button
-            wire:click="toggleTask({{$task->id}})"
+            wire:click="toggleTaskComplete({{$task->id}})"
             type="button"
             class="mr-2 {{ $task->isComplete ? 'rounded hover:bg-green-100 bg-green-300 text-green-800' : 'hover:bg-zinc-200' }}"
             title="{{ $task->isComplete ? 'Completed by '.$task->completedBy->name.' on '.$task->completed_date->format(config('app.date_display')) : 'Click to Mark Complete' }}"
@@ -25,16 +25,31 @@
             @endif
         </button>
 
-        <div class="cursor-pointer" wire:click="toggleTask({{$task->id}})" title="Click to toggle complete/incomplete">
+        <div class="cursor-pointer" wire:click="toggleTaskComplete({{$task->id}})" title="Click to toggle complete/incomplete">
             {{ $task->name }}
         </div>
 
+        <a
+            href="{{ route('tasks.show', [$task]) }}" w
+            wire:click.prevent="openDetail({{ $task->id }})"
+            class="btn btn-white ml-4 btn-xs"
+            title="Click to view task detail in a popup"
+        >
+            View Detail
+        </a>
+
         <div class="ml-auto space-x-4 flex items-center text-sm">
             @if($task->files_count > 0)
-                <div class="flex items-center">
+                <a
+                    href="{{ route('tasks.show', [$task, 'tab' => 'files']) }}"
+                    title="Click to view files in task detail"
+                    type="button"
+                    class="flex items-center hover:bg-zinc-100 rounded-md px-1 py-0.5"
+                    wire:click.prevent="openDetail({{ $task->id }}, 'files')"
+                >
                     <x-icon icon="paperclip" class="h-5 mr-1  w-5" />
                     {{ $task->files_count }} File{{ $task->files_count !== 1 ? 's' : '' }}
-                </div>
+                </a>
             @endif
 
             @if($task->isComplete)
@@ -54,10 +69,12 @@
                     changeEvent="setTaskDue"
                     removeEvent="removeTaskDue"
                 />
-                <livewire:assign-to-selector
-                    wire:key="assing-to-task-{{ $task->id }}-{{ $task->updated_at }}"
+                <livewire:user-selector
+                    wire:key="assign-to-task-{{ $task->id }}-{{ $task->updated_at }}"
                     :model-id="$task->id"
-                    :assigned-to="$task->assignedTo"
+                    change-event="assigned"
+                    remove-event="removeAssigned"
+                    :user="$task->assignedTo"
                 />
             @endif
 

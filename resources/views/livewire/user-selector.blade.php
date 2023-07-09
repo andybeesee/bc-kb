@@ -7,13 +7,13 @@
     >
         <x-slot name="trigger">
             <button
-                title="Change who this is assigned to"
+                title="Change user"
                 class="flex items-center hover:bg-zinc-100 dark:hover:bg-zinc-600 rounded-md px-1 py-0.5"
                 type="button"
             >
-                @if(!empty($assignedTo))
-                    <span title="{{ $assignedTo->name }}" class="truncate">
-                        {{ $assignedTo->name }}
+                @if(!empty($user))
+                    <span title="{{ $user->name }}" class="truncate">
+                        {{ $user->name }}
                     </span>
 
                     {{-- TODO: some better wayt o show it is assigned to the current user --}}
@@ -34,21 +34,21 @@
                 style="display: none;"
             >
                 <div class="grid divide-y divide-zinc-400">
-                    @if(!empty($assignedTo))
+                    @if(!empty($user) &&! $disableRemove)
                         <button
-                            wire:click="$emit('removeAssigned', {{$modelId}})"
+                            wire:click="$emit('{{ $removeEvent }}', {{$modelId}})"
                             class="p-1 flex items-center text-left text-sm bg-red-50 dark:bg-red-800 dark:hover:bg-red-600 hover:bg-red-100"
                             type="button"
                         >
-                            Remove Assignment
+                            Remove User
 
                             <x-icon icon="x-circle" class="ml-auto h-4 w-4" />
                         </button>
                     @endif
                     @foreach($this->userOptions as $userOpt)
-                        @php $assignedToThisUser =  $assignedTo?->id === $userOpt->id; @endphp
+                        @php $assignedToThisUser =  $user?->id === $userOpt->id; @endphp
                         <button
-                            wire:click="$emit('assigned', {{$modelId}}, {{$userOpt->id}})"
+                            wire:click="$emit('{{ $changeEvent }}', {{$modelId}}, {{$userOpt->id}})"
                             class="{{ $assignedToThisUser ? 'dark:bg-indigo-700 bg-indigo-100' : '' }} p-1 flex items-center text-left text-sm hover:bg-zinc-100 dark:hover:bg-zinc-600"
                             type="button"
                         >

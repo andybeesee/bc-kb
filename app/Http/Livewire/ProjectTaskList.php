@@ -5,6 +5,7 @@ namespace App\Http\Livewire;
 use App\Models\File;
 use App\Models\Task;
 use App\Models\TaskGroup;
+use App\Traits\LivewireTaskFunctions;
 use Illuminate\Support\Facades\DB;
 use Livewire\Component;
 use Livewire\TemporaryUploadedFile;
@@ -12,22 +13,27 @@ use Livewire\WithFileUploads;
 
 class ProjectTaskList extends Component
 {
-    use WithFileUploads;
+    use WithFileUploads, LivewireTaskFunctions;
 
     public int $projectId;
 
     public $files;
 
+    public null|int $showDetailTask = null;
+
+    public null|string $startingTab = null;
+
     protected $listeners = [
+        // handled by TaskFunctionsTrait
         'assigned' => 'handleAssignment',
         'removeAssigned' => 'removeAssignment',
-        'saveFiles' => 'storeFiles',
-        'sorted' => 'handleSort',
-        'groupSorted' => 'handleGroupSorted',
-        // 'sortedUngroupedTasks' => 'handleSortingUngroupedTasks',
-        'movedList' => 'handleTaskMove',
         'setTaskDue' => 'handleSetTaskDue',
         'removeTaskDue' => 'handleRemoveTaskDue',
+        'saveFiles' => 'storeFiles',
+        // handled here
+        'sorted' => 'handleSort',
+        'groupSorted' => 'handleGroupSorted',
+        'movedList' => 'handleTaskMove',
     ];
 
     public function render()
@@ -49,18 +55,15 @@ class ProjectTaskList extends Component
             ->with('groups', $groups);
     }
 
-    public function handleSetTaskDue($taskId, $date)
+    public function openDetail($taskId, $tab = null)
     {
-        DB::table('tasks')
-            ->where('id', $taskId)
-            ->update(['due_date' => $date]);
+        $this->showDetailTask = $taskId;
+        $this->startingTab = $tab;
     }
 
-    public function handleRemoveTaskDue($taskId)
+    public function closeDetail()
     {
-        DB::table('tasks')
-            ->where('id', $taskId)
-            ->update(['due_date' => null]);
+        $this->showDetailTask = null;
     }
 
 
@@ -137,66 +140,5 @@ class ProjectTaskList extends Component
         DB::table('tasks')
             ->where('id', $id)
             ->delete();
-    }
-
-    public function storeFiles($taskId)
-    {
-        \Log::debug("WE DID IT ".$taskId, [$this->files]);
-
-        /** @var TemporaryUploadedFile $tempFile */
-        foreach($this->files as $tempFile) {
-            $path = 'tasks/'.$taskId.'/'.$tempFile->getFilename();
-            $tempFile->store($path);
-            $file = new File();
-            $file->filename = $tempFile->getClientOriginalName();
-            $file->location = $path;
-            $file->attached_type = 'task';
-            $file->attached_id = $taskId;
-            $file->save();
-        }
-
-        $this->files = [];
-    }
-
-    public function handleAssignment($taskId, $newOwner)
-    {
-        \Log::debug("handling...", [$taskId, $newOwner]);
-        // TODO: track activitiy, send notifications and whatever else
-        DB::table('tasks')
-            ->where('id', $taskId)
-            ->update(['assigned_to' => $newOwner, 'updated_at' => now()]);
-    }
-
-    public function removeAssignment($taskId)
-    {
-        \Log::debug("handling removal...", [$taskId]);
-        // TODO: track activitiy, send notifications and whatever else
-        DB::table('tasks')
-            ->where('id', $taskId)
-            ->update(['assigned_to' => null, 'updated_at' => now()]);
-    }
-
-
-    public function toggleTask($taskId)
-    {
-        $isComplete = DB::table('tasks')
-                ->where('id', $taskId)
-                ->whereNull('completed_date')
-                ->count() === 0;
-
-        \Log::debug("{$taskId}: ISCOMPEL ".($isComplete ? 'YES' : 'no'));
-
-        if($isComplete) {
-            $update = ['completed_date' => null, 'completed_by' => null];
-        } else {
-            $update = ['completed_date' => date('Y-m-d'), 'completed_by' => auth()->user()->id];
-        }
-
-        \Log::debug("{$taskId}: UPDATING WITH: ", $update);
-        DB::table('tasks')
-            ->where('id', $taskId)
-            ->update($update);
-
-        // TODO: Trigger notifications and whatever else
     }
 }
