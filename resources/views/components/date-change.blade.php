@@ -10,6 +10,7 @@
     'removable' => true,
 ])
 
+{{-- TODO: Need a better dat epciker with Dark Mode Support --}}
 <div
     x-data="{
     calendarIsOpen: false,
@@ -57,7 +58,7 @@
 
     <div  class="absolute shadow bg-white z-[10]" x-show="calendarIsOpen" style="display: none" @click.outside="closeCalendar">
         @if(!empty($date) && $removable)
-            <button @click="removeDate" type="button" class="w-full bg-red-100 hover:bg-red-200 py-0.5 rounded-md mb-0.5">Remove Date</button>
+            <button @click="removeDate" type="button" class="w-full bg-red-100 hover:bg-red-200 dark:bg-red-700 dark:hover:bg-red-800 py-0.5 rounded-md mb-0.5">Remove Date</button>
         @endif
         <input type="text" x-ref="input" placeholder="text" class="w-[100px] border" style="display: none"/>
     </div>
