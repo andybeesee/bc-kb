@@ -1,0 +1,44 @@
+<?php
+
+namespace App\Http\Livewire;
+
+use App\Models\File;
+use Illuminate\Support\Str;
+use Livewire\Component;
+use Livewire\TemporaryUploadedFile;
+use Livewire\WithFileUploads;
+
+class AttachedFileList extends Component
+{
+    use WithFileUploads;
+
+    public string $attachedType;
+
+    public int $attachedId;
+
+    public $files;
+
+    public $listeners = [
+        'fileListAttached' => 'uploadFiles',
+    ];
+
+    public function render()
+    {
+        $attachedFiles = File::orderBy('filename')
+            ->where('attached_type', $this->attachedType)
+            ->where('attached_id', $this->attachedId)
+            ->get();
+
+        return view('livewire.attached-file-list')->with('attachedFiles', $attachedFiles);
+    }
+
+    public function uploadFiles()
+    {
+        \Log::debug("Uploading", $this->files);
+
+        File::attachFiles($this->files, $this->attachedType, $this->attachedId);
+
+        $this->files = [];
+
+    }
+}

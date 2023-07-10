@@ -23,22 +23,11 @@ trait LivewireTaskFunctions
             ->update(['due_date' => null, 'updated_at' => now()]);
     }
 
-
     public function storeFiles($taskId)
     {
         \Log::debug("WE DID IT ".$taskId, [$this->files]);
 
-        /** @var TemporaryUploadedFile $tempFile */
-        foreach($this->files as $tempFile) {
-            $path = 'tasks/'.$taskId.'/'.$tempFile->getFilename();
-            $tempFile->store($path);
-            $file = new File();
-            $file->filename = $tempFile->getClientOriginalName();
-            $file->location = $path;
-            $file->attached_type = 'task';
-            $file->attached_id = $taskId;
-            $file->save();
-        }
+        File::attachFiles($this->files, 'task', $taskId);
 
         $this->files = [];
     }

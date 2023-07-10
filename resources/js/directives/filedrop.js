@@ -1,15 +1,26 @@
 import axios from 'axios';
 
+// put on an element like x-filedrop="{}
+// pass data to the livewire component by specififcying an array of params like  x-filedrop="{ eventParams: [{{ $task->id }}] }"
+// all options...
+/*
+    {
+        eventParams: [],
+        dragoverClass: ['bg-indigo-100', 'dark:bg-indigo-700'],
+        eventName: 'saveFiles',
+    }
+ */
+
 // TODO: We need upload progress, indiciators, cancel buttons, all kinds of stuff
 export default function(el, { expression }, { evaluate, cleanup }) {
 
     const baseOptions = {
+        eventName: 'saveFiles',
         dragoverClass: ['bg-indigo-100', 'dark:bg-indigo-700'],
         eventParams: [],
     }
 
     const livewireComponent = Livewire.find([el.closest("[wire\\:id]").getAttribute('wire:id')]);
-
     const givenOptions = evaluate(expression) ?? {};
     const options = Object.assign(baseOptions, givenOptions);
 
@@ -21,7 +32,6 @@ export default function(el, { expression }, { evaluate, cleanup }) {
         if(hasFiles) {
             el.classList.add(...options.dragoverClass)
         }
-
     }
 
     const dragexitHandler = (e) => {
@@ -39,8 +49,8 @@ export default function(el, { expression }, { evaluate, cleanup }) {
         el.classList.remove(...options.dragoverClass);
         // console.log('cakked dropHandler', e, e.dataTransfer.files);
         livewireComponent.uploadMultiple('files', e.dataTransfer.files, (succ) => {
-            console.log("usccess", succ, ...options.eventParams)
-            Livewire.emit('saveFiles', ...options.eventParams);
+            console.log("usccess", succ, options.eventName, ...options.eventParams)
+            Livewire.emit(options.eventName, ...options.eventParams);
         }, (err) => {
             console.log('error', err);
         }, (evt) => {

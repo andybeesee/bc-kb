@@ -26,8 +26,8 @@ class TaskDetail extends Component
         'removeAssigned' => 'removeAssignment',
         'changeCompleted' => 'updateCompletedBy',
         'completeDateChange' => 'updateCompletedDate',
+        'filesAttached' => 'handleFilesAttached',
     ];
-
 
     public function mount()
     {
