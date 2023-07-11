@@ -20,6 +20,8 @@ return new class extends Migration
 
             $table->morphs('attached');
 
+            $table->json('old_versions');
+
             $table->timestamps();
         });
     }

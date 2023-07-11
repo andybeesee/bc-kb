@@ -14,8 +14,7 @@
         type="{{ $type }}"
         name="{{ $name }}"
         value="{{ $value }}"
-        class="form-control {{ $hasError ? 'error' : '' }}"
-        {{ $attributes->merge() }}
+        {{ $attributes->merge(['class' => "form-control ".($hasError ? 'error' : '')]) }}
     />
 
     @if(!empty($help))

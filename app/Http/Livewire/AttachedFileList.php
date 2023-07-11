@@ -18,8 +18,12 @@ class AttachedFileList extends Component
 
     public $files;
 
+    public array $editing = [];
+
     public $listeners = [
         'fileListAttached' => 'uploadFiles',
+        'fileSaved' => 'stopEditing',
+        'fileCancelled' => 'stopEditing',
     ];
 
     public function render()
@@ -39,6 +43,24 @@ class AttachedFileList extends Component
         File::attachFiles($this->files, $this->attachedType, $this->attachedId);
 
         $this->files = [];
+    }
 
+    public function startEditing($id)
+    {
+        $this->editing = [$id, ...$this->editing];;
+    }
+
+    public function stopEditing($id)
+    {
+        $editing = [];
+        foreach($this->editing as $editingId) {
+            if($id === $editingId) {
+                continue;
+            }
+
+            $editing[] = $id;
+        }
+
+        $this->editing = $editing;;
     }
 }
