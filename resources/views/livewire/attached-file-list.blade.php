@@ -3,7 +3,16 @@
         <div class="card-title">
             Files
         </div>
-        <div class="card-body">
+        <div
+            class="card-body"
+            x-data="{
+                deleteFile(fileId) {
+                    if(confirm('really delete it?')) {
+                        $wire.deleteFile(fileId);
+                    }
+                }
+            }"
+        >
             <div class="grid divide-y divide-zinc-300">
                 @if($attachedFiles->count() === 0)
                     <div class="py-3">
@@ -25,10 +34,10 @@
                                 {{ $file->filename }}
                             </a>
 
-                            <button wire:click="startEditing({{ $file->id }})" class="btn btn-white btn-xs ml-auto">
+                            <button type="button" wire:click="startEditing({{ $file->id }})" class="btn btn-white btn-xs ml-auto">
                                 Edit
                             </button>
-                            <button class="btn btn-danger btn-xs ml-3">
+                            <button type="button" @click="deleteFile({{ $file->id }})" class="btn btn-danger btn-xs ml-3">
                                 Delete
                             </button>
                         </div>

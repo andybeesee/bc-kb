@@ -63,4 +63,10 @@ class AttachedFileList extends Component
 
         $this->editing = $editing;;
     }
+
+    public function deleteFile($id)
+    {
+        $file = File::findOrFail($id);
+        $file->delete();
+    }
 }

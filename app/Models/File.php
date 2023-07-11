@@ -17,17 +17,34 @@ class File extends Model
         'old_versions' => 'array',
     ];
 
+    protected static function boot()
+    {
+        parent::boot();
+
+        // delete old versions and current version from disk on delete
+        static::deleting(function($model) {
+            if(count($model->old_versions) > 0) {
+                foreach($model->old_versions as $ov) {
+                    Storage::delete($ov['location']);
+                }
+            }
+
+            Storage::delete($model->location);
+        });
+    }
+
     public static function attachFiles($tempFiles, $toType, $toId)
     {
         $fileIds = [];
 
         /** @var TemporaryUploadedFile $tempFile */
         foreach($tempFiles as $tempFile) {
-            $path = Str::plural($toType).'/'.$toId.'/'.$tempFile->getFilename();
-            $tempFile->store($path);
+            $path = Str::plural($toType).'/'.$toId;
+            $finalPath = $tempFile->store($path);
+
             $file = new File();
             $file->filename = $tempFile->getClientOriginalName();
-            $file->location = $path;
+            $file->location = $finalPath;
             $file->attached_type = $toType;
             $file->attached_id = $toId;
             $file->old_versions = [];
@@ -45,9 +62,9 @@ class File extends Model
     {
         $oldLocation = $this->location;
 
-        $path = Str::plural($this->attached_type).'/'.$this->attached_id.'/'.$tempFile->getFilename();
+        $path = Str::plural($this->attached_type).'/'.$this->attached_id;
 
-        $tempFile->store($path);
+        $finalPath = $tempFile->store($path);
 
         $currentExtension = pathinfo($this->filename, PATHINFO_EXTENSION);
         $newExtension = pathinfo($tempFile->getFilename(), PATHINFO_EXTENSION);
@@ -67,7 +84,7 @@ class File extends Model
 
         $this->old_versions = $ovs;
 
-        $this->location = $path;
+        $this->location = $finalPath;
         $this->save();
     }
 }
