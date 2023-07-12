@@ -20,31 +20,23 @@
                     </div>
                 @endif
                 @foreach($attachedFiles as $file)
-                    @if(in_array($file->id, $editing))
-                        <div class="py-2">
-                            <livewire:attached-file-edit-form :file="$file" />
-                        </div>
-                    @else
-                        <div class="p-2 flex items-center">
-                            <a
-                                href="{{ route('files.download', $file->id) }}"
-                                class="link"
-                                target="_blank"
-                            >
-                                {{ $file->filename }}
-                            </a>
-
-                            <button type="button" wire:click="startEditing({{ $file->id }})" class="btn btn-white btn-xs ml-auto">
-                                Edit
-                            </button>
-                            <button type="button" @click="deleteFile({{ $file->id }})" class="btn btn-danger btn-xs ml-3">
-                                Delete
-                            </button>
-                        </div>
-                    @endif
-
+                    <livewire:attached-file-list-item :file="$file" wire:key="{{$file->id}}-{{ $file->updated_at->getTimestamp() }}"/>
                 @endforeach
             </div>
         </div>
     </div>
+
+    @if(!is_null($relatedFiles))
+        <div class="card mt-4">
+            <div class="card-title">Related Files</div>
+            <div class="card-body">
+                <p>These are files attached to related items</p>
+                <div class="grid divide-y divide-zinc-300">
+                    @foreach($relatedFiles as $relatedFile)
+                        <livewire:attached-file-list-item :file="$relatedFile" wire:key="{{$relatedFile->id}}-{{ $relatedFile->updated_at->getTimestamp() }}"/>
+                    @endforeach
+                </div>
+            </div>
+        </div>
+    @endif
 </div>

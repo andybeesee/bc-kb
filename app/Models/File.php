@@ -33,6 +33,11 @@ class File extends Model
         });
     }
 
+    public function attached()
+    {
+        return $this->morphTo('attached');
+    }
+
     public static function attachFiles($tempFiles, $toType, $toId)
     {
         $fileIds = [];

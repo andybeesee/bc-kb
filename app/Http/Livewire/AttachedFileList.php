@@ -22,8 +22,8 @@ class AttachedFileList extends Component
 
     public $listeners = [
         'fileListAttached' => 'uploadFiles',
-        'fileSaved' => 'stopEditing',
-        'fileCancelled' => 'stopEditing',
+        'fileSaved' => 'render',
+        'fileCancelled' => 'render',
     ];
 
     public function render()
@@ -33,7 +33,20 @@ class AttachedFileList extends Component
             ->where('attached_id', $this->attachedId)
             ->get();
 
-        return view('livewire.attached-file-list')->with('attachedFiles', $attachedFiles);
+        $relatedFiles = null;
+        if($this->attachedType === 'project') {
+            $relatedFiles = File::with('attached')->orderBy('filename')
+                ->where('attached_type', 'task')
+                ->whereIn('attached_id', function($iq) {
+                    return $iq->select('tasks.id')
+                        ->from('tasks')
+                        ->where('tasks.project_id', $this->attachedId);
+                })->get();
+        }
+
+        return view('livewire.attached-file-list')
+            ->with('attachedFiles', $attachedFiles)
+            ->with('relatedFiles', $relatedFiles);
     }
 
     public function uploadFiles()
