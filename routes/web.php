@@ -33,6 +33,9 @@ Route::middleware('auth')->group(function () {
 
     Route::resource('projects', \App\Http\Controllers\ProjectController::class);
     Route::put('/projects/{project}/boards/sort', \App\Http\Controllers\ProjectBoardSortController::class)->name('projects.boards.sort');
+    Route::get('/projects/{project}/discussions', \App\Http\Controllers\ProjectDiscussionController::class)->name('projects.discussions.index');
+    Route::get('/projects/{project}/files', \App\Http\Controllers\ProjectFileController::class)->name('projects.files.index');
+
 
     Route::resource('projects.boards', \App\Http\Controllers\ProjectBoardController::class);
     Route::resource('projects.boards.tasks', \App\Http\Controllers\ProjectBoardTaskController::class);

@@ -33,7 +33,11 @@
                 <p>These are files attached to related items</p>
                 <div class="grid divide-y divide-zinc-300">
                     @foreach($relatedFiles as $relatedFile)
-                        <livewire:attached-file-list-item :file="$relatedFile" wire:key="{{$relatedFile->id}}-{{ $relatedFile->updated_at->getTimestamp() }}"/>
+                        <livewire:attached-file-list-item
+                            :file="$relatedFile"
+                            :show-related="true"
+                            wire:key="{{$relatedFile->id}}-{{ $relatedFile->updated_at->getTimestamp() }}"
+                        />
                     @endforeach
                 </div>
             </div>

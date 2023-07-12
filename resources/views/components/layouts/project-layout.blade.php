@@ -41,8 +41,8 @@
                  <div class="sub-nav">
                     <a class="link" href="{{ route('projects.show', $project) }}" data-exact-active="y">Tasks</a>
                     <a class="link" href="{{ route('projects.edit', $project) }}">Edit</a>
-                    <a class="link" href="#">Files</a>
-                     <a class="link" href="#">Discussion</a>
+                    <a class="link" href="{{ route('projects.files.index', $project) }}">Files</a>
+                    <a class="link" href="{{ route('projects.discussions.index', $project) }}">Discussion</a>
                 </div>
             </div>
 

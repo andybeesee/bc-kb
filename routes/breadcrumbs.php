@@ -41,6 +41,16 @@ Breadcrumbs::for('projects.edit', function (BreadcrumbTrail $trail, Project $pro
     $trail->push('Edit', route('projects.edit', $project));
 });
 
+Breadcrumbs::for('projects.files.index', function (BreadcrumbTrail $trail, Project $project) {
+    $trail->parent('projects.show', $project);
+    $trail->push('Files', route('projects.files.index', $project));
+});
+
+Breadcrumbs::for('projects.discussions.index', function (BreadcrumbTrail $trail, Project $project) {
+    $trail->parent('projects.show', $project);
+    $trail->push('Discussions', route('projects.discussions.index', $project));
+});
+
 Breadcrumbs::for('projects.boards.index', function (BreadcrumbTrail $trail, Project $project) {
     $trail->parent('projects.show', $project);
     $trail->push('Boards', route('projects.boards.index', $project));

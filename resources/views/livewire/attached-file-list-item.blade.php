@@ -29,23 +29,32 @@
                     </button>
                 </div>
 
-            </form>        </div>
+            </form>
+        </div>
     @else
-        <div class="p-2 flex items-center">
-            <a
-                href="{{ route('files.download', $file->id) }}"
-                class="link"
-                target="_blank"
-            >
-                {{ $file->filename }}
-            </a>
+        <div class="p-2">
+            <div class="flex items-center">
+                <a href="{{ route('files.download', $file->id) }}" class="link" target="_blank">
+                    {{ $file->filename }}
+                </a>
 
-            <button type="button" wire:click="startEditing({{ $file->id }})" class="btn btn-white btn-xs ml-auto">
-                Edit
-            </button>
-            <button type="button" @click="deleteFile({{ $file->id }})" class="btn btn-danger btn-xs ml-3">
-                Delete
-            </button>
+                <button type="button" wire:click="startEditing({{ $file->id }})" class="btn btn-white btn-xs ml-auto">
+                    Edit
+                </button>
+                <button type="button" @click="deleteFile({{ $file->id }})" class="btn btn-danger btn-xs ml-3">
+                    Delete
+                </button>
+            </div>
+            @if($showRelated)
+                <div class="text-sm">
+                    @switch($file->attached_type)
+                        @case('task')
+                            Task <a href="{{ route('tasks.show', $file->attached_id) }}" class="link">#{{ $file->attached_id }}</a> - {{ $file->attached->name }}
+                            @break
+
+                    @endswitch
+                </div>
+            @endif
         </div>
     @endif
 </div>

@@ -12,6 +12,8 @@ class AttachedFileListItem extends Component
 
     public File $file;
 
+    public bool $showRelated = false;
+
     public $editing = false;
 
     public $filename;
