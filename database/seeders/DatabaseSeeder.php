@@ -3,6 +3,8 @@
 namespace Database\Seeders;
 
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+use App\Models\DiscussionComment;
+use App\Models\Discussion;
 use App\Models\Project;
 use App\Models\Board;
 use App\Models\Task;
@@ -104,6 +106,10 @@ class DatabaseSeeder extends Seeder
                         ]);
                 }
 
+                if($this->faker->boolean(60)) {
+                    $this->addDiscussions('project', $project->id, random_int(1, 50));
+                }
+
                 $tasksToMake = random_int(20, 200);
 
                 $groups = $tasksToMake > 50 ? TaskGroup::factory()->count(random_int(2, 20))->create(['project_id' => $project->id]) : collect();
@@ -128,7 +134,32 @@ class DatabaseSeeder extends Seeder
 
                 }
             });
+    }
 
+    public function addDiscussions($type, $id, $qty)
+    {
+        for($i = 0; $i < $qty; $i++) {
+            $commentQty = random_int(3, 500);
+            $userId = $this->users->random()->id;
 
+            $discussion = Discussion::factory()->create([
+                'attached_type' => $type,
+                'attached_id' => $id,
+                'created_by' => $userId,
+                'updated_by' => $userId,
+            ]);
+
+            for($i = 0; $i < $commentQty; $i++) {
+                $commentAuthorId = $this->users->random()->id;
+                DiscussionComment::factory()
+                    ->create([
+                        'discussion_id' => $discussion->id,
+                        'created_by' => $commentAuthorId,
+                        'updated_by' => $commentAuthorId,
+                    ]);
+
+                // TODO: Reactions
+            }
+        }
     }
 }
