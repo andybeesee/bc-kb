@@ -11,14 +11,10 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('discussion_comments', function (Blueprint $table) {
+        Schema::create('comments', function (Blueprint $table) {
             $table->id();
 
-            $table->foreignId('discussion_id')
-                ->references('id')
-                ->on('discussions')
-                ->onUpdate('cascade')
-                ->onDelete('cascade');
+            $table->morphs('attached');
 
             $table->text('comment');
 
@@ -43,6 +39,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('discussion_comments');
+        Schema::dropIfExists('comments');
     }
 };

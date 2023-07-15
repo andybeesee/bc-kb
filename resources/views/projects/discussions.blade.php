@@ -1,3 +1,3 @@
 <x-layouts.project-layout :project="$project">
-    DISCUSSIONS
+    <livewire:discussion-list :attached-id="$project->id" attached-type="project" />
 </x-layouts.project-layout>

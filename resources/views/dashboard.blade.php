@@ -2,7 +2,7 @@
 <div class="container">
     <h1>Dashboard</h1>
 
-    <div class="grid grid-cols-2 gap-3">
+    <div class="grid md:grid-cols-2 gap-3">
         <div>
             @if($pastDueTasks->count() > 0)
                 <div class="card mb-5">

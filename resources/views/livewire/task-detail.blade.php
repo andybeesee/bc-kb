@@ -105,12 +105,6 @@
                     </div>
                 </div>
             @endif
-
-            @if(!$modalMode || $tab === 'discussions')
-                <div>
-                    Discussions
-                </div>
-            @endif
         </div>
 
         @if(!$modalMode || $tab === 'files')
@@ -120,4 +114,12 @@
         @endif
 
     </div>
+
+
+
+    @if(!$modalMode || $tab === 'discussions')
+        <div class="{{ $modalMode ? '' : 'mt-4' }}">
+            <livewire:comment-list attached-type="task" :attached-id="$task->id" />
+        </div>
+    @endif
 </div>

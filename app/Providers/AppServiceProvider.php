@@ -34,6 +34,8 @@ class AppServiceProvider extends ServiceProvider
 
         Relation::morphMap([
             'board' => \App\Models\Board::class,
+            'comment' => \App\Models\Comment::class,
+            'discussion' => \App\Models\Discussion::class,
             'project' => \App\Models\Project::class,
             'task' => \App\Models\Task::class,
             'team' => \App\Models\Team::class,

@@ -3,7 +3,7 @@
 namespace Database\Seeders;
 
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
-use App\Models\DiscussionComment;
+use App\Models\Comment;
 use App\Models\Discussion;
 use App\Models\Project;
 use App\Models\Board;
@@ -121,7 +121,7 @@ class DatabaseSeeder extends Seeder
                     $isComplete = $this->faker->boolean();
                     $groupId = $groups->count() > 0 && $this->faker->boolean(75) ? $groups->random()->id : null;
 
-                    Task::factory()
+                    $task = Task::factory()
                         ->create([
                             'sort' => $t + 1,
                             'project_id' => $project->id,
@@ -132,14 +132,38 @@ class DatabaseSeeder extends Seeder
                             'completed_by' => $isComplete ? $completedBy : null,
                         ]);
 
+                    if($this->faker->boolean(40)) {
+                        $this->addComments('task', $task->id, random_int(1, 10));
+                    }
                 }
             });
+    }
+
+
+    public function addComments($type, $id, $qty = null)
+    {
+        $qty = $qty ?? random_int(1, 60);
+
+
+        for($x = 0; $x < $qty; $x++) {
+            $commentAuthorId = $this->users->random()->id;
+            Comment::factory()
+                ->create([
+                    'attached_id' => $id,
+                    'attached_type' => $type,
+                    'created_by' => $commentAuthorId,
+                    'updated_by' => $commentAuthorId,
+                ]);
+
+            // TODO: Reactions
+        }
+
     }
 
     public function addDiscussions($type, $id, $qty)
     {
         for($i = 0; $i < $qty; $i++) {
-            $commentQty = random_int(3, 500);
+            $commentQty = random_int(3, 50);
             $userId = $this->users->random()->id;
 
             $discussion = Discussion::factory()->create([
@@ -149,17 +173,8 @@ class DatabaseSeeder extends Seeder
                 'updated_by' => $userId,
             ]);
 
-            for($i = 0; $i < $commentQty; $i++) {
-                $commentAuthorId = $this->users->random()->id;
-                DiscussionComment::factory()
-                    ->create([
-                        'discussion_id' => $discussion->id,
-                        'created_by' => $commentAuthorId,
-                        'updated_by' => $commentAuthorId,
-                    ]);
+            $this->addComments('discussion', $discussion->id, $commentQty);
 
-                // TODO: Reactions
-            }
         }
     }
 }
