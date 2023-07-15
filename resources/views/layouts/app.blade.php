@@ -17,7 +17,6 @@
         <div class="min-h-screen pb-20">
             <div class="mb-5">
                 @include('layouts.navigation')
-                {{ Breadcrumbs::render() }}
             </div>
             <!-- Page Content -->
             <main>

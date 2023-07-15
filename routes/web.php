@@ -23,6 +23,8 @@ Route::get('/', function () {
 });
 
 Route::middleware('auth')->group(function () {
+    Route::get('/app', \App\Http\Livewire\ProjectPageContainer::class)->name('app');
+
     Route::get('/dashboard', \App\Http\Controllers\DashboardController::class)->name('dashboard');
 
     Route::get('/files/{file}/download', \App\Http\Controllers\FileDownloadController::class)->name('files.download');
