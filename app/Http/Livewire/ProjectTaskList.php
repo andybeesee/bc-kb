@@ -44,7 +44,7 @@ class ProjectTaskList extends Component
             ->get();
 
         $tasks = Task::with(['completedBy', 'assignedTo'])
-            ->withCount('files')
+            ->withCount(['files', 'comments'])
             ->where('project_id', $this->projectId)
             ->whereNull('task_group_id')
             ->orderBy('sort')

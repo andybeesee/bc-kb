@@ -9,9 +9,9 @@
                 <button type="button" class="link {{ $tab === 'files' ? 'active' : '' }}" wire:click="setTab('files')">
                     {{ $task->files_count }} Files
                 </button>
-                <button type="button" class="link {{ $tab === 'discussions' ? 'active' : '' }}" wire:click="setTab('discussions')">
-                    {{ $task->discussions_count ?? 0 }}
-                    Discussions
+                <button type="button" class="link {{ $tab === 'comments' ? 'active' : '' }}" wire:click="setTab('comments')">
+                    {{ $task->comments_count ?? 0 }}
+                    Comments
                 </button>
             </div>
         @endif
@@ -117,7 +117,7 @@
 
 
 
-    @if(!$modalMode || $tab === 'discussions')
+    @if(!$modalMode || $tab === 'comments')
         <div class="{{ $modalMode ? '' : 'mt-4' }}">
             <livewire:comment-list attached-type="task" :attached-id="$task->id" />
         </div>

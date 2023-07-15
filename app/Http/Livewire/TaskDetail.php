@@ -47,6 +47,7 @@ class TaskDetail extends Component
             ])
             ->withCount([
                 'files',
+                'comments',
             ])
             ->findOrFail($this->taskId);
 

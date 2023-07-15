@@ -44,13 +44,27 @@
                     href="{{ route('tasks.show', [$task, 'tab' => 'files']) }}"
                     title="Click to view files in task detail"
                     type="button"
-                    class="flex items-center hover:bg-zinc-100 rounded-md px-1 py-0.5"
+                    class="flex items-center hover:bg-zinc-100 rounded-md px-1 py-0.5 text-zinc-500"
                     wire:click.prevent="openDetail({{ $task->id }}, 'files')"
                 >
                     <x-icon icon="paperclip" class="h-5 mr-1  w-5" />
                     {{ $task->files_count }} File{{ $task->files_count !== 1 ? 's' : '' }}
                 </a>
             @endif
+
+            @if($task->comments_count > 0)
+                <a
+                    href="{{ route('tasks.show', [$task, 'tab' => 'files']) }}"
+                    title="Click to view comments in task detail"
+                    type="button"
+                    class="flex items-center hover:bg-zinc-100 rounded-md px-1 py-0.5 text-zinc-500"
+                    wire:click.prevent="openDetail({{ $task->id }}, 'comments')"
+                >
+                    <x-icon icon="chat-left-text" class="h-5 mr-1.5  w-5" />
+                    {{ $task->comments_count }} Comment{{ $task->comments_count !== 1 ? 's' : '' }}
+                </a>
+            @endif
+
 
             @if($task->isComplete)
                 <div class="text-green-600 dark:text-green-400 text-sm ml-3">
