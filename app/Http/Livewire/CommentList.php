@@ -19,6 +19,11 @@ class CommentList extends Component
         'newComment' => 'required'
     ];
 
+    protected $listeners = [
+        'commentUpdated' => 'render',
+        'commentDeleted' => 'render',
+    ];
+
     public function render()
     {
         // TODO: Paginate?
