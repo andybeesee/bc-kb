@@ -34,6 +34,8 @@ class ProjectTaskList extends Component
         'sorted' => 'handleSort',
         'groupSorted' => 'handleGroupSorted',
         'movedList' => 'handleTaskMove',
+        'changeCompleted' => 'updateCompletedBy',
+        'completeDateChange' => 'updateCompletedDate',
     ];
 
     public function render()
