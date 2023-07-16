@@ -1,4 +1,4 @@
-<div class="mx-10 grid grid-cols-4 gap-12 items-start">
+<div class="mx-1 md:mx-6 lg:mx-10 grid grid-cols-4 gap-12 items-start">
     <div>
         <div class="mb-3">
             <x-form.input
@@ -13,7 +13,7 @@
             @foreach($this->projects as $project)
                 <div
                     wire:click.self="$set('projectId', {{$project->id}})"
-                    class="cursor-pointer p-2 flex truncate items-center hover:bg-zinc-100 rounded-md {{ $project->id === $projectId ? 'bg-purple-100' : '' }}"
+                    class="cursor-pointer p-2 flex truncate items-center rounded-md {{ $project->id === $projectId ? 'bg-purple-100 hover:bg-purple-200' : 'hover:bg-zinc-100' }}"
                     title="{{ $project->name }} -- {{ $project->status }}"
                 >
                     {{ $project->name }}
