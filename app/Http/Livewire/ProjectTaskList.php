@@ -66,7 +66,6 @@ class ProjectTaskList extends Component
         $this->showDetailTask = null;
     }
 
-
     public function handleTaskMove($taskId, $groupId, $items)
     {
         DB::table('tasks')
