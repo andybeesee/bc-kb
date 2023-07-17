@@ -31,7 +31,6 @@
                                         {{ $pastDueTask->project->name }}
                                     </a>
                                 </div>
-
                             </div>
                         @endforeach
                     </div>

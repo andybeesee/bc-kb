@@ -4,8 +4,12 @@ namespace App\Http\Livewire;
 
 use App\Models\Project;
 use App\Models\Task;
+use App\Models\Team;
+use App\Models\User;
 use Livewire\Component;
 
+// TODO: Complete task from dashboard, view task detail on click it
+// TODO: Better dashboard...
 class ProjectPageContainer extends Component
 {
     public $projectSearch = '';
@@ -18,6 +22,12 @@ class ProjectPageContainer extends Component
 
     public $teams = [];
 
+    public $userId = null;
+
+    public $teamId = null;
+
+    public $projectList = 'user';
+
     public $listeners = [
         'projectDetailClosed' => 'closeProject',
     ];
@@ -26,6 +36,11 @@ class ProjectPageContainer extends Component
         'projectId',
     ];
 
+    public function mount()
+    {
+        $this->userId = auth()->user()->id;
+    }
+
     public function render()
     {
         $dashboardData = [];
@@ -33,8 +48,24 @@ class ProjectPageContainer extends Component
             $dashboardData = $this->getDashboardData();
         }
 
+        $allTeams = Team::orderBy('name')->get();
+
+        $userTeams = Team::orderBy('name')
+            ->whereHas('members', fn($mq) => $mq->where('users.id', auth()->user()->id))
+            ->get();
+
+        $usersOnYourTeams = User::orderBy('name')
+            ->whereHas('teams', fn($tq) => $tq->whereIn('team_id', $userTeams->pluck('id')->toArray()))
+            ->get();
+
+        $allUsers = User::orderBy('name')->get();
+
         return view('livewire.project-page-container')
-            ->with('dashboardData', $dashboardData);
+            ->with('dashboardData', $dashboardData)
+            ->with('allTeams', $allTeams)
+            ->with('userTeams', $userTeams)
+            ->with('usersOnYourTeams', $usersOnYourTeams)
+            ->with('allUsers', $allUsers);
     }
 
     public function closeProject()
@@ -55,8 +86,19 @@ class ProjectPageContainer extends Component
             ]);
         }
 
-        if($this->assignedToUser) {
-            $q = $q->where('owner_id', auth()->user()->id);
+        switch ($this->projectList) {
+            case 'user':
+                $q = $q->where('owner_id', $this->userId ?? auth()->user()->id);
+                break;
+            case 'team':
+                if(empty($this->teamId)) {
+                    $q = $q->whereHas('team', function($tq) {
+                        return $tq->whereHas('members', fn($mq) => $mq->where('team_user.user_id', auth()->user()->id));
+                    });
+                } else {
+                    $q = $q->where('team_id', $this->teamId);
+                }
+                break;
         }
 
         if(empty($this->projectSearch)) {
@@ -64,6 +106,20 @@ class ProjectPageContainer extends Component
         }
 
         return $q->limit(200)->get();
+    }
+
+    public function showUserProjects($userId)
+    {
+        $this->projectList = 'user';
+        $this->teamId = null;
+        $this->userId = $userId;
+    }
+
+    public function showTeamProjects($teamId)
+    {
+        $this->projectList = 'team';
+        $this->teamId = $teamId;
+        $this->userId = null;
     }
 
     protected function getDashboardData()
