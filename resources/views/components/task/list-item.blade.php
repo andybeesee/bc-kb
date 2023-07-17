@@ -21,7 +21,7 @@
                 <div
                     @click.outside="open = false"
                     x-show="open"
-                    class="p-3 mt-0.5 border border-zinc-400 absolute z-10 bg-white rounded shadow min-w-[300px] max-h-[400x]"
+                    class="p-3 mt-0.5 border border-zinc-400 absolute z-10 bg-white dark:bg-zinc-900 rounded shadow min-w-[350px] max-h-[400x]"
                     style="display: none;"
                 >
                     <x-task.action-menu-items :task="$task" />

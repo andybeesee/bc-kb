@@ -11,8 +11,8 @@
         View Detail
     </a>
     @if($task->isComplete)
-        <div class="p-1 bg-green-100 flex items-center">
-            <span class="mr-1">Completed by</span>
+        <div class="p-1 bg-green-100 dark:bg-green-800 flex items-center">
+            <span class="truncate mr-1">Completed by</span>
             <livewire:user-selector
                 wire:key="task-detail-{{ $task->id }}-{{ $task->completed_by }}"
                 :user="$task->completedBy"
@@ -21,8 +21,8 @@
                 :disable-remove="true"
             />
         </div>
-        <div class="p-1 bg-green-100 flex items-center">
-            <span class="mr-1">Completed on</span>
+        <div class="p-1 bg-green-100 dark:bg-green-800 flex items-center">
+            <span class="truncate mr-1">Completed on</span>
             <x-date-change
                 wire:key="task-detail-{{ $task->id }}-completed-{{ $task->completed_date?->getTimestamp() }}"
                 :model-id="$task->id"

@@ -13,7 +13,7 @@
             @foreach($this->projects as $project)
                 <div
                     wire:click.self="$set('projectId', {{$project->id}})"
-                    class="cursor-pointer text-sm p-2 flex truncate items-center rounded-md {{ $project->id === $projectId ? 'bg-purple-100 hover:bg-purple-200' : 'hover:bg-zinc-100' }}"
+                    class="cursor-pointer text-sm p-2 flex truncate items-center rounded-md {{ $project->id === $projectId ? 'bg-purple-100 dark:bg-purple-700 hover:bg-purple-200 dark:hover:bg-purple-800' : 'hover:bg-zinc-100 hover:bg-zinc-700' }}"
                     title="{{ $project->name }} -- {{ $project->status }}"
                 >
                     {{ $project->name }}
