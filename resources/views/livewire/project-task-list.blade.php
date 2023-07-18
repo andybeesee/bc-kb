@@ -16,7 +16,7 @@
             Tasks <span class="text-sm font-normal text-zinc-500">Ungrouped tasks</span>
         </div>
         <div
-            data-group-id="" class="card-body divide-y divide-zinc-300" x-sortable="{ options: { handle: '.handle', group: { name: 'tasks', put: 'tasks', pull: 'tasks' } } }">
+            data-group-id="" class="divide-y divide-zinc-300 dark:divide-zinc-700" x-sortable="{ options: { handle: '.handle', group: { name: 'tasks', put: 'tasks', pull: 'tasks' } } }">
             @foreach($tasks as $task)
                 <x-task.list-item class="py-2 px-1" :task="$task" :sortable="true" />
             @endforeach
@@ -53,7 +53,7 @@
             {{-- TODO: Dropdown to change color of section --}}
             <div data-group-id="{{ $group->id }}" class="mt-4 grid gap-4">
                 <div class="card">
-                    <div class="card-title flex items-center">
+                    <div class="card-title sticky top-0 z-[4] flex items-center">
                         <div class="mr-1 cursor-move handle">
                             <x-icon icon="grip-vertical" class="h-4 w-4" />
                         </div>
@@ -61,9 +61,8 @@
                     </div>
 
                     <div
-                        class="sortable-chosen-hide"
                         data-group-id="{{ $group->id }}"
-                        class="card-body divide-y divide-zinc-300"
+                        class="sortable-chosen-hide divide-y divide-zinc-300 dark:divide-zinc-700"
                         x-sortable="{ options: { handle: '.handle',  group: { name: 'tasks', put: 'tasks', pull: 'tasks' } } }"
                     >
                         @foreach($group->tasks as $task)

@@ -15,7 +15,7 @@
                 </div>
             @endif
             <div x-data="{ open: false }" class="relative mr-2">
-                <div class="cursor-pointer hover:bg-zinc-100" @click="open = !open" type="button">
+                <div class="z-2 cursor-pointer rounded hover:bg-zinc-100 dark:hover:bg-zinc-900" @click="open = !open" type="button">
                     <x-icon icon="three-dots-vertical" class="block align-middle h-4 w-4" />
                 </div>
                 <div
