@@ -7,10 +7,20 @@
                 <x-icon icon="x-circle-fill" class="h-5 w-5" />
             </button>
 
+
+
         </div>
 
-        <div class="flex items-center">
+        <div class="flex items-center space-x-3">
             <livewire:project-status-button :project="$project" />
+
+            <x-date-change
+                :date="$project->due_date"
+                prefix="Due"
+                placeholder="No Due Date"
+                change-event="setProjectDueDate"
+                remove-event="removeProjectDueDate"
+            />
         </div>
     </div>
     <div>

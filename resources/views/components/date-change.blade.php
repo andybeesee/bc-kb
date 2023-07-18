@@ -1,6 +1,6 @@
 @props([
     'date',
-    'modelId',
+    'modelId' => null,
     'placeholder' => 'No Date',
     'title' => 'Date',
     'prefix' => '',
@@ -19,7 +19,12 @@
         this.picker = flatpickr(this.$refs.input, {
             inline: true,
             onChange: (date, dateString) => {
-                Livewire.emit('{{ $changeEvent }}', '{{ $modelId }}', date[0].toISOString().slice(0, 10))
+                console.log('lets send date', date);
+                @if(empty($modelId))
+                    Livewire.emit('{{ $changeEvent }}', date[0].toISOString().slice(0, 10))
+                @else
+                    Livewire.emit('{{ $changeEvent }}', '{{ $modelId }}', date[0].toISOString().slice(0, 10))
+                @endif
                 this.closeCalendar();
             },
         });
@@ -39,7 +44,7 @@
         title="{{ $title }}"
         type="button"
         @click="openCalendar"
-        class="flex items-center px-1 py-0.5 rounded-md hover:bg-zinc-100"
+        class="flex items-center px-1 py-0.5 rounded-md hover:bg-zinc-100 dark:hover:bg-zinc-900"
     >
         @if($date)
             @if(!empty($prefix))
