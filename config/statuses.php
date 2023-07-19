@@ -3,8 +3,8 @@
 
 return [
     'idea' => 'Idea',
-    'planning' => 'Planning',
-    'planned' => 'Planned',
+    // 'planning' => 'Planning',
+    // 'planned' => 'Planned',
     'in_progress' => 'In Progress',
     'complete' => 'Complete',
     // 'incomplete' => 'Incomplete',

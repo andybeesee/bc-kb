@@ -30,6 +30,7 @@ class ProjectPageContainer extends Component
 
     public $listeners = [
         'projectDetailClosed' => 'closeProject',
+        'status-updated' => 'render'
     ];
 
     protected $queryString = [

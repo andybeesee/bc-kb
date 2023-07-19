@@ -1,15 +1,9 @@
-<div class="mx-1 md:mx-6 lg:mx-10 grid grid-cols-4 gap-8 items-start">
+<div class="mx-1 md:mx-6 lg:mx-10 grid grid-cols-5 gap-8 items-start">
     <div>
         <div class="grid">
-            <button
-                wire:click.self="$set('projectId', null)"
-                class="w-full cursor-pointer text-sm p-2 flex truncate items-center rounded-md {{ empty($projectId) ? 'bg-purple-100 dark:bg-purple-700 hover:bg-purple-200 dark:hover:bg-purple-800' : 'hover:bg-zinc-100 hover:bg-zinc-700' }}"
-                title="Show dashboard"
-            >
-                Dashboard
-            </button>
 
-            <div class="mt-3">
+
+            <div class="mb-3">
                 <x-form.input
                     type="text" p
                     laceholder="Search"
@@ -19,8 +13,20 @@
                     wire:model="projectSearch"
                 />
             </div>
+
+            <button
+                wire:click.self="$set('projectId', null)"
+                class="w-full cursor-pointer text-sm p-2 flex truncate items-center rounded-md {{ empty($projectId) ? 'bg-purple-100 dark:bg-purple-700 hover:bg-purple-200 dark:hover:bg-purple-800' : 'hover:bg-zinc-100 hover:bg-zinc-700' }}"
+                title="Show dashboard"
+            >
+                <div class=" mr-3 rounded-full bg-zinc-100 text-zinc-700 dark:bg-zinc-700 dark:text-zinc-300">
+                    <x-icon icon="pie-chart-fill" class="h-4 w-4" />
+                </div>
+                Dashboard
+            </button>
+
             <div x-data="{ open: false }">
-                <button yype="button" class="p-2 text-left flex items-center text-sm" @click="open = !open">
+                <button type="button" class="p-2 text-left flex items-center text-sm" @click="open = !open">
                     <x-icon icon="caret-right" x-show="!open" class="h-4 w-4 mr-1" />
                     <x-icon icon="caret-down" x-show="open" class="h-4 w-4 mr-1" />
                     Projects to Show
@@ -86,6 +92,9 @@
                     class="cursor-pointer text-sm p-2 flex truncate items-center rounded-md {{ $project->id === $projectId ? 'bg-purple-100 dark:bg-purple-700 hover:bg-purple-200 dark:hover:bg-purple-800' : 'hover:bg-zinc-100 hover:bg-zinc-700' }}"
                     title="{{ $project->name }} -- {{ $project->status }}"
                 >
+                    <div class=" mr-3 rounded-full bg-zinc-100 text-zinc-700 dark:bg-zinc-700 dark:text-zinc-300">
+                        <livewire:project-status-button wire:key="proj-stat-{{ $project->id }}-{{ $project->updated_at->getTimestamp() }}" :icon-only="true" icon-class="h-4 w-4" :project="$project" />
+                    </div>
                     {{ $project->name }}
                 </button>
             @endforeach

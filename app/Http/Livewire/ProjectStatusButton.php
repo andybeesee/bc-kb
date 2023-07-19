@@ -14,10 +14,12 @@ class ProjectStatusButton extends Component
 
     public bool $canChange = false;
 
+    public $iconOnly = false;
+
+    public string $iconClass = '';
+
     public array $optionClasses = [
         'idea' => 'bg-zinc-100 hover:bg-zinc-300 border-zinc-400 text-zinc-900',
-        'planning' => 'bg-blue-50 hover:bg-blue-200 border-blue-400 text-blue-500',
-        'planned' => 'bg-blue-200 hover:bg-blue-400 border-blue-400 text-blue-900',
         'in_progress' => 'bg-blue-600 hover:bg-blue-800 border-blue-700 text-white',
         'complete' => 'bg-emerald-200 hover:bg-emerald-400 border-emerald-400 text-emerald-900',
         'incomplete' => 'bg-orange-200 hover:bg-orange-400 border-orange-400 text-orange-900',
@@ -37,42 +39,36 @@ class ProjectStatusButton extends Component
 
         switch ($this->project->status) {
             case 'idea':
-                $colors = 'bg-zinc-200 border-zinc-400 text-zinc-900';
+                $colors = 'bg-zinc-200 dark:bg-zinc-700 dark:text-zinc-200 border-zinc-400 text-zinc-900';
                 $hoverColors = 'hover:bg-zinc-400';
-                break;
-            case 'planning':
-                $colors = 'bg-blue-50 border-blue-400 text-blue-500';
-                $hoverColors = 'hover:bg-blue-200';
-                break;
-            case 'planned':
-                $colors = 'bg-blue-200 border-blue-400 text-blue-900';
-                $hoverColors = 'hover:bg-blue-400';
+                $icon = 'lightbulb';
                 break;
             case 'in_progress':
                 $colors = 'bg-blue-600 border-blue-700 text-white';
                 $hoverColors = 'hover:bg-blue-700';
+                $icon = 'circle';
                 break;
             case 'complete':
-                $colors = 'bg-emerald-200 border-emerald-400 text-emerald-900';
+                $colors = 'bg-emerald-200 border-emerald-400 text-emerald-900 dark:bg-emerald-300';
                 $hoverColors = 'hover:bg-emerald-400';
-                break;
-            case 'incomplete':
-                $colors = 'bg-orange-200 border-orange-400 text-orange-900';
-                $hoverColors = 'hover:bg-orange-400';
+                $icon = 'check-circle-fill';
                 break;
             case 'late':
-                $colors = 'bg-red-200 border-red-400 text-red-900';
+                $colors = 'bg-red-200 border-red-400 text-red-900 dark:bg-red-800 dark:text-white';
                 $hoverColors = 'hover:bg-red-400';
+                $icon = 'clock';
                 break;
             case 'abandoned':
-                $colors = 'bg-zinc-100 border-zinc-300 text-zinc-500';
+                $colors = 'bg-zinc-100 dark:bg-zinc-600 dark:text-zinc-300 border-zinc-300 text-zinc-500';
                 $hoverColors = 'hover:bg-zinc-400';
+                $icon = 'trash3';
                 break;
         }
 
         return view('livewire.project-status-button')
             ->with('colors', $colors)
             ->with('hoverColors', $hoverColors)
+            ->with('icon', $icon)
             ->with('status', $status);
     }
 
