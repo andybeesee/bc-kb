@@ -28,13 +28,17 @@ class ProjectPageContainer extends Component
 
     public $projectList = 'user';
 
+    public bool $newProject = false;
+
     public $listeners = [
         'projectDetailClosed' => 'closeProject',
-        'status-updated' => 'render'
+        'status-updated' => 'render',
+        'projectAdded' => 'render',
     ];
 
     protected $queryString = [
         'projectId',
+        'newProject',
     ];
 
     public function mount()
@@ -117,8 +121,15 @@ class ProjectPageContainer extends Component
         return $q->limit(200)->get();
     }
 
+    public function openNewProjectForm()
+    {
+        $this->newProject = true;
+        $this->projectId = null;
+    }
+
     public function showUserProjects($userId)
     {
+        $this->newProject = false;
         $this->projectList = 'user';
         $this->teamId = null;
         $this->userId = $userId;
@@ -126,9 +137,22 @@ class ProjectPageContainer extends Component
 
     public function showTeamProjects($teamId)
     {
+        $this->newProject = false;
         $this->projectList = 'team';
         $this->teamId = $teamId;
         $this->userId = null;
+    }
+
+    public function showDashboard()
+    {
+        $this->newProject = false;
+        $this->projectId = null;
+    }
+
+    public function showProject($projectId)
+    {
+        $this->newProject = false;
+        $this->projectId = $projectId;
     }
 
     protected function getDashboardData()
