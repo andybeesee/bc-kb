@@ -1,7 +1,7 @@
 <div>
     @if($iconOnly)
         <div>
-            <div class="rounded-full {{ $colors }}">
+            <div title="{{ $status }}" class="rounded-full {{ $colors }}">
                 <x-icon :icon="$icon" class="{{ $iconClass }}" />
             </div>
         </div>

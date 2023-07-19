@@ -78,32 +78,40 @@ class ProjectPageContainer extends Component
     {
         $q = Project::with('team');
 
-        if($this->currentOnly) {
-            $q->whereIn('status', [
-                'planning',
-                'planned',
-                'in_progress',
-                'late',
-            ]);
-        }
+        $q = $q->where(function($pq) {
+            if($this->currentOnly) {
+                $pq->whereIn('status', [
+                    'planning',
+                    'planned',
+                    'in_progress',
+                    'late',
+                ]);
+            }
 
-        switch ($this->projectList) {
-            case 'user':
-                $q = $q->where('owner_id', $this->userId ?? auth()->user()->id);
-                break;
-            case 'team':
-                if(empty($this->teamId)) {
-                    $q = $q->whereHas('team', function($tq) {
-                        return $tq->whereHas('members', fn($mq) => $mq->where('team_user.user_id', auth()->user()->id));
-                    });
-                } else {
-                    $q = $q->where('team_id', $this->teamId);
-                }
-                break;
-        }
+            switch ($this->projectList) {
+                case 'user':
+                    $pq = $pq->where('owner_id', $this->userId ?? auth()->user()->id);
+                    break;
+                case 'team':
+                    if(empty($this->teamId)) {
+                        $pq = $pq->whereHas('team', function($tq) {
+                            return $tq->whereHas('members', fn($mq) => $mq->where('team_user.user_id', auth()->user()->id));
+                        });
+                    } else {
+                        $pq = $pq->where('team_id', $this->teamId);
+                    }
+                    break;
+            }
 
-        if(empty($this->projectSearch)) {
-            $q = $q->where('name', 'LIKE', '%'.trim($this->projectSearch).'%');
+            if(empty($this->projectSearch)) {
+                $pq = $pq->where('name', 'LIKE', '%'.trim($this->projectSearch).'%');
+            }
+
+            return $pq;
+        });
+
+        if(!empty($this->projectId)) {
+            $q = $q->orWhere('id', $this->projectId);
         }
 
         return $q->limit(200)->get();
