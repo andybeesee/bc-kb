@@ -14,7 +14,7 @@ class ProjectDetailPage extends Component
         'removeProjectDueDate' => 'removeDueDate',
     ];
 
-    public string $tab = 'tasks';
+    public string $tab = 'dashboard';
 
     public function render()
     {

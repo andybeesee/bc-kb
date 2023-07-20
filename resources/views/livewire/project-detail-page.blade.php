@@ -24,8 +24,11 @@
         </div>
     </div>
     <div class=" mb-4">
-        <div class="grid grid-cols-4 divide-x dark:divide-zinc-900 mx-auto max-w-[40vw]">
-            <button wire:click="$set('tab', 'tasks')" type="button" class="rounded-l-md p-1 {{ $tab === 'tasks' ? 'bg-blue-900 hover:bg-blue-800' : 'bg-zinc-500 hover:bg-zinc-700' }}">
+        <div class="grid grid-cols-5 divide-x dark:divide-zinc-900 mx-auto max-w-[40vw]">
+            <button wire:click="$set('tab', 'dashboard')" type="button" class="rounded-l-md p-1 {{ $tab === 'dashboard' ? 'bg-blue-900 hover:bg-blue-800' : 'bg-zinc-500 hover:bg-zinc-700' }}">
+                Dashboard
+            </button>
+            <button wire:click="$set('tab', 'tasks')" type="button" class="p-1 {{ $tab === 'tasks' ? 'bg-blue-900 hover:bg-blue-800' : 'bg-zinc-500 hover:bg-zinc-700' }}">
                 Tasks
             </button>
             <button wire:click="$set('tab', 'edit')" type="button" class="p-1 {{ $tab === 'edit' ? 'bg-blue-900 hover:bg-blue-800' : 'bg-zinc-500 hover:bg-zinc-700' }}">
@@ -41,6 +44,11 @@
     </div>
     <div>
         @switch($tab)
+            @case('dashboard')
+                <div>
+                    <livewire:project-dashboard :project="$project" />
+                </div>
+                @break
             @case('tasks')
                 <livewire:project-task-list :project-id="$projectId" />
                 @break
