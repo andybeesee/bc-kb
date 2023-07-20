@@ -4,9 +4,18 @@
     $inputId = $name.'-'.str($label)->slug();
     $hasError = $errors->first($name);
     $value = old($name, $value);
-
+    $showRadios = false;
+    $radioMAx = 10;
     if(is_numeric($value)) {
         $value = (int) $value;
+    }
+
+    if(!is_null($options)) {
+        if(is_array($options) && count($options) < $radioMAx) {
+            $showRadios = true;
+        } elseif(method_exists($options, 'count') && $options->count() < $radioMAx) {
+            $showRadios = true;
+        }
     }
 @endphp
 
@@ -18,35 +27,64 @@
     @endif
 
     <div class="form-control-container">
-        <select
-            {{ $attributes->merge(['class' => 'form-control '.($hasError ? 'is-invalid' : '')]) }}
-            id="{{ $inputId }}"
-            value="{{ $value }}"
-            name="{{ $name }}"
-        >
-            @if($emptyStart)
-                <option value=""></option>
-            @endif
-
-            @if(is_null($options))
-                {{ $slot }}
-            @else
+        @if($showRadios)
+            <div class="grid gap-2">
                 @foreach($options as $optKey => $display)
-                    @if($display instanceof \Illuminate\Database\Eloquent\Model)
-                        <option value="{{ $display->getKey() }}" {{ $value === $display->getKey() ? "selected=selected" : '' }}>
-                            {{ $display->name }}
-                        </option>
-                    @else
-                        @php $optValue = $simpleArray ? $display : $optKey; @endphp
-                        <option
-                            {{ $optValue === $value ? 'selected=selected' : '' }}
-                            value="{{ $optValue }}"
-                        >{{ $display }}</option>
-                    @endif
-                @endforeach
-            @endif
+                    <label class="flex items-center space-x-1">
+                        @if($display instanceof \Illuminate\Database\Eloquent\Model)
+                            <input
+                                type="radio"
+                                {{ $attributes->merge(['class' => ($hasError ? 'is-invalid' : '')]) }}
+                                id="{{ $inputId }}"
+                                value="{{ $display->getKey() }}"
+                                name="{{ $name }}"
+                                {{ $value === $display->getKey() ? "checked=checked" : '' }}
+                            />
+                            <span class="ml-1.5">{{ $display->name }}</span>
+                        @else
+                            @php $optValue = $simpleArray ? $display : $optKey; @endphp
+                            <input
+                                type="radio"
+                                {{ $optValue === $value ? 'checked=checked' : '' }}
+                                value="{{ $optValue }}"
+                            />
+                            <span class="ml-1.5">{{ $display }}</span>
+                        @endif
 
-        </select>
+                    </label>
+                @endforeach
+            </div>
+        @else
+            <select
+                {{ $attributes->merge(['class' => 'form-control '.($hasError ? 'is-invalid' : '')]) }}
+                id="{{ $inputId }}"
+                value="{{ $value }}"
+                name="{{ $name }}"
+            >
+                @if($emptyStart)
+                    <option value=""></option>
+                @endif
+
+                @if(is_null($options))
+                    {{ $slot }}
+                @else
+                    @foreach($options as $optKey => $display)
+                        @if($display instanceof \Illuminate\Database\Eloquent\Model)
+                            <option value="{{ $display->getKey() }}" {{ $value === $display->getKey() ? "selected=selected" : '' }}>
+                                {{ $display->name }}
+                            </option>
+                        @else
+                            @php $optValue = $simpleArray ? $display : $optKey; @endphp
+                            <option
+                                {{ $optValue === $value ? 'selected=selected' : '' }}
+                                value="{{ $optValue }}"
+                            >{{ $display }}</option>
+                        @endif
+                    @endforeach
+                @endif
+
+            </select>
+        @endif
 
         @if(!empty($help))
             <div class="text-sm text-zinc-700">{{ $help }}</div>

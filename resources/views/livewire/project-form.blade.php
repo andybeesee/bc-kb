@@ -17,10 +17,6 @@
 
         <x-form.select wire:model="project.owner_id" label="Owner" :options="$owners" name="owner" :value="$project->owner_id" />
 
-        <div>
-            {{ $errors->toJson() }}
-        </div>
-
         <div class="form-group">
             <div class="form-label"></div>
             <div class="form-control-container">
