@@ -54,6 +54,10 @@
         @apply text-zinc-400;
     }
 
+    .form-error {
+        @apply text-red-400;
+    }
+
     .form-control.error {
         @apply border-red-400
     }

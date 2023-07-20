@@ -32,6 +32,8 @@ class ProjectPageContainer extends Component
 
     public $listeners = [
         'projectDetailClosed' => 'closeProject',
+        'projectCreated' => 'showProject',
+        'projectUpdated' => 'render',
         'status-updated' => 'render',
         'projectAdded' => 'render',
     ];

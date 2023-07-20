@@ -3,7 +3,9 @@
 @php
     $inputId = $name.'-input';
     $value = old($name, $value);
-    $hasError = $errors->has($name )
+    $wiremodel = $attributes->wire('model')->value();
+    $errorName = empty($wiremodel) ? $name : $wiremodel;
+    $hasError = $errors->has($errorName )
 @endphp
 <div class="form-group">
     <label for="{{ $inputId }}" class="form-label {{ $hasError ? 'error' : '' }}">
@@ -23,7 +25,7 @@
         @endif
 
         @if($hasError)
-            <div class="form-error">{{ $errors->first($name) }}</div>
+            <div class="form-error">{{ $errors->first($errorName) }}</div>
         @endif
     </div>
 </div>
