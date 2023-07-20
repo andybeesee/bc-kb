@@ -10,18 +10,20 @@
         {{ $label }}
     </label>
 
-    <input
-        type="{{ $type }}"
-        name="{{ $name }}"
-        value="{{ $value }}"
-        {{ $attributes->merge(['class' => "form-control ".($hasError ? 'error' : '')]) }}
-    />
+    <div class="form-control-container">
+        <input
+            type="{{ $type }}"
+            name="{{ $name }}"
+            value="{{ $value }}"
+            {{ $attributes->merge(['class' => "form-control ".($hasError ? 'error' : '')]) }}
+        />
 
-    @if(!empty($help))
-        <div class="form-help">{{ $help }}</div>
-    @endif
+        @if(!empty($help))
+            <div class="form-help">{{ $help }}</div>
+        @endif
 
-    @if($hasError)
-        <div class="form-error">{{ $errors->first($name) }}</div>
-    @endif
+        @if($hasError)
+            <div class="form-error">{{ $errors->first($name) }}</div>
+        @endif
+    </div>
 </div>

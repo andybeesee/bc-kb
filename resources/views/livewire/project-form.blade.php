@@ -4,7 +4,7 @@
     @else
 
     @endif
-    <div class="grid gap-4">
+    <div class="grid gap-5">
         <x-form.input label="Name" name="name" help="All projects must have a unique name" :value="$project->name" />
 
         <x-form.textarea label="Description" name="description" help="optionally put additional info in here" :value="$project->description" />

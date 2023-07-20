@@ -1,4 +1,4 @@
-<div class="mx-1 md:mx-6 lg:mx-10 grid grid-cols-5 gap-8 items-start">
+<div class="mx-1 md:mx-6 lg:mx-10 grid lg:grid-cols-4 xl:grid-cols-5 gap-6 items-start">
     <div>
         <div class="grid">
             <div class="mb-3">
@@ -109,7 +109,7 @@
             @endforeach
         </div>
     </div>
-    <div class="col-span-3">
+    <div class="lg:col-span-3 xl:col-span-4">
         @if(empty($projectId))
             @if($newProject)
                 <livewire:project-form />

@@ -11,17 +11,19 @@
         {{ $label }}
     </label>
 
-    <textarea
-        {{ $attributes->merge() }}
-        name="{{ $name }}"
-        class="form-control {{ $hasError ? 'error' : '' }}"
-    >{{ $value }}</textarea>
+    <div class="form-control-container">
+        <textarea
+            {{ $attributes->merge() }}
+            name="{{ $name }}"
+            class="form-control {{ $hasError ? 'error' : '' }}"
+        >{{ $value }}</textarea>
 
-    @if(!empty($help))
-        <div class="form-help">{{ $help }}</div>
-    @endif
+        @if(!empty($help))
+            <div class="form-help">{{ $help }}</div>
+        @endif
 
-    @if($hasError)
-        <div class="form-error">{{ $errors->first($errorName) }}</div>
-    @endif
+        @if($hasError)
+            <div class="form-error">{{ $errors->first($errorName) }}</div>
+        @endif
+    </div>
 </div>

@@ -14,6 +14,8 @@ class ProjectDetailPage extends Component
         'removeProjectDueDate' => 'removeDueDate',
     ];
 
+    public string $tab = 'tasks';
+
     public function render()
     {
         $project = Project::findOrFail($this->projectId);
