@@ -7,7 +7,7 @@ use Livewire\Component;
 
 class ProjectDetailPage extends Component
 {
-    public int $projectId;
+    public Project $project;
 
     protected $listeners = [
         'setProjectDueDate' => 'setDueDate',
@@ -16,17 +16,21 @@ class ProjectDetailPage extends Component
 
     public string $tab = 'dashboard';
 
+    protected $queryString = [
+        'tab',
+    ];
+
     public function render()
     {
-        $project = Project::findOrFail($this->projectId);
+        // $project = Project::findOrFail($this->project->id);
 
-        return view('livewire.project-detail-page')->with('project', $project);
+        return view('livewire.project-detail-page');
     }
 
     public function setDueDate($date)
     {
         \DB::table('projects')
-            ->where('id', $this->projectId)
+            ->where('id', $this->project->id)
             ->update([
                 'due_date' => $date,
                 'updated_at' => now(),
@@ -36,7 +40,7 @@ class ProjectDetailPage extends Component
     public function removeDueDate()
     {
         \DB::table('projects')
-            ->where('id', $this->projectId)
+            ->where('id', $this->project->id)
             ->update([
                 'due_date' => null,
                 'updated_at' => now(),

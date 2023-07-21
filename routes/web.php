@@ -33,7 +33,10 @@ Route::middleware('auth')->group(function () {
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 
-    Route::resource('projects', \App\Http\Controllers\ProjectController::class);
+    Route::resource('projects', \App\Http\Controllers\ProjectController::class)->except('show');
+
+    Route::get('/projects/{project}', \App\Http\Livewire\ProjectDetailPage::class)->name('projects.show');
+
     Route::put('/projects/{project}/boards/sort', \App\Http\Controllers\ProjectBoardSortController::class)->name('projects.boards.sort');
     Route::get('/projects/{project}/discussions', \App\Http\Controllers\ProjectDiscussionController::class)->name('projects.discussions.index');
     Route::get('/projects/{project}/files', \App\Http\Controllers\ProjectFileController::class)->name('projects.files.index');

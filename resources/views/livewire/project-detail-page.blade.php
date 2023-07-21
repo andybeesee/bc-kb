@@ -1,17 +1,11 @@
-<div>
+<div class="mx-2 md:mx-10 lg:mx-16">
     <div class="mb-2">
-        <div class="flex items-center">
-            <div class="mb-2 text-3xl font-bold font-serif">{{ $project->name }}</div>
-
-            <button class="text-zinc-500 hover:text-zinc-800 ml-auto" type="button" wire:click="$emitUp('projectDetailClosed')">
-                <x-icon icon="x-circle-fill" class="h-5 w-5" />
-            </button>
-
-
+        <div class="flex justify-center">
+            <div class="mb-2 text-center text-3xl font-bold">{{ $project->name }}</div>
 
         </div>
 
-        <div class="flex items-center space-x-3">
+        <div class="flex justify-center items-center space-x-3">
             <livewire:project-status-button :project="$project" />
 
             <x-date-change
@@ -23,21 +17,21 @@
             />
         </div>
     </div>
-    <div class=" mb-4">
-        <div class="grid grid-cols-5 divide-x dark:divide-zinc-900 mx-auto max-w-[40vw]">
-            <button wire:click="$set('tab', 'dashboard')" type="button" class="rounded-l-md p-1 {{ $tab === 'dashboard' ? 'bg-blue-900 hover:bg-blue-800' : 'bg-zinc-500 hover:bg-zinc-700' }}">
+    <div class="mb-4">
+        <div class="button-tabs">
+            <button wire:click="$set('tab', 'dashboard')" type="button" class="{{ $tab === 'dashboard' ? 'active' : '' }}">
                 Dashboard
             </button>
-            <button wire:click="$set('tab', 'tasks')" type="button" class="p-1 {{ $tab === 'tasks' ? 'bg-blue-900 hover:bg-blue-800' : 'bg-zinc-500 hover:bg-zinc-700' }}">
+            <button wire:click="$set('tab', 'tasks')" type="button" class="{{ $tab === 'tasks' ? 'active' : '' }}">
                 Tasks
             </button>
-            <button wire:click="$set('tab', 'edit')" type="button" class="p-1 {{ $tab === 'edit' ? 'bg-blue-900 hover:bg-blue-800' : 'bg-zinc-500 hover:bg-zinc-700' }}">
+            <button wire:click="$set('tab', 'edit')" type="button" class="{{ $tab === 'edit' ? 'active' : '' }}">
                 Edit
             </button>
-            <button wire:click="$set('tab', 'files')" type="button" class="p-1 {{ $tab === 'files' ? 'bg-blue-900 hover:bg-blue-800' : 'bg-zinc-500 hover:bg-zinc-700' }}">
+            <button wire:click="$set('tab', 'files')" type="button" class="{{ $tab === 'files' ? 'active' : '' }}">
                 Files
             </button>
-            <button wire:click="$set('tab', 'discussions')" type="button" class="rounded-r-md p-1 {{ $tab === 'discussions' ? 'bg-blue-900 hover:bg-blue-800' : 'bg-zinc-500 hover:bg-zinc-700' }}">
+            <button wire:click="$set('tab', 'discussions')" type="button" class="{{ $tab === 'discussions' ? 'active' : '' }}">
                 Discussions
             </button>
         </div>
@@ -50,7 +44,7 @@
                 </div>
                 @break
             @case('tasks')
-                <livewire:project-task-list :project-id="$projectId" />
+                <livewire:project-task-list :project-id="$project->id" />
                 @break
             @case('edit')
                 <div>Edit</div>
