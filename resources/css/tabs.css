@@ -3,7 +3,11 @@
 }
 
 .button-tabs button {
-    @apply flex-grow rounded-md px-2 py-1 hover:bg-zinc-200;
+    @apply flex-grow rounded-md px-2 py-1 hover:bg-zinc-200 flex justify-center items-center;
+}
+
+.button-tabs button .icon {
+    @apply h-4 w-4 mr-2;
 }
 
 .button-tabs button.active {
@@ -12,14 +16,14 @@
 
 @media (prefers-color-scheme: dark) {
     .button-tabs {
-
+        @apply bg-zinc-700;
     }
 
     .button-tabs button {
-
+        @apply hover:bg-zinc-800;
     }
 
     .button-tabs button.active {
-
+        @apply bg-zinc-900 hover:bg-zinc-800;
     }
 }

@@ -8,9 +8,11 @@
     $hasError = $errors->has($errorName )
 @endphp
 <div class="form-group">
-    <label for="{{ $inputId }}" class="form-label {{ $hasError ? 'error' : '' }}">
-        {{ $label }}
-    </label>
+    @if(!empty($label))
+        <label for="{{ $inputId }}" class="form-label {{ $hasError ? 'error' : '' }}">
+            {{ $label }}
+        </label>
+    @endif
 
     <div class="form-control-container">
         <input

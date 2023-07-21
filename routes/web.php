@@ -23,7 +23,7 @@ Route::get('/', function () {
 });
 
 Route::middleware('auth')->group(function () {
-    Route::get('/app', \App\Http\Livewire\ProjectPageContainer::class)->name('app');
+    Route::get('/app', \App\Http\Livewire\ProjectIndexPage::class)->name('app');
 
     Route::get('/dashboard', \App\Http\Controllers\DashboardController::class)->name('dashboard');
 
@@ -33,8 +33,9 @@ Route::middleware('auth')->group(function () {
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 
-    Route::resource('projects', \App\Http\Controllers\ProjectController::class)->except('show');
+    // Route::resource('projects', \App\Http\Controllers\ProjectController::class)->except('show');
 
+    Route::get('/projects', \App\Http\Livewire\ProjectIndexPage::class)->name('projects.index');
     Route::get('/projects/{project}', \App\Http\Livewire\ProjectDetailPage::class)->name('projects.show');
 
     Route::put('/projects/{project}/boards/sort', \App\Http\Controllers\ProjectBoardSortController::class)->name('projects.boards.sort');

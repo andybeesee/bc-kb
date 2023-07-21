@@ -10,15 +10,15 @@ use Livewire\Component;
 
 // TODO: Complete task from dashboard, view task detail on click it
 // TODO: Better dashboard...
-class ProjectPageContainer extends Component
+class ProjectIndexPage extends Component
 {
     public $projectSearch = '';
-
-    public $projectId = null;
 
     public $currentOnly = true;
 
     public $assignedToUser = true;
+
+    public $tab = 'list';
 
     public $teams = [];
 
@@ -30,6 +30,13 @@ class ProjectPageContainer extends Component
 
     public bool $newProject = false;
 
+    public array $statusesToShow = [
+        'planning',
+        'planned',
+        'in_progress',
+        'late',
+    ];
+
     public $listeners = [
         'projectDetailClosed' => 'closeProject',
         'projectCreated' => 'showProject',
@@ -39,8 +46,10 @@ class ProjectPageContainer extends Component
     ];
 
     protected $queryString = [
-        'projectId',
         'newProject',
+        'teamId',
+        'projectList',
+        'statusesToShow',
     ];
 
     public function mount()
@@ -50,10 +59,7 @@ class ProjectPageContainer extends Component
 
     public function render()
     {
-        $dashboardData = [];
-        if(empty($this->projectId)) {
-            $dashboardData = $this->getDashboardData();
-        }
+        $dashboardData = $this->tab === 'dashboard' ? $this->getDashboardData() : [] ;
 
         $allTeams = Team::orderBy('name')->get();
 
@@ -67,8 +73,11 @@ class ProjectPageContainer extends Component
 
         $allUsers = User::orderBy('name')->get();
 
-        return view('livewire.project-page-container')
+        $statusOptions = config('statuses');
+
+        return view('livewire.project-index-page')
             ->with('dashboardData', $dashboardData)
+            ->with('statusOptions', $statusOptions)
             ->with('allTeams', $allTeams)
             ->with('userTeams', $userTeams)
             ->with('usersOnYourTeams', $usersOnYourTeams)
@@ -82,16 +91,12 @@ class ProjectPageContainer extends Component
 
     public function getProjectsProperty()
     {
-        $q = Project::with('team');
+        $q = Project::with(['team', 'owner'])
+            ->withCount(['pastDueTasks', 'incompleteTasks']);
 
         $q = $q->where(function($pq) {
-            if($this->currentOnly) {
-                $pq->whereIn('status', [
-                    'planning',
-                    'planned',
-                    'in_progress',
-                    'late',
-                ]);
+            if(count($this->statusesToShow) > 0) {
+                $pq->whereIn('status', $this->statusesToShow);
             }
 
             switch ($this->projectList) {
