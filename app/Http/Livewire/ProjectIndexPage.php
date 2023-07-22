@@ -28,6 +28,8 @@ class ProjectIndexPage extends Component
 
     public $projectList = 'user';
 
+    public $filtersOpen = false;
+
     public bool $newProject = false;
 
     public array $statusesToShow = [
@@ -46,9 +48,11 @@ class ProjectIndexPage extends Component
     ];
 
     protected $queryString = [
-        'newProject',
+        'tab',
         'teamId',
+        'userId',
         'projectList',
+        'filtersOpen',
         'statusesToShow',
     ];
 
