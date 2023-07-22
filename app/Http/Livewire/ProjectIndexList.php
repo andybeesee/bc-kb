@@ -7,6 +7,7 @@ use App\Models\Team;
 use App\Models\User;
 use Livewire\Component;
 
+// TODO: I want to show more here... with option to change project due date, status right here...
 class ProjectIndexList extends Component
 {
     public bool $filtersOpen = false;
