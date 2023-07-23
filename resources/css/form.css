@@ -45,6 +45,15 @@
     @apply border-red-600
 }
 
+.form-group.vertical {
+    @apply flex-col justify-start;
+}
+
+.form-group.vertical  .form-label{
+    @apply text-left;
+}
+
+
 @media(prefers-color-scheme: dark) {
     .form-label {
         @apply text-zinc-300;

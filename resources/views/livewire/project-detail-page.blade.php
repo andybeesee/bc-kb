@@ -2,7 +2,6 @@
     <div class="mb-2">
         <div class="flex justify-center">
             <div class="mb-2 text-center text-3xl font-bold">{{ $project->name }}</div>
-
         </div>
 
         <div class="flex justify-center items-center space-x-3">
@@ -17,6 +16,7 @@
             />
         </div>
     </div>
+
     <div class="mb-4">
         <div class="button-tabs">
             <button wire:click="$set('tab', 'dashboard')" type="button" class="{{ $tab === 'dashboard' ? 'active' : '' }}">
@@ -47,7 +47,9 @@
                 <livewire:project-task-list :project-id="$project->id" />
                 @break
             @case('edit')
-                <div>Edit</div>
+                <div>
+                    <livewire:project-form :project="$project" />
+                </div>
                 @break
             @case('files')
                 <div>Files</div>

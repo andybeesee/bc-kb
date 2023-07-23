@@ -1,4 +1,4 @@
-@props(['name', 'label' => '', 'help' => null, 'type' => 'text', 'value' => null])
+@props(['name', 'style' => 'horizontal', 'label' => '', 'help' => null, 'type' => 'text', 'value' => null])
 
 @php
     $inputId = $name.'-input';
@@ -7,7 +7,7 @@
     $errorName = empty($wiremodel) ? $name : $wiremodel;
     $hasError = $errors->has($errorName )
 @endphp
-<div class="form-group">
+<div class="form-group {{ $style }}">
     @if(!empty($label))
         <label for="{{ $inputId }}" class="form-label {{ $hasError ? 'error' : '' }}">
             {{ $label }}
