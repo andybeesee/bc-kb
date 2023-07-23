@@ -23,9 +23,9 @@ class ProjectForm extends Component
     }
 
     public $rules = [
-        'project.name' => 'required|unique:projects,name',
+        'project.name' => 'required',
         'project.description' => 'nullable',
-        'project.due_date' => 'nullable',
+        'project.due_date' => 'nullable|date',
         'project.status' => 'required',
         'project.team_id' => 'nullable|exists:teams,id',
         'project.owner_id' => 'nullable|exists:users,id',
@@ -45,7 +45,9 @@ class ProjectForm extends Component
 
     public function saveProject()
     {
-        $this->validate();
+        $this->validate([
+            'project.name' => 'unique:projects,name'.($this->isNew ? '' : ','.$this->project->id),
+        ]);
 
         $this->project->save();
 

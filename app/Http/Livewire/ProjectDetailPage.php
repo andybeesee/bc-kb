@@ -12,6 +12,7 @@ class ProjectDetailPage extends Component
     protected $listeners = [
         'setProjectDueDate' => 'setDueDate',
         'removeProjectDueDate' => 'removeDueDate',
+        'projectUpdated' => 'handleProjectUpdate'
     ];
 
     public string $tab = 'dashboard';
@@ -45,5 +46,10 @@ class ProjectDetailPage extends Component
                 'due_date' => null,
                 'updated_at' => now(),
             ]);
+    }
+
+    public function handleProjectUpdate()
+    {
+        $this->tab = 'dashboard';
     }
 }

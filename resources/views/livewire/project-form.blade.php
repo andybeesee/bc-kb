@@ -9,7 +9,7 @@
 
         <x-form.textarea wire:model="project.description" label="Description" name="description" help="optionally put additional info in here" :value="$project->description" />
 
-        <x-form.input wire:model="project.due_date" type="date" name="due_date" label="Due Date" help="This is optional" :value="$project->due_date?->format('Y-m-d')" />
+        <x-form.date-picker name="due_date" wire:model="project.due_date" label="Due Date" />
 
         <x-form.select wire:model="project.status" :empty-start="false" :options="$statuses" label="Status" name="status" :value="$project->status" />
 
