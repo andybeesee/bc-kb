@@ -4,7 +4,7 @@
             @click="open = !open"
             title="Open filters"
             class="flex items-center p-1 mr-3 rounded-md border border-zinc-400 hover:bg-zinc-100"
-            :class="open ? 'bg-indigo-700 text-white hover:bg-indigo-500' : 'bg-white hover:bg-zinc-200'"
+            :class="open ? 'bg-indigo-700 text-white hover:bg-indigo-800' : 'bg-white dark:bg-zinc-900 hover:bg-zinc-200 dark:hover:bg-zinc-700'"
         >
             <x-icon icon="sliders" class="h-6 w-6" />
         </button>
@@ -126,7 +126,7 @@
                             <div class="grid ml-4  border-l pl-3 max-h-[350px] overflow-y-scroll" x-show="open" style="display: none;">
                                 @foreach($allUsers as $alluser)
                                     <button
-                                        class="text-left p-1 rounded {{ $alluser->id === $alluser->id ? 'bg-purple-200 dark:bg-purple-700' : 'hover:bg-zinc-200 dark:hover:bg-zinc-800' }}"
+                                        class="text-left p-1 rounded {{ $filterType === 'all_user' && $filterId === $alluser->id ? 'bg-purple-200 dark:bg-purple-700' : 'hover:bg-zinc-200 dark:hover:bg-zinc-800' }}"
                                         type="button"
                                         wire:click="setFilter('all_user', {{$alluser->id}})"
                                     >
