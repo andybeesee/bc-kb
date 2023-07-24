@@ -72,36 +72,36 @@ class ProjectIndexList extends Component
         $q = Project::with(['team', 'owner'])
             ->withCount(['pastDueTasks', 'incompleteTasks']);
 
-        $q = $q->where(function($pq) {
+
+        if(!empty($this->projectSearch)) {
+            // TODO: More thorough searching
+            $q = $q->where('name', 'LIKE', '%'.trim($this->projectSearch).'%');
+        } else {
+            //searching removes the filter
             if(count($this->statusesToShow) > 0) {
-                $pq->whereIn('status', $this->statusesToShow);
+                $q->whereIn('status', $this->statusesToShow);
             }
 
             switch ($this->filterType) {
                 case 'current_user':
-                    $pq = $pq->where('owner_id', auth()->user()->id);
+                    $q = $q->where('owner_id', auth()->user()->id);
                     break;
                 case 'current_user_teams':
-                    $pq = $pq->whereHas('team', function($tq) {
+                    $q = $q->whereHas('team', function($tq) {
                         return $tq->whereHas('members', fn($mq) => $mq->where('team_user.user_id', auth()->user()->id));
                     });
                     break;
                 case 'all_user':
                 case 'team_user':
-                    $pq = $pq->where('owner_id', $this->filterId);
+                    $q = $q->where('owner_id', $this->filterId);
                     break;
                 case 'all_team':
                 case 'user_team':
-                    $pq = $pq->where('team_id', $this->filterId);
+                    $q = $q->where('team_id', $this->filterId);
                     break;
             }
+        }
 
-            if(empty($this->projectSearch)) {
-                $pq = $pq->where('name', 'LIKE', '%'.trim($this->projectSearch).'%');
-            }
-
-            return $pq;
-        });
 
         return $q->limit(200)->get();
     }

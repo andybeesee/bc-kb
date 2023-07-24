@@ -9,7 +9,7 @@
             <x-icon icon="sliders" class="h-6 w-6" />
         </button>
         <x-form.input
-            type="text" p
+            type="text"
             laceholder="Search"
             class="p-1 w-full text-sm"
             name="project_search"
