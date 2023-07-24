@@ -36,11 +36,15 @@
                     @endforeach
                 </div>
                 <div>
+                    @php
+                        $btnNormalClass = 'hover:bg-zinc-300 dark:hover:bg-zinc-900';
+                        $btnActiveClass = 'bg-purple-100 hover:bg-purple-300 dark:bg-purple-700 dark:hover:bg-purple-900';
+                    @endphp
                     <div class="font-semibold text-sm mb-1">Projects to Show</div>
                     <div class="grid gap-1">
                         <button
                             type="button"
-                            class="w-full text-left rounded-md p-1 {{ $filterType === 'current_user' ? 'bg-purple-200 dark:bg-purple-700' : 'hover:bg-zinc-300 dark:hover:bg-zinc-900' }}"
+                            class="w-full text-left rounded-md p-1 {{ $filterType === 'current_user' ? $btnActiveClass : $btnNormalClass }}"
                             wire:click="setFilter('current_user')"
                         >
                             Your Projects
@@ -48,7 +52,7 @@
 
                         <button
                             type="button"
-                            class="w-full text-left rounded-md p-1 {{ $filterType === 'current_user_teams' ? 'bg-purple-200 dark:bg-purple-700' : 'hover:bg-zinc-300 dark:hover:bg-zinc-900' }}"
+                            class="w-full text-left rounded-md p-1 {{ $filterType === 'current_user_teams' ? $btnActiveClass : $btnNormalClass }}"
                             wire:click="setFilter('current_user_teams')"
                         >
                             Projects From Your Teams
@@ -56,7 +60,7 @@
 
                         <div x-data="{ open: false }">
                             <button
-                                class="{{ $filterType === 'user_team' ? 'bg-purple-100 hover:bg-purple-300 dark:hover:bg-purple-900' : ' hover:bg-zinc-300 dark:hover:bg-zinc-900' }} text-left p-1 flex items-center rounded-md w-full"
+                                class="{{ $filterType === 'user_team' ? $btnActiveClass : $btnNormalClass }} text-left p-1 flex items-center rounded-md w-full"
                                 type="button"
                                 @click="open = !open"
                             >
@@ -67,7 +71,7 @@
                             <div class="grid border-l pl-3 ml-4 max-h-[350px] overflow-y-scroll" x-show="open" style="display: none;">
                                 @foreach($userTeams as $uTeam)
                                     <button
-                                        class="text-left p-1 rounded {{ $filterType === 'user_team' && $filterId === $uTeam->id ? 'bg-purple-200 dark:bg-purple-700' : 'hover:bg-zinc-200 dark:hover:bg-zinc-800' }}"
+                                        class="text-left p-1 rounded {{ $filterType === 'user_team' && $filterId === $uTeam->id ? $btnActiveClass : 'hover:bg-zinc-200 dark:hover:bg-zinc-800' }}"
                                         type="button"
                                         wire:click="setFilter('user_team', {{$uTeam->id}})"
                                     >
@@ -78,7 +82,7 @@
                         </div><!-- end of your teams -->
 
                         <div x-data="{ open: false }">
-                            <button class="text-left p-1 rounded-md flex w-full hover:bg-zinc-300 dark:hover:bg-zinc-900 items-center" type="button" @click="open = !open">
+                            <button class="text-left p-1 rounded-md flex w-full {{ $filterType === 'all_team' ? $btnActiveClass : $btnNormalClass }} items-center" type="button" @click="open = !open">
                                 <x-icon icon="caret-right" x-show="!open" class="h-4 w-4 mr-1" />
                                 <x-icon icon="caret-down" x-show="open" class="h-4 w-4 mr-1" />
                                 All Teams
@@ -86,9 +90,9 @@
                             <div class="grid border-l pl-3 ml-4 max-h-[350px] overflow-y-scroll" x-show="open" style="display: none;">
                                 @foreach($allTeams as $aTeam)
                                     <button
-                                        class="text-left p-1 rounded {{ $filterType === 'all_team' && $filterId === $aTeam->id ? 'bg-purple-200 dark:bg-purple-700' : 'hover:bg-zinc-200 dark:hover:bg-zinc-800' }}"
+                                        class="text-left p-1 rounded {{ $filterType === 'all_team' && $filterId === $aTeam->id ? $btnActiveClass : $btnNormalClass }}"
                                         type="button"
-                                        wire:click="setFilter('all_team', {{$uTeam->id}})"
+                                        wire:click="setFilter('all_team', {{$aTeam->id}})"
                                     >
                                         {{ $aTeam->name }}
                                     </button>
@@ -97,7 +101,7 @@
                         </div><!-- end of all teams -->
 
                         <div x-data="{ open: false }">
-                            <button class="text-left p-1 items-center rounded-md flex w-full hover:bg-zinc-300 dark:hover:bg-zinc-900" type="button" @click="open = !open">
+                            <button class="text-left p-1 items-center rounded-md flex w-full {{ $filterType === 'team_user' ? $btnActiveClass : $btnNormalClass }}" type="button" @click="open = !open">
                                 <x-icon icon="caret-right" x-show="!open" class="h-4 w-4 mr-1" />
                                 <x-icon icon="caret-down" x-show="open" class="h-4 w-4 mr-1" />
                                 Users on Your Teams
@@ -118,7 +122,7 @@
                         </div><!-- end of users on your teams -->
 
                         <div x-data="{ open: false }">
-                            <button class="text-left p-1 flex items-center rounded-md flex w-full hover:bg-zinc-300 dark:hover:bg-zinc-900" type="button" @click="open = !open">
+                            <button class="text-left p-1 flex items-center rounded-md w-full {{ $filterType === 'all_user' ? $btnActiveClass : $btnNormalClass }}" type="button" @click="open = !open">
                                 <x-icon icon="caret-right" x-show="!open" class="h-4 w-4 mr-1" />
                                 <x-icon icon="caret-down" x-show="open" class="h-4 w-4 mr-1" />
                                 All Users
@@ -126,7 +130,7 @@
                             <div class="grid ml-4  border-l pl-3 max-h-[350px] overflow-y-scroll" x-show="open" style="display: none;">
                                 @foreach($allUsers as $alluser)
                                     <button
-                                        class="text-left p-1 rounded {{ $filterType === 'all_user' && $filterId === $alluser->id ? 'bg-purple-200 dark:bg-purple-700' : 'hover:bg-zinc-200 dark:hover:bg-zinc-800' }}"
+                                        class="text-left p-1 rounded {{ $filterType === 'all_user' && $filterId === $alluser->id ? $btnActiveClass : $btnNormalClass }}"
                                         type="button"
                                         wire:click="setFilter('all_user', {{$alluser->id}})"
                                     >
