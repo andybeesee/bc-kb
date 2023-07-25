@@ -1,13 +1,24 @@
 <div
-    x-data="{ modifying: @entangle('modifying') }"
+    x-data="{ modifyingTab: @entangle('modifyTab') }"
     class="flex items-center"
+    @modal-close="modifyingTab =  ''"
 >
-    @if($modifying)
-        <x-modal name="proj-{{ $project->id }}-list-item-modal" :show="$modifying" @modal-close="modifying =  false">
-            <div class="p-4">
-                MODAL CONTENT
-            </div>
-        </x-modal>
+    @if(!empty($modifyTab))
+        <div>
+            this is all busted to heck. so annoying. lets do our v3 upgrade, tekepoit this to body
+            <x-modal name="proj-{{ $project->id }}-list-item-modal-{{ $modifyTab }}">
+                <div class="p-4">
+                    @switch($modifyTab)
+                        @case('edit')
+                            <livewire:project-form :project="$project" />
+                            @break
+                        @case('update')
+                            <div>Livewire status update form</div>
+                            @break
+                    @endswitch
+                </div>
+            </x-modal>
+        </div>
     @endif
     <div class="flex items-start w-full">
         <div class="mr-3 mt-1 rounded-full bg-zinc-100 text-zinc-700 dark:bg-zinc-700 dark:text-zinc-300">
@@ -26,7 +37,7 @@
                         </div>
                     </div>
                     <div class="font-semibold">
-                        {{ $project->name }}
+                        {{ $project->name }} -- {{ $modifyTab }}
                     </div>
 
                 </div>
