@@ -92,4 +92,13 @@ class Project extends Model
     {
         return !empty($this->completed_date);
     }
+
+    public function getIsLateAttribute()
+    {
+        if(empty($this->due_date)) {
+            return false;
+        }
+
+        return $this->due_date->isPast();
+    }
 }
