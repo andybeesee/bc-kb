@@ -197,10 +197,11 @@
                                         Due {{ $project->due_date->format(config('app.date_display')) }}
                                     </div>
                                 @endif
-                                <div>
-                                    {{-- TODO: Inline last update change, def --}}
-                                    Last update on xxxx by username: some tet goeshad asdkjl
-                                </div>
+                                @if($project->currentStatus)
+                                    <div title="Update entered by {{ $project->currentStatus->creator->name }}">
+                                        Last update {{ $project->currentStatus->created_at->format(config('app.date_display')) }}: {{ $project->currentStatus->status }}
+                                    </div>
+                                @endif
                             </div>
 
                         </div>

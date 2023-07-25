@@ -69,7 +69,7 @@ class ProjectIndexList extends Component
 
     public function getProjectsProperty()
     {
-        $q = Project::with(['team', 'owner'])
+        $q = Project::with(['team', 'owner', 'currentStatus', 'currentStatus.creator'])
             ->withCount(['pastDueTasks', 'incompleteTasks']);
 
 

@@ -32,6 +32,11 @@ class Project extends Model
         return $this->belongsTo(Team::class);
     }
 
+    public function currentStatus()
+    {
+        return $this->morphOne(CurrentStatus::class, 'attached')->orderBy('created_at', 'DESC');
+    }
+
     public function owner()
     {
         return $this->belongsTo(User::class, 'owner_id');

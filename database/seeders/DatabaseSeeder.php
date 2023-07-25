@@ -4,6 +4,7 @@ namespace Database\Seeders;
 
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use App\Models\Comment;
+use App\Models\CurrentStatus;
 use App\Models\Discussion;
 use App\Models\Project;
 use App\Models\Board;
@@ -90,6 +91,8 @@ class DatabaseSeeder extends Seeder
                 $project->owner_id = $this->faker->boolean() ? $owner->id : null;
                 $project->save();
 
+                $this->addStatuses('project', $project->id, random_int(1, 10));
+
                 if($this->faker->boolean(70)) {
                     $dueDate = $this->faker->dateTimeBetween('-1 year', '+11 years')->format('Y-m-d');
                     $completeDated = $this->faker->dateTimeBetween('-6 months', '+10 years')->format('Y-m-d');
@@ -132,6 +135,10 @@ class DatabaseSeeder extends Seeder
                             'completed_by' => $isComplete ? $completedBy : null,
                         ]);
 
+                    if($this->faker->boolean()) {
+                        $this->addStatuses('task', $task->id, random_int(1, 10));
+                    }
+
                     if($this->faker->boolean(40)) {
                         $this->addComments('task', $task->id, random_int(1, 10));
                     }
@@ -157,7 +164,21 @@ class DatabaseSeeder extends Seeder
 
             // TODO: Reactions
         }
+    }
 
+    public function addStatuses($type, $id, $qty = 1)
+    {
+        for($x = 0; $x < $qty; $x++) {
+            $statusAuthorId = $this->users->random()->id;
+
+            CurrentStatus::factory()
+                ->create([
+                    'attached_id' => $id,
+                    'attached_type' => $type,
+                    'created_by' => $statusAuthorId,
+                    'updated_by' => $statusAuthorId,
+                ]);
+        }
     }
 
     public function addDiscussions($type, $id, $qty)
