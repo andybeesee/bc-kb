@@ -23,7 +23,7 @@ Route::get('/', function () {
 });
 
 Route::middleware('auth')->group(function () {
-    Route::get('/app', \App\Http\Livewire\ProjectIndexPage::class)->name('app');
+    Route::get('/app', \App\Livewire\ProjectIndexPage::class)->name('app');
 
     Route::get('/dashboard', \App\Http\Controllers\DashboardController::class)->name('dashboard');
 
@@ -35,8 +35,8 @@ Route::middleware('auth')->group(function () {
 
     // Route::resource('projects', \App\Http\Controllers\ProjectController::class)->except('show');
 
-    Route::get('/projects', \App\Http\Livewire\ProjectIndexPage::class)->name('projects.index');
-    Route::get('/projects/{project}', \App\Http\Livewire\ProjectDetailPage::class)->name('projects.show');
+    Route::get('/projects', \App\Livewire\ProjectIndexPage::class)->name('projects.index');
+    Route::get('/projects/{project}', \App\Livewire\ProjectDetailPage::class)->name('projects.show');
 
     Route::put('/projects/{project}/boards/sort', \App\Http\Controllers\ProjectBoardSortController::class)->name('projects.boards.sort');
     Route::get('/projects/{project}/discussions', \App\Http\Controllers\ProjectDiscussionController::class)->name('projects.discussions.index');

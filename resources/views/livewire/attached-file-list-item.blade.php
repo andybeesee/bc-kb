@@ -1,7 +1,7 @@
 <div>
     @if($editing)
         <div class="py-2">
-            <form class="p-2 grid gap-4" wire:submit.prevent="save">
+            <form class="p-2 grid gap-4" wire:submit="save">
                 <x-form.input
                     autofocus
                     label="Filename"

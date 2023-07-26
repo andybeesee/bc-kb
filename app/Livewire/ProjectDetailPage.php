@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Livewire;
+namespace App\Livewire;
 
 use App\Models\Project;
 use Livewire\Component;
@@ -30,22 +30,14 @@ class ProjectDetailPage extends Component
 
     public function setDueDate($date)
     {
-        \DB::table('projects')
-            ->where('id', $this->project->id)
-            ->update([
-                'due_date' => $date,
-                'updated_at' => now(),
-            ]);
+        $this->project->due_date = $date;
+        $this->project->save();
     }
 
     public function removeDueDate()
     {
-        \DB::table('projects')
-            ->where('id', $this->project->id)
-            ->update([
-                'due_date' => null,
-                'updated_at' => now(),
-            ]);
+        $this->project->due_date = null;
+        $this->project->save();
     }
 
     public function handleProjectUpdate()

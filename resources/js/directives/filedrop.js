@@ -50,7 +50,7 @@ export default function(el, { expression }, { evaluate, cleanup }) {
         // console.log('cakked dropHandler', e, e.dataTransfer.files);
         livewireComponent.uploadMultiple('files', e.dataTransfer.files, (succ) => {
             console.log("usccess", succ, options.eventName, ...options.eventParams)
-            Livewire.emit(options.eventName, ...options.eventParams);
+            Livewire.dispatch(options.eventName, options.eventParams);
         }, (err) => {
             console.log('error', err);
         }, (evt) => {

@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Livewire;
+namespace App\Livewire;
 
 use App\Models\Project;
 use Illuminate\Support\Str;
@@ -79,6 +79,6 @@ class ProjectStatusButton extends Component
 
         $this->changing = false;
 
-        $this->emit('status-updated', $this->project->id);
+        $this->dispatch('status-updated', $this->project->id);
     }
 }

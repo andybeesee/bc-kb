@@ -4,7 +4,7 @@
     @else
 
     @endif
-    <form class="grid max-w-xl gap-5" wire:submit.prevent="saveProject">
+    <form class="grid max-w-xl gap-5" wire:submit="saveProject">
         <x-form.input wire:model="project.name" label="Name" name="name" help="All projects must have a unique name" :value="$project->name" />
 
         <x-form.textarea wire:model="project.description" label="Description" name="description" help="optionally put additional info in here" :value="$project->description" />

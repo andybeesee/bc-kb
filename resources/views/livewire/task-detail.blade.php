@@ -44,7 +44,6 @@
                                 <dt>Due Date</dt>
                                 <dd class="col-span-3">
                                     <x-date-change
-                                        wire:key="task-detail-{{ $task->id }}-due-{{ $task->due_date?->getTimestamp() }}"
                                         change-event="updateDueDate"
                                         remove-event="removeDueDate"
                                         :model-id="$task->id"
@@ -60,7 +59,6 @@
                                     <dt>Completed by</dt>
                                     <dd class="col-span-3">
                                         <livewire:user-selector
-                                            wire:key="task-detail-{{ $task->id }}-{{ $task->completed_by }}"
                                             :user="$task->completedBy"
                                             :model-id="$task->id"
                                             change-event="changeCompleted"
@@ -72,7 +70,6 @@
                                     <dt>Date Completed</dt>
                                     <dd class="col-span-3">
                                         <x-date-change
-                                            wire:key="task-detail-{{ $task->id }}-completed-{{ $task->completed_date?->getTimestamp() }}"
                                             :model-id="$task->id"
                                             :date="$task->completed_date"
                                             prefix="Due"

@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Livewire;
+namespace App\Livewire;
 
 use App\Models\File;
 use Livewire\Component;
@@ -52,6 +52,6 @@ class AttachedFileListItem extends Component
         }
 
         $this->editing = false;
-        $this->emitUp('fileSaved', $this->file->id);
+        $this->dispatch('fileSaved', $this->file->id);
     }
 }

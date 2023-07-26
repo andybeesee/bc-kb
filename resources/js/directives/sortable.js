@@ -25,7 +25,7 @@ export default function(el, { expression }, { evaluate, cleanup }) {
             const itemId = e.item.getAttribute(itemAttribute);
             const groupId = e.to.getAttribute('data-group-id') ?? null
 
-            Livewire.emit('movedList', itemId, groupId, pullItems(e.to, itemAttribute));
+            Livewire.dispatch('movedList', itemId, groupId, pullItems(e.to, itemAttribute));
         },
         onEnd(e) {
             if(e.type === 'add') {
@@ -45,7 +45,7 @@ export default function(el, { expression }, { evaluate, cleanup }) {
                 axios.put(data.url, { items });
             } else {
                 console.log('event name is ', data.event ?? 'sorted');
-                Livewire.emit(data.event ?? 'sorted', items, groupId);
+                Livewire.dispatch(data.event ?? 'sorted', items, groupId);
             }
         },
         ghostClass: ['dark:bg-zinc-600', 'bg-zinc-100'],

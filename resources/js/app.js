@@ -9,12 +9,14 @@ window.flatpickr = flatpickr;
 
 window.createPopper = createPopper;
 
-import Alpine from 'alpinejs';
+import { Livewire, Alpine } from '../../vendor/livewire/livewire/dist/livewire.esm';
 
-window.Alpine = Alpine;
+//window.Alpine = Alpine;
 Alpine.directive('filedrop', filedropDirective);
 Alpine.directive('sortable', sortableDirective)
-Alpine.start();
+
+Livewire.start();
+// Alpine.start();
 
 function scrollStuffIntoView() {
     Array.from(document.querySelectorAll('[data-scroll-into-view]'))

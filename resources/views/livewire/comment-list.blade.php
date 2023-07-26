@@ -3,7 +3,7 @@
         <div class="card-title">
             Comments
         </div>
-        <form class="card-body" wire:submit.prevent="addComment">
+        <form class="card-body" wire:submit="addComment">
             <x-form.textarea style="vertical" wire:model="newComment" name="comment" label="New Comment" />
             <button type="submit" class="mt-2 btn btn-primary">
                 Add Comment

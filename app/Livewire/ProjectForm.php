@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Livewire;
+namespace App\Livewire;
 
 use App\Models\Project;
 use Livewire\Component;
@@ -52,9 +52,9 @@ class ProjectForm extends Component
         $this->project->save();
 
         if($this->isNew) {
-            $this->emitUp('projectCreated', $this->project->id);
+            $this->dispatch('projectCreated', $this->project->id);
         } else {
-            $this->emitUp('projectUpdated', $this->project->id);
+            $this->dispatch('projectUpdated', $this->project->id);
         }
     }
 }

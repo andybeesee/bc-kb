@@ -6,7 +6,7 @@
     }
 }">
     @if($editing)
-        <form wire:submit.prevent="saveChange">
+        <form wire:submit="saveChange">
             <x-form.textarea name="updatedcomment" label="Update Your Comment" wire:model="updatedComment" />
 
             <div class="mt-3">

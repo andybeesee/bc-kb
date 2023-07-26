@@ -39,14 +39,6 @@ switch ($width) {
 
     <div
         x-show="open"
-        {{-- TODO: Animations ar ejanky when data is loaded asynchronously, need to fix that and re-enable
-        x-transition.delay.100ms:enter="transition ease-out duration-200"
-        x-transition.delay.100ms:enter-start="transform opacity-0 scale-95"
-        x-transition.delay.100ms:enter-end="transform opacity-100 scale-100"
-        x-transition.delay.100ms:leave="transition ease-in duration-75"
-        x-transition.delay.100ms:leave-start="transform opacity-100 scale-100"
-        x-transition.delay.100ms:leave-end="transform opacity-0 scale-95"
-        --}}
         class="absolute z-50 mt-2 {{ $width }} rounded-md shadow-lg {{ $alignmentClasses }}"
         style="display: none;"
         @click.outside="open = false"

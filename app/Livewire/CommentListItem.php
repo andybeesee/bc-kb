@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Livewire;
+namespace App\Livewire;
 
 use App\Models\Comment;
 use Livewire\Component;
@@ -35,13 +35,13 @@ class CommentListItem extends Component
         $this->comment->comment = $this->updatedComment;
         $this->comment->save();
 
-        $this->emit('commentUpdated', $this->comment->id);
+        $this->dispatch('commentUpdated', $this->comment->id);
     }
 
     public function destroy()
     {
         $this->comment->delete();
 
-        $this->emit('commentDeleted');
+        $this->dispatch('commentDeleted');
     }
 }

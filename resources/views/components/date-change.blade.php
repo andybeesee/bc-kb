@@ -20,11 +20,8 @@
             inline: true,
             onChange: (date, dateString) => {
                 console.log('lets send date', date);
-                @if(empty($modelId))
-                    Livewire.emit('{{ $changeEvent }}', date[0].toISOString().slice(0, 10))
-                @else
-                    Livewire.emit('{{ $changeEvent }}', '{{ $modelId }}', date[0].toISOString().slice(0, 10))
-                @endif
+                const params = {{ $modelId ? '['.$modelId.', date[0].toISOString().slice(0, 10)]' : '[date[0].toISOString().slice(0, 10)]' }}
+                Livewire.dispatch('{{ $changeEvent }}', params)
                 this.closeCalendar();
             },
         });
@@ -34,7 +31,7 @@
         this.picker.destroy()
     },
     removeDate() {
-        Livewire.emit('{{ $removeEvent  }}', '{{$modelId}}');
+        Livewire.dispatch('{{ $removeEvent  }}', '{{$modelId}}');
         this.closeCalendar();
     }
 }"
