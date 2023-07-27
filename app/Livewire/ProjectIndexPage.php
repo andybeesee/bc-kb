@@ -4,15 +4,13 @@ namespace App\Livewire;
 
 use App\Models\Project;
 use App\Models\Task;
-use App\Models\Team;
-use App\Models\User;
 use Livewire\Component;
 
 // TODO: Complete task from dashboard, view task detail on click it
 // TODO: Better dashboard...
 class ProjectIndexPage extends Component
 {
-    public $tab = 'list';
+    public $tab = 'dashboard';
 
     public $listeners = [
         'projectDetailClosed' => 'closeProject',
