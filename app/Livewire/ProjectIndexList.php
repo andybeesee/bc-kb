@@ -5,6 +5,7 @@ namespace App\Livewire;
 use App\Models\Project;
 use App\Models\Team;
 use App\Models\User;
+use Livewire\Attributes\Computed;
 use Livewire\Attributes\Url;
 use Livewire\Component;
 
@@ -65,7 +66,8 @@ class ProjectIndexList extends Component
         $this->filterType = $type;
     }
 
-    public function getProjectsProperty()
+    #[Computed]
+    public function projects()
     {
         $q = Project::with(['team', 'owner', 'currentStatus', 'currentStatus.creator'])
             ->withCount(['pastDueTasks', 'incompleteTasks']);

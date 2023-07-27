@@ -28,7 +28,7 @@
                             <input
                                 type="checkbox"
                                 value="{{ $statusValue }}"
-                                wire:model="statusesToShow"
+                                wire:model.live="statusesToShow"
                                 name="statuses_to_show[]"
                             />
                             {{ $statusName }}
@@ -150,7 +150,10 @@
                     title="{{ $project->name }} -- {{ $project->status }}"
                     @click="window.location.href = '{{ route('projects.show', $project->id) }}'"
                 >
-                    <livewire:project-list-item wire:key="proj-lind-lis-it-{{ $project->id }}" :project="$project" />
+                    <livewire:project-list-item
+                        :project="$project"
+                        :key="'proj-lind-lis-it-'.$project->id"
+                    />
                 </div>
             @endforeach
         </div>
