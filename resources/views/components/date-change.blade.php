@@ -32,7 +32,8 @@
         this.picker.destroy()
     },
     removeDate() {
-        Livewire.dispatch('{{ $removeEvent  }}', '{{$modelId}}');
+        const params = this.modelId === '' ? [] : [this.modelId];
+        Livewire.dispatch('{{ $removeEvent  }}', params);
         this.closeCalendar();
     }
 }"

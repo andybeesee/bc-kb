@@ -3,6 +3,7 @@
 namespace App\Livewire;
 
 use App\Models\Comment;
+use Livewire\Attributes\Computed;
 use Livewire\Component;
 
 class CommentList extends Component
@@ -26,14 +27,9 @@ class CommentList extends Component
 
     public function render()
     {
+        \Log::debug("RENDER HITS?", [$this->attachedId, $this->attachedType]);
         // TODO: Paginate?
-        $comments = Comment::with('creator')
-            ->orderBy('created_at', 'DESC')
-            ->where('attached_id', $this->attachedId)
-            ->where('attached_type', $this->attachedType)
-            ->get();
-
-        return view('livewire.comment-list')->with('comments', $comments);
+        return view('livewire.comment-list');
     }
 
     public function addComment()
@@ -47,5 +43,15 @@ class CommentList extends Component
         $comment->save();
 
         $this->newComment = '';
+    }
+
+    #[Computed]
+    public function comments()
+    {
+        return Comment::with('creator')
+             ->orderBy('created_at', 'DESC')
+             ->where('attached_id', $this->attachedId)
+             ->where('attached_type', $this->attachedType)
+             ->get();
     }
 }

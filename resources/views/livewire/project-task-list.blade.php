@@ -18,7 +18,7 @@
         <div
             data-group-id="" class="divide-y divide-zinc-300 dark:divide-zinc-700" x-sortable="{ options: { handle: '.handle', group: { name: 'tasks', put: 'tasks', pull: 'tasks' } } }">
             @foreach($tasks as $task)
-                <x-task.list-item class="py-2 px-1" :task="$task" :sortable="true" />
+                <x-task.list-item class="py-2 px-1" :task="$task" :sortable="true" :key="'ungrouped-'.$task->id" />
             @endforeach
         </div>
     </div>
@@ -66,7 +66,7 @@
                         x-sortable="{ options: { handle: '.handle',  group: { name: 'tasks', put: 'tasks', pull: 'tasks' } } }"
                     >
                         @foreach($group->tasks as $task)
-                            <x-task.list-item class="py-2 px-1" :task="$task" :sortable="true" />
+                            <x-task.list-item class="py-2 px-1" :task="$task" :sortable="true" :key="'grouped-'.$group->id.'-'.$task->id" />
                         @endforeach
                     </div>
                 </div>

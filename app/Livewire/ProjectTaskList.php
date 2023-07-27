@@ -30,6 +30,8 @@ class ProjectTaskList extends Component
         'setTaskDue' => 'handleSetTaskDue',
         'removeTaskDue' => 'handleRemoveTaskDue',
         'saveFiles' => 'storeFiles',
+        'updateTaskCompletedDate' => 'updateCompletedDate',
+        'removeCompletedDate' => 'toggleTaskComplete',
         // handled here
         'sorted' => 'handleSort',
         'groupSorted' => 'handleGroupSorted',

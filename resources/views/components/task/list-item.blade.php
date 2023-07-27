@@ -73,23 +73,29 @@
 
 
                 @if($task->isComplete)
-                    <div class="text-green-600 dark:text-green-400 text-sm ml-3">
-                        {{ $task->completedBy->name }} {{ $task->completed_date->format(config('app.date_display')) }}
+                    <div class="text-green-600 dark:text-green-400 space-x-2 text-sm ml-3 flex items-center">
+                        {{ $task->completedBy->name }}
+                        <x-date-change
+                            prefix="Completed"
+                            :date="$task->completed_date"
+                            change-event="updateTaskCompletedDate"
+                            remove-event="removeCompletedDate"
+                            :model-id="$task->id"
+                        />
                     </div>
                 @else
                     <div class="text-sm">
                         {{  $task->assignedTo?->name }}
                     </div>
                     @if(!$task->isComplete)
-                        @if(!empty($task->due_date))
-                            <div class="text-sm">
-                                Due {{ $task->due_date->format(config('app.date_display')) }}
-                            </div>
-                        @else
-                            <div class="text-sm">
-                                No Due Date
-                            </div>
-                        @endif
+                        <x-date-change
+                            placeholder="No Due Date"
+                            prefix="Due"
+                            :date="$task->due_date"
+                            change-event="setTaskDue"
+                            remove-event="removeTaskDue"
+                            :model-id="$task->id"
+                        />
                     @endif
                 @endif
             </div>

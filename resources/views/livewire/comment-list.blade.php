@@ -4,16 +4,14 @@
             Comments
         </div>
         <form class="card-body" wire:submit="addComment">
-            <x-form.textarea style="vertical" wire:model="newComment" name="comment" label="New Comment" />
+            <x-form.textarea display="vertical" wire:model="newComment" name="comment" label="New Comment" />
             <button type="submit" class="mt-2 btn btn-primary">
                 Add Comment
             </button>
         </form>
         <div>
-            @foreach($comments as $comment)
-                <div>
-                    <livewire:comment-list-item :comment="$comment" wire:key="comm-{{ $comment->id }}-{{ $comment->updated_at->getTimestamp() }}" />
-                </div>
+            @foreach($this->comments as $comment)
+                <livewire:comment-list-item :comment="$comment" :key="$attachedId.'-'.$attachedType.'-comm-'.$comment->id" />
             @endforeach
         </div>
     </div>

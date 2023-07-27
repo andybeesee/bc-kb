@@ -30,7 +30,6 @@
                                 <dd class="col-span-3">
                                     <div class="w-1/2">
                                         <livewire:user-selector
-                                            wire:key="task-detail-{{ $task->id }}-assigned-{{ $task->assigned_to }}"
                                             :user="$task->assignedTo"
                                             :model-id="$task->id"
                                             change-event="assigned"
