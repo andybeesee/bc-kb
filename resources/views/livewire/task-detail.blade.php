@@ -3,13 +3,13 @@
         <h2>{{ $task->name }}</h2>
         @if($modalMode)
             <div class="mb-3 sub-nav">
-                <button type="button" class="link {{ $tab === 'detail' ? 'active' : '' }}" wire:click="setTab('detail')">
+                <button type="button" class="link {{ $taskTab === 'detail' ? 'active' : '' }}" wire:click="setTab('detail')">
                     Detail
                 </button>
-                <button type="button" class="link {{ $tab === 'files' ? 'active' : '' }}" wire:click="setTab('files')">
+                <button type="button" class="link {{ $taskTab === 'files' ? 'active' : '' }}" wire:click="setTab('files')">
                     {{ $task->files_count }} Files
                 </button>
-                <button type="button" class="link {{ $tab === 'comments' ? 'active' : '' }}" wire:click="setTab('comments')">
+                <button type="button" class="link {{ $taskTab === 'comments' ? 'active' : '' }}" wire:click="setTab('comments')">
                     {{ $task->comments_count ?? 0 }}
                     Comments
                 </button>
@@ -18,7 +18,7 @@
     </div>
     <div class="grid {{ $modalMode ? '' : 'grid-cols-2 gap-4 items-start'}}">
         <div class="grid {{ $modalMode ? '' : 'gap-4' }}">
-            @if(!$modalMode || $tab === 'detail')
+            @if(!$modalMode || $taskTab === 'detail')
                 <div class="card">
                     <div class="card-title">
                         Detail
@@ -103,7 +103,7 @@
             @endif
         </div>
 
-        @if(!$modalMode || $tab === 'files')
+        @if(!$modalMode || $taskTab === 'files')
             <div>
                 <livewire:attached-file-list attached-type="task" :attached-id="$task->id" />
             </div>
@@ -113,7 +113,7 @@
 
 
 
-    @if(!$modalMode || $tab === 'comments')
+    @if(!$modalMode || $taskTab === 'comments')
         <div class="{{ $modalMode ? '' : 'mt-4' }}">
             <livewire:comment-list attached-type="task" :attached-id="$task->id" />
         </div>

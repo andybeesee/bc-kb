@@ -4,12 +4,14 @@ namespace App\Livewire;
 
 use App\Models\Project;
 use App\Models\Task;
+use Livewire\Attributes\Url;
 use Livewire\Component;
 
 // TODO: Complete task from dashboard, view task detail on click it
 // TODO: Better dashboard...
 class ProjectIndexPage extends Component
 {
+    #[Url]
     public $tab = 'dashboard';
 
     public $listeners = [
@@ -18,10 +20,6 @@ class ProjectIndexPage extends Component
         'projectUpdated' => 'render',
         'status-updated' => 'render',
         'projectAdded' => 'render',
-    ];
-
-    protected $queryString = [
-        'tab',
     ];
 
     public function mount()

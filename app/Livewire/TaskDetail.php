@@ -4,6 +4,7 @@ namespace App\Livewire;
 
 use App\Models\Task;
 use App\Traits\LivewireTaskFunctions;
+use Livewire\Attributes\Url;
 use Livewire\Component;
 use Livewire\WithFileUploads;
 
@@ -17,7 +18,8 @@ class TaskDetail extends Component
 
     public $startingTab = null;
 
-    public $tab = 'detail';
+    #[Url]
+    public $taskTab = 'detail';
 
     protected $listeners = [
         'updateDueDate' => 'handleSetTaskDue',
@@ -57,6 +59,6 @@ class TaskDetail extends Component
 
     public function setTab($tab)
     {
-        $this->tab = $tab;
+        $this->taskTab = $tab;
     }
 }

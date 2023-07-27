@@ -3,6 +3,7 @@
 namespace App\Livewire;
 
 use App\Models\Project;
+use Livewire\Attributes\Url;
 use Livewire\Component;
 
 class ProjectDetailPage extends Component
@@ -15,16 +16,11 @@ class ProjectDetailPage extends Component
         'projectUpdated' => 'handleProjectUpdate'
     ];
 
+    #[Url]
     public string $tab = 'dashboard';
-
-    protected $queryString = [
-        'tab',
-    ];
 
     public function render()
     {
-        // $project = Project::findOrFail($this->project->id);
-
         return view('livewire.project-detail-page');
     }
 

@@ -36,7 +36,7 @@
                 <div class="grid divide-y divide-zinc-400">
                     @if(!empty($user) &&! $disableRemove)
                         <button
-                            wire:click="$dispatch('{{ $removeEvent }}', {{$modelId}})"
+                            wire:click="$dispatch('{{ $removeEvent }}', [{{$modelId}}])"
                             class="p-1 flex items-center text-left text-sm bg-red-50 dark:bg-red-800 dark:hover:bg-red-600 hover:bg-red-100"
                             type="button"
                         >
@@ -48,7 +48,7 @@
                     @foreach($this->userOptions as $userOpt)
                         @php $assignedToThisUser =  $user?->id === $userOpt->id; @endphp
                         <button
-                            wire:click="$dispatch('{{ $changeEvent }}', {{$modelId}}, {{$userOpt->id}})"
+                            wire:click="$dispatch('{{ $changeEvent }}', [{{$modelId}}, {{$userOpt->id}}])"
                             class="{{ $assignedToThisUser ? 'dark:bg-indigo-700 bg-indigo-100' : '' }} p-1 flex items-center text-left text-sm hover:bg-zinc-100 dark:hover:bg-zinc-600"
                             type="button"
                         >

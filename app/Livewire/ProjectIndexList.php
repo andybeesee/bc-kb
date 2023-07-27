@@ -5,31 +5,29 @@ namespace App\Livewire;
 use App\Models\Project;
 use App\Models\Team;
 use App\Models\User;
+use Livewire\Attributes\Url;
 use Livewire\Component;
 
 // TODO: I want to show more here... with option to change project due date, status right here...
 class ProjectIndexList extends Component
 {
+    #[Url]
     public bool $filtersOpen = false;
 
+    #[Url]
     public string $filterType = 'current_user';
 
-    public int|null $filterId = null;
+    #[Url]
+    public int|null|string $filterId = null;
 
     public string $projectSearch = '';
 
+    #[Url]
     public array $statusesToShow = [
         'planning',
         'planned',
         'in_progress',
         'late',
-    ];
-
-    protected $queryString = [
-        'statusesToShow',
-        'filterType',
-        'filterId',
-        'filtersOpen',
     ];
 
     public function render()
