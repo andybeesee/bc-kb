@@ -13,6 +13,7 @@
 {{-- TODO: Need a better dat epciker with Dark Mode Support --}}
 <div
     x-data="{
+    modelId: '{{ $modelId ?? '' }}',
     calendarIsOpen: false,
     openCalendar() {
         this.calendarIsOpen = true;
@@ -20,7 +21,7 @@
             inline: true,
             onChange: (date, dateString) => {
                 console.log('lets send date', date);
-                const params = {{ $modelId ? '['.$modelId.', date[0].toISOString().slice(0, 10)]' : '[date[0].toISOString().slice(0, 10)]' }}
+                const params = this.modelId === '' ? [date[0].toISOString().slice(0, 10)] : [this.modelId, date[0].toISOString().slice(0, 10)];
                 Livewire.dispatch('{{ $changeEvent }}', params)
                 this.closeCalendar();
             },

@@ -25,17 +25,14 @@ switch ($width) {
 
 <div
     class="relative"
-    @if(!empty($attributes->has('wire:model')))
-        x-data="{ open: @entangle($attributes->wire('model')) }"
-    @else
-        x-data="{ open: false }"
-    @endif
+    x-data="{ open: @entangle($attributes->wire('model')->value()).live }"
     @click.outside="open = false"
     @close.stop="open = false"
 >
     <div @click="open = ! open">
         {{ $trigger }}
     </div>
+
 
     <div
         x-show="open"
