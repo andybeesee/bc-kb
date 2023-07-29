@@ -9,26 +9,39 @@ class ProjectForm extends Component
 {
     public null|Project $project = null;
 
+    public string $status = 'idea';
+
+    public int $teamId = 0;
+
+    public int $ownerId = 0;
+
+    public string $name = '';
+
+    public string $description = '';
+
+    public string $dueDate = '';
+
+
     public $isNew = false;
 
     public function mount()
     {
         if(empty($this->project)) {
             $this->isNew = true;
-            $this->project = new \App\Models\Project();
-            $this->project->status = 'idea';
-            $this->project->team_id = auth()->user()->teams()->first()?->id;
-            $this->project->owner_id = auth()->user()->id;
+            $this->status = 'idea';
+            $this->teamId = auth()->user()->teams()->first()?->id;
+            $this->ownerId = auth()->user()->id;
+        } else {
+            $this->name = $this->project->name;
+            $this->status = $this->project->status;
+            $this->teamId = $this->project->team_id;
+            $this->ownerId = $this->project->owner_id;
+            $this->dueDate = $this->project->due_date ? $this->project->due_date->format('Y-m-d') : '';
         }
     }
 
     public $rules = [
-        'project.name' => 'required',
-        'project.description' => 'nullable',
-        'project.due_date' => 'nullable|date',
-        'project.status' => 'required',
-        'project.team_id' => 'nullable|exists:teams,id',
-        'project.owner_id' => 'nullable|exists:users,id',
+
     ];
 
     public function render()
@@ -46,15 +59,30 @@ class ProjectForm extends Component
     public function saveProject()
     {
         $this->validate([
-            'project.name' => 'unique:projects,name'.($this->isNew ? '' : ','.$this->project->id),
+            'name' => 'required|unique:projects,name'.($this->isNew ? '' : ','.$this->project->id),
+            // 'name' => 'required',
+            'description' => 'nullable',
+            'dueDate' => 'nullable|date',
+            'status' => 'required',
+            'teamId' => 'nullable|exists:teams,id',
+            'ownerId' => 'nullable|exists:users,id',
         ]);
 
+        if($this->isNew) {
+            $this->project = new Project();
+        }
+
+        $this->project->name = $this->name;
+        $this->project->status = $this->status;
+        $this->project->team_id = $this->teamId;
+        $this->project->owner_id = $this->ownerId;
+        $this->project->due_date = empty($this->dueDate) ? null : $this->dueDate;
         $this->project->save();
 
         if($this->isNew) {
-            $this->dispatch('projectCreated', $this->project->id);
+            $this->dispatch('project-created', $this->project->id);
         } else {
-            $this->dispatch('projectUpdated', $this->project->id);
+            $this->dispatch('project-updated', $this->project->id);
         }
     }
 }

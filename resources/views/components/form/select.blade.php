@@ -45,6 +45,8 @@
                             @php $optValue = $simpleArray ? $display : $optKey; @endphp
                             <input
                                 type="radio"
+                                name="{{ $name }}"
+                                {{ $attributes->merge(['class' => ($hasError ? 'is-invalid' : '')]) }}
                                 {{ $optValue === $value ? 'checked=checked' : '' }}
                                 value="{{ $optValue }}"
                             />

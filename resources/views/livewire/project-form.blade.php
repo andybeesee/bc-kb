@@ -5,17 +5,17 @@
 
     @endif
     <form class="grid max-w-xl gap-5" wire:submit="saveProject">
-        <x-form.input wire:model="project.name" label="Name" name="name" help="All projects must have a unique name" :value="$project->name" />
+        <x-form.input wire:model="name" label="Name" name="name" help="All projects must have a unique name" />
 
-        <x-form.textarea wire:model="project.description" label="Description" name="description" help="optionally put additional info in here" :value="$project->description" />
+        <x-form.textarea wire:model="description" label="Description" name="description" help="optionally put additional info in here" />
 
-        <x-form.date-picker name="due_date" wire:model="project.due_date" label="Due Date" />
+        <x-form.date-picker name="due_date" wire:model="due_date" label="Due Date" />
 
-        <x-form.select wire:model="project.status" :empty-start="false" :options="$statuses" label="Status" name="status" :value="$project->status" />
+        <x-form.select wire:model="status" :empty-start="false" :options="$statuses" label="Status" name="status" />
 
-        <x-form.select wire:model="project.team_id" label="Team" :options="$teams" name="team" :value="$project->team_id" />
+        <x-form.select wire:model="teamId" label="Team" :options="$teams" name="team" />
 
-        <x-form.select wire:model="project.owner_id" label="Owner" :options="$owners" name="owner" :value="$project->owner_id" />
+        <x-form.select wire:model="ownerId" label="Owner" :options="$owners" name="owner" />
 
         <div class="form-group">
             <div class="form-label"></div>

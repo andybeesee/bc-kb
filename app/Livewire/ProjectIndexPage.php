@@ -4,22 +4,21 @@ namespace App\Livewire;
 
 use App\Models\Project;
 use App\Models\Task;
+use App\Traits\LivewireProjectFunctions;
 use Livewire\Attributes\Url;
 use Livewire\Component;
-
+use Livewire\Attributes\On;
 // TODO: Complete task from dashboard, view task detail on click it
 // TODO: Better dashboard...
 class ProjectIndexPage extends Component
 {
+    use LivewireProjectFunctions;
+
     #[Url]
     public $tab = 'dashboard';
 
     public $listeners = [
-        'projectDetailClosed' => 'closeProject',
-        'projectCreated' => 'showProject',
-        'projectUpdated' => 'render',
-        'status-updated' => 'render',
-        'projectAdded' => 'render',
+        'project-updated' => 'render',
     ];
 
     public function mount()
@@ -33,6 +32,12 @@ class ProjectIndexPage extends Component
 
         return view('livewire.project-index-page')
             ->with('dashboardData', $dashboardData);
+    }
+
+    #[On('project-created')]
+    public function showProject($projectId)
+    {
+        $this->redirect(route('projects.show', $projectId));
     }
 
     protected function getDashboardData()

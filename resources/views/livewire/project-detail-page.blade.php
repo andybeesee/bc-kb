@@ -8,11 +8,12 @@
             <livewire:project-status-button :project="$project" />
 
             <x-date-change
+                :model-id="$project->id"
                 :date="$project->due_date"
                 prefix="Due"
                 placeholder="No Due Date"
-                change-event="setProjectDueDate"
-                remove-event="removeProjectDueDate"
+                change-event="update-project-due-date"
+                remove-event="remove-project-due-date"
             />
         </div>
     </div>

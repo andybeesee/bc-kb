@@ -3,18 +3,16 @@
 namespace App\Livewire;
 
 use App\Models\Project;
+use App\Traits\LivewireProjectFunctions;
+use Livewire\Attributes\On;
 use Livewire\Attributes\Url;
 use Livewire\Component;
 
 class ProjectDetailPage extends Component
 {
-    public Project $project;
+    use LivewireProjectFunctions;
 
-    protected $listeners = [
-        'setProjectDueDate' => 'setDueDate',
-        'removeProjectDueDate' => 'removeDueDate',
-        'projectUpdated' => 'handleProjectUpdate'
-    ];
+    public Project $project;
 
     #[Url]
     public string $tab = 'dashboard';
@@ -24,20 +22,14 @@ class ProjectDetailPage extends Component
         return view('livewire.project-detail-page');
     }
 
-    public function setDueDate($date)
+    #[On('project-updated')]
+    public function handleProjectUpdate($projectId)
     {
-        $this->project->due_date = $date;
-        $this->project->save();
+        if($projectId === $this->project->id) {
+            $this->tab = 'dashboard';
+            $this->project = $this->project->refresh();
+        }
+
     }
 
-    public function removeDueDate()
-    {
-        $this->project->due_date = null;
-        $this->project->save();
-    }
-
-    public function handleProjectUpdate()
-    {
-        $this->tab = 'dashboard';
-    }
 }
