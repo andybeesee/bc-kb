@@ -25,8 +25,6 @@ Route::get('/', function () {
 Route::middleware('auth')->group(function () {
     Route::get('/app', \App\Livewire\ProjectIndexPage::class)->name('app');
 
-    Route::get('/dashboard', \App\Http\Controllers\DashboardController::class)->name('dashboard');
-
     Route::get('/files/{file}/download', \App\Http\Controllers\FileDownloadController::class)->name('files.download');
 
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
