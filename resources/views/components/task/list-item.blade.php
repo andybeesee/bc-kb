@@ -73,30 +73,42 @@
 
 
                 @if($task->isComplete)
-                    <div class="text-green-600 dark:text-green-400 space-x-2 text-sm ml-3 flex items-center">
-                        {{ $task->completedBy->name }}
+                    <div class="text-green-600 dark:text-green-400 text-sm ml-3 flex items-center">
                         <x-date-change
                             prefix="Completed"
                             :date="$task->completed_date"
-                            change-event="updateTaskCompletedDate"
-                            remove-event="removeCompletedDate"
+                            change-event="changeTaskCompletedDate"
+                            remove-event="removeTaskCompletedDate"
                             :model-id="$task->id"
+                        />
+                        by
+                        <livewire:user-selector
+                            :key="'task-li-comp-user-'.$task->id.'-'.$task->completed_by"
+                            :user="$task->completedBy"
+                            :model-id="$task->id"
+                            change-event="changeTaskCompletedBy"
+                            :disable-remove="true"
                         />
                     </div>
                 @else
                     <div class="text-sm">
-                        {{  $task->assignedTo?->name }}
-                    </div>
-                    @if(!$task->isComplete)
-                        <x-date-change
-                            placeholder="No Due Date"
-                            prefix="Due"
-                            :date="$task->due_date"
-                            change-event="setTaskDue"
-                            remove-event="removeTaskDue"
+                        <livewire:user-selector
+                            :key="'assign-to-li-task-'.$task->id.'-'.$task->updated_at"
                             :model-id="$task->id"
+                            change-event="changeTaskAssigned"
+                            remove-event="removeTaskAssigned"
+                            :user="$task->assignedTo"
+                            placeholder="Not Assigned"
                         />
-                    @endif
+                    </div>
+                    <x-date-change
+                        placeholder="No Due Date"
+                        prefix="Due"
+                        :date="$task->due_date"
+                        change-event="changeTaskDueDate"
+                        remove-event="removeTaskDueDate"
+                        :model-id="$task->id"
+                    />
                 @endif
             </div>
         </div>

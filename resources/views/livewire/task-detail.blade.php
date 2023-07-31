@@ -30,10 +30,11 @@
                                 <dd class="col-span-3">
                                     <div class="w-1/2">
                                         <livewire:user-selector
+                                            :key="'tuser-'.$taskId.'-assigned-'.$task->assigned_to"
                                             :user="$task->assignedTo"
                                             :model-id="$task->id"
-                                            change-event="assigned"
-                                            remove-event="removeAssigned"
+                                            change-event="changeTaskAssigned"
+                                            remove-event="removeTaskAssigned"
                                         />
                                     </div>
 
@@ -43,7 +44,7 @@
                                 <dt>Due Date</dt>
                                 <dd class="col-span-3">
                                     <x-date-change
-                                        change-event="updateDueDate"
+                                        change-event="changeDueDate"
                                         remove-event="removeDueDate"
                                         :model-id="$task->id"
                                         :date="$task->due_date"
@@ -57,12 +58,15 @@
                                 <div class="px-2 py-1 grid grid-cols-4 bg-emerald-50 dark:bg-emerald-800">
                                     <dt>Completed by</dt>
                                     <dd class="col-span-3">
-                                        <livewire:user-selector
-                                            :user="$task->completedBy"
-                                            :model-id="$task->id"
-                                            change-event="changeCompleted"
-                                            :disable-remove="true"
-                                        />
+                                        <div class="w-1/2">
+                                            <livewire:user-selector
+                                                :key="'tuser-'.$taskId.'-user-comp-'.$task->completed_by"
+                                                :user="$task->completedBy"
+                                                :model-id="$task->id"
+                                                change-event="changeTaskCompletedBy"
+                                                :disable-remove="true"
+                                            />
+                                        </div>
                                     </dd>
                                 </div>
                                 <div class="px-2 py-1 grid grid-cols-4 bg-emerald-50 dark:bg-emerald-800">
@@ -74,8 +78,8 @@
                                             prefix="Due"
                                             title="Due Date"
                                             placeholder="Not Set"
-                                            change-event="completeDateChange"
-                                            :removable="false"
+                                            change-event="changeTaskCompletedDate"
+                                            remove-event="removeTaskCompletedDate"
                                         />
                                     </dd>
                                 </div>

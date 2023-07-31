@@ -8,6 +8,7 @@ use App\Models\TaskGroup;
 use App\Traits\LivewireTaskFunctions;
 use Illuminate\Support\Facades\DB;
 use Livewire\Component;
+use Livewire\Attributes\On;
 use Livewire\TemporaryUploadedFile;
 use Livewire\WithFileUploads;
 
@@ -22,23 +23,6 @@ class ProjectTaskList extends Component
     public null|int $showDetailTask = null;
 
     public null|string $startingTab = null;
-
-    protected $listeners = [
-        // handled by TaskFunctionsTrait
-        'assigned' => 'handleAssignment',
-        'removeAssigned' => 'removeAssignment',
-        'setTaskDue' => 'handleSetTaskDue',
-        'removeTaskDue' => 'handleRemoveTaskDue',
-        'saveFiles' => 'storeFiles',
-        'updateTaskCompletedDate' => 'updateCompletedDate',
-        'removeCompletedDate' => 'toggleTaskComplete',
-        // handled here
-        'sorted' => 'handleSort',
-        'groupSorted' => 'handleGroupSorted',
-        'movedList' => 'handleTaskMove',
-        'changeCompleted' => 'updateCompletedBy',
-        'completeDateChange' => 'updateCompletedDate',
-    ];
 
     public function render()
     {
@@ -70,6 +54,7 @@ class ProjectTaskList extends Component
         $this->showDetailTask = null;
     }
 
+    #[On('movedList')]
     public function handleTaskMove($taskId, $groupId, $items)
     {
         DB::table('tasks')
@@ -81,6 +66,7 @@ class ProjectTaskList extends Component
         $this->handleSort($items, $groupId);
     }
 
+    #[On('sorted')]
     public function handleSort($items, $groupId = null)
     {
         $taskQuery = DB::table('tasks')->where('project_id', $this->projectId);
@@ -111,6 +97,7 @@ class ProjectTaskList extends Component
         }
     }
 
+    #[On('groupSorted')]
     public function handleGroupSorted($groupIds)
     {
         $groups = DB::table('task_groups')

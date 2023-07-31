@@ -4,8 +4,9 @@ namespace App\Livewire;
 
 use App\Models\File;
 use Illuminate\Support\Str;
+use Livewire\Attributes\On;
 use Livewire\Component;
-use Livewire\TemporaryUploadedFile;
+use Livewire\Features\SupportFileUploads\TemporaryUploadedFile;
 use Livewire\WithFileUploads;
 
 class AttachedFileList extends Component
@@ -19,12 +20,6 @@ class AttachedFileList extends Component
     public $files;
 
     public array $editing = [];
-
-    public $listeners = [
-        'fileListAttached' => 'uploadFiles',
-        'fileSaved' => 'render',
-        'fileCancelled' => 'render',
-    ];
 
     public function render()
     {
@@ -49,6 +44,19 @@ class AttachedFileList extends Component
             ->with('relatedFiles', $relatedFiles);
     }
 
+    #[On('fileCancelled')]
+    public function handleCancel(){
+
+    }
+
+    #[On('fileSaved')]
+    public function handleSave()
+    {
+
+    }
+
+
+    #[On('fileListAttached')]
     public function uploadFiles()
     {
         \Log::debug("Uploading", $this->files);

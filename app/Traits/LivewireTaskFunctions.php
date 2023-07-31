@@ -4,11 +4,12 @@ namespace App\Traits;
 
 use App\Models\File;
 use Illuminate\Support\Facades\DB;
+use Livewire\Attributes\On;
 use Livewire\TemporaryUploadedFile;
 
 trait LivewireTaskFunctions
 {
-
+    #[On('changeTaskDueDate')]
     public function handleSetTaskDue($taskId, $date)
     {
         DB::table('tasks')
@@ -16,12 +17,14 @@ trait LivewireTaskFunctions
             ->update(['due_date' => $date, 'updated_at' => now()]);
     }
 
+    #[On('removeTaskDueDate')]
     public function handleRemoveTaskDue($taskId)
     {
         DB::table('tasks')
             ->where('id', $taskId)
             ->update(['due_date' => null, 'updated_at' => now()]);
     }
+
 
     public function storeFiles($taskId)
     {
@@ -32,15 +35,17 @@ trait LivewireTaskFunctions
         $this->files = [];
     }
 
+    #[On('changeTaskAssigned')]
     public function handleAssignment($taskId, $newOwner)
     {
-        \Log::debug("handling...", [$taskId, $newOwner]);
+        \Log::debug("handling assign...", [$taskId, $newOwner]);
         // TODO: track activitiy, send notifications and whatever else
         DB::table('tasks')
             ->where('id', $taskId)
             ->update(['assigned_to' => $newOwner, 'updated_at' => now()]);
     }
 
+    #[On('removeTaskAssigned')]
     public function removeAssignment($taskId)
     {
         \Log::debug("handling removal...", [$taskId]);
@@ -48,8 +53,11 @@ trait LivewireTaskFunctions
         DB::table('tasks')
             ->where('id', $taskId)
             ->update(['assigned_to' => null, 'updated_at' => now()]);
+
+
     }
 
+    #[On('changeTaskCompletedBy')]
     public function updateCompletedBy($taskId, $userId)
     {
         \Log::debug("updateCompletedBy...", [$taskId, $userId]);
@@ -59,6 +67,7 @@ trait LivewireTaskFunctions
             ->update(['completed_by' => $userId, 'updated_at' => now()]);
     }
 
+    #[On('changeTaskCompletedDate')]
     public function updateCompletedDate($taskId, $date)
     {
         \Log::debug("updateCompletedDate...", [$taskId, $date]);
@@ -66,6 +75,12 @@ trait LivewireTaskFunctions
         DB::table('tasks')
             ->where('id', $taskId)
             ->update(['completed_date' => $date, 'updated_at' => now()]);
+    }
+
+    #[on('removeTaskCompletedDate')]
+    public function removeTaskCompletedDate($taskId)
+    {
+        $this->toggleTaskComplete($taskId);
     }
 
     public function toggleTaskComplete($taskId)

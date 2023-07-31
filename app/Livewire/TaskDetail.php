@@ -21,27 +21,15 @@ class TaskDetail extends Component
     #[Url]
     public $taskTab = 'detail';
 
-    protected $listeners = [
-        'updateDueDate' => 'handleSetTaskDue',
-        'removeDueDate' => 'handleRemoveTaskDue',
-        'assigned' => 'handleAssignment',
-        'removeAssigned' => 'removeAssignment',
-        'changeCompleted' => 'updateCompletedBy',
-        'completeDateChange' => 'updateCompletedDate',
-        'filesAttached' => 'handleFilesAttached',
-    ];
-
     public function mount()
     {
         if(!empty($this->startingTab)) {
-            $this->tab = $this->startingTab;
+            $this->taskTab = $this->startingTab;
         }
     }
 
     public function render()
     {
-        \Log::debug("RE-rendering?");
-
         $task = Task::with([
                 'completedBy',
                 'assignedTo',

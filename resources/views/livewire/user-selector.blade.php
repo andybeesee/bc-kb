@@ -31,13 +31,14 @@
         <x-slot name="content">
             <div
                 x-show="open"
+                class="text-black dark:text-zinc-100"
                 style="display: none;"
             >
                 <div class="grid divide-y divide-zinc-400">
                     @if(!empty($user) &&! $disableRemove)
                         <button
                             wire:click="$dispatch('{{ $removeEvent }}', [{{$modelId}}])"
-                            class="p-1 flex items-center text-left text-sm bg-red-50 dark:bg-red-800 dark:hover:bg-red-600 hover:bg-red-100"
+                            class="p-1 flex items-center text-left text-red-800 text-sm bg-red-50 dark:text-red-50 dark:bg-red-800 dark:hover:bg-red-600 hover:bg-red-100"
                             type="button"
                         >
                             Remove User

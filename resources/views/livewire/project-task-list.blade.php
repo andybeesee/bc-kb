@@ -4,7 +4,7 @@
         @if(!empty($showDetailTask))
             <x-modal max-width="big" :show="true" name="task-detail-window">
                 <div class="p-4">
-                    <livewire:task-detail :modal-mode="true" :task-id="$showDetailTask" :starting-tab="$startingTab" />
+                    <livewire:task-detail :key="'livewire-task-detail-window-'.$showDetailTask" :modal-mode="true" :task-id="$showDetailTask" :starting-tab="$startingTab" />
                 </div>
             </x-modal>
         @endif
