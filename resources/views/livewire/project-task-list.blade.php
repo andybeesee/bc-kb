@@ -1,4 +1,5 @@
 <div x-data="{ addingGroup: false }">
+    {{-- TODO: we still get the odd livewire state error when sorting items - but I don't know why --}}
     {{-- This div has to be outside the if/else --}}
     <div @modal-close="$wire.closeDetail()">
         @if(!empty($showDetailTask))
@@ -10,7 +11,6 @@
         @endif
     </div>
 
-    {{--TODO: we need to do groupings on here... and update accordingly when livewire event happens... ick --}}
     <div class="card">
         <div class="card-title">
             Tasks <span class="text-sm font-normal text-zinc-500">Ungrouped tasks</span>
@@ -44,14 +44,10 @@
             </form>
         </div>
     </div>
-
-    {{-- TODO: Group Sorting --}}
-    {{-- TODO: Moving tasks between groups --}}
-
     <div x-sortable="{ event: 'groupSorted', idAttribute: 'data-group-id', options: { handle: '.handle', group: { name: 'groups', put: 'groups', pull: 'groups' } } }">
         @foreach($groups as $group)
             {{-- TODO: Dropdown to change color of section --}}
-            <div data-group-id="{{ $group->id }}" class="mt-4 grid gap-4">
+            <div id="group-task-list-{{ $group->id }}" data-group-id="{{ $group->id }}" class="mt-4 grid gap-4">
                 <div class="card">
                     <div class="card-title sticky top-0 z-[4] flex items-center">
                         <div class="mr-1 cursor-move handle">
@@ -66,7 +62,11 @@
                         x-sortable="{ options: { handle: '.handle',  group: { name: 'tasks', put: 'tasks', pull: 'tasks' } } }"
                     >
                         @foreach($group->tasks as $task)
-                            <x-task.list-item class="py-2 px-1" :task="$task" :sortable="true" :key="'grouped-'.$group->id.'-'.$task->id" />
+                            <x-task.list-item
+                                class="py-2 px-1"
+                                :task="$task"
+                                :sortable="true"
+                            />
                         @endforeach
                     </div>
                 </div>
