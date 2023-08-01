@@ -4,6 +4,7 @@ namespace App\Livewire;
 
 use App\Models\Comment;
 use Livewire\Attributes\Computed;
+use Livewire\Attributes\On;
 use Livewire\Component;
 
 class CommentList extends Component
@@ -20,16 +21,31 @@ class CommentList extends Component
         'newComment' => 'required'
     ];
 
-    protected $listeners = [
-        'commentUpdated' => 'render',
-        'commentDeleted' => 'render',
-    ];
-
     public function render()
     {
         \Log::debug("RENDER HITS?", [$this->attachedId, $this->attachedType]);
-        // TODO: Paginate?
-        return view('livewire.comment-list');
+
+        $comments = Comment::with('creator')
+            ->orderBy('created_at', 'DESC')
+            ->where('attached_id', $this->attachedId)
+            ->where('attached_type', $this->attachedType)
+            ->get();
+
+        \Log::debug("COMMENT COUNT IS ".$comments->count());
+
+        return view('livewire.comment-list', ['comments' => $comments]);
+    }
+
+    #[On('commentUpdated')]
+    public function handleCommentUpdated()
+    {
+        \Log::debug('handle update');
+    }
+
+    #[On('commentDeleted')]
+    public function handleCommentDeleted()
+    {
+        \Log::debug('handle update');
     }
 
     public function addComment()
@@ -43,15 +59,24 @@ class CommentList extends Component
         $comment->save();
 
         $this->newComment = '';
+        \Log::debug("NEW COMMENT ADDED");
     }
 
-    #[Computed]
-    public function comments()
+    public function saveChange($commentId, $updatedComment)
     {
-        return Comment::with('creator')
-             ->orderBy('created_at', 'DESC')
-             ->where('attached_id', $this->attachedId)
-             ->where('attached_type', $this->attachedType)
-             ->get();
+        \DB::table('comments')
+            ->where('id', $commentId)
+            ->update([
+                'comment' => $updatedComment,
+                'updated_at' => now(),
+                'updated_by' => auth()->user()->id,
+            ]);
+    }
+
+    public function destroyComment($commentId)
+    {
+        \DB::table('comments')
+            ->where('id', $commentId)
+            ->delete();
     }
 }
