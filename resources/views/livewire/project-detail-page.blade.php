@@ -41,22 +41,28 @@
         @switch($tab)
             @case('dashboard')
                 <div>
-                    <livewire:project-dashboard :project="$project" />
+                    <livewire:project-dashboard :project="$project" :key="$project->id.'-projdet-dashboard'"/>
                 </div>
                 @break
             @case('tasks')
-                <livewire:project-task-list :project-id="$project->id" />
+                <div>
+                    <livewire:project-task-list :project-id="$project->id" :key="$project->id.'-projdet-taskslist'"/>
+                </div>
+
                 @break
             @case('edit')
                 <div>
-                    <livewire:project-form :project="$project" />
+                    <livewire:project-form :project="$project" :key="$project->id.'-projdet-editform'"/>
                 </div>
                 @break
             @case('files')
                 <div>Files</div>
                 @break
             @case('discussions')
-                <div>Discussions</div>
+                <div>
+                    <div>Discussions</div>
+                    TODO
+                </div>
                 @break
         @endswitch
     </div>

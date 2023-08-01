@@ -17,10 +17,6 @@ class ProjectIndexPage extends Component
     #[Url]
     public $tab = 'dashboard';
 
-    public $listeners = [
-        'project-updated' => 'render',
-    ];
-
     public function mount()
     {
         $this->userId = auth()->user()->id;
@@ -34,7 +30,13 @@ class ProjectIndexPage extends Component
             ->with('dashboardData', $dashboardData);
     }
 
-    #[On('project-created')]
+    #[On('projectUpdated')]
+    public function handleProjectUpdate()
+    {
+        // TODO: probably something
+    }
+
+    #[On('projectCreated')]
     public function showProject($projectId)
     {
         $this->redirect(route('projects.show', $projectId));

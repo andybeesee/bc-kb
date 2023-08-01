@@ -80,9 +80,9 @@ class ProjectForm extends Component
         $this->project->save();
 
         if($this->isNew) {
-            $this->dispatch('project-created', $this->project->id);
+            $this->dispatch('projectCreated', $this->project->id);
         } else {
-            $this->dispatch('project-updated', $this->project->id);
+            $this->dispatch('projectUpdated', $this->project->id);
         }
     }
 }
