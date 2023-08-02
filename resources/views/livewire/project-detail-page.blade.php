@@ -56,7 +56,9 @@
                 </div>
                 @break
             @case('files')
-                <div>Files</div>
+                <div>
+                    <livewire:attached-file-list attached-type="project" :attached-id="$project->id" />
+                </div>
                 @break
             @case('discussions')
                 <div>

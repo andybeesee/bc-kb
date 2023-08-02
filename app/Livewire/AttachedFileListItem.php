@@ -54,4 +54,12 @@ class AttachedFileListItem extends Component
         $this->editing = false;
         $this->dispatch('fileSaved', $this->file->id);
     }
+
+    public function deleteFile()
+    {
+        // TODO: delete from storage
+        \DB::table('files')->where('id', $this->file->id)->delete();
+
+        $this->dispatch('fileDeleted', $this->file->id);
+    }
 }

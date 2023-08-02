@@ -55,6 +55,11 @@ class AttachedFileList extends Component
 
     }
 
+    #[On('fileDeleted')]
+    public function handleDelete()
+    {
+
+    }
 
     #[On('fileListAttached')]
     public function uploadFiles()
