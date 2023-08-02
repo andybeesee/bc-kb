@@ -44,8 +44,8 @@
                                 <dt>Due Date</dt>
                                 <dd class="col-span-3">
                                     <x-date-change
-                                        change-event="changeDueDate"
-                                        remove-event="removeDueDate"
+                                        change-event="changeTaskDueDate"
+                                        remove-event="removeTaskDueDate"
                                         :model-id="$task->id"
                                         :date="$task->due_date"
                                         prefix="Due"
