@@ -30,8 +30,18 @@
                 {{ $task->name }}
             </div>
 
+                
+            <a
+                href="{{ route('tasks.show', [$task]) }}"
+                class="md:hidden rounded-md justify-center flex ml-auto min-w-[2em] p-1 items-center text-zinc-600 hover:text-zinc-800 dark:text-zinc-400 dark:hover:text-white"
+                title="Click to view task detail page"
+            >
+                <x-icon icon="arrow-right" class="h-4 w-4" />
+            </a>
 
-            <div class="ml-auto text=sm flex items-center space-x-3">
+
+            {{-- TODO: :On mobile we just hide all this? --}}
+            <div class="hidden md:ml-auto text-sm md:flex items-center space-x-3">
                 @if($task->files_count > 0)
                     <a
                         href="{{ route('tasks.show', [$task, 'tab' => 'files']) }}"
