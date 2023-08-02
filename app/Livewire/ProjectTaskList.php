@@ -124,6 +124,16 @@ class ProjectTaskList extends Component
         }
     }
 
+    #[On('attachTaskFiles')]
+    public function attachFiles($taskId)
+    {
+        \Log::debug("Uploading", $this->files);
+
+        File::attachFiles($this->files, 'task', $taskId);
+
+        $this->files = [];
+    }
+
     public function deleteGroup($id)
     {
         // TODO: Shoudl this delete all nested items? it should probably be an option when clicked

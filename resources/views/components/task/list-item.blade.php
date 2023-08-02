@@ -3,9 +3,8 @@
 <div
     id="task-{{ $task->id }}"
     data-sort-id="{{ $task->id }}"
-    x-filedrop="{ eventParams: [{{ $task->id }}] }"
-    {{ $attributes->merge() }}
-    class="flex items-start"
+    x-filedrop="{ eventName: 'attachTaskFiles', eventParams: [{{ $task->id }}] }"
+    {{ $attributes->merge(['class' => 'hover:bg-zinc-200 dark:hover:bg-zinc-900']) }}
 >
     <div>
         <div class="flex items-center">
