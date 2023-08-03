@@ -26,6 +26,22 @@
                     <div class="card-body">
                         <dl class="grid divide-y divide-zinc-300">
                             <div class="px-2 py-1 grid grid-cols-4">
+                                <dt>Project</dt>
+                                <dd class="col-span-3">
+                                    <a class="link" href="{{ route('projects.show', $task->project) }}">
+                                        {{ $task->project->name }}
+                                    </a>
+                                </dd>
+                            </div>
+                            @if(!empty($task->task_group_id))
+                                <div class="px-2 py-1 grid grid-cols-4">
+                                    <dt>Group</dt>
+                                    <dd class="col-span-3">
+                                        {{ $task->group->name }}
+                                    </dd>
+                                </div>
+                            @endif
+                            <div class="px-2 py-1 grid grid-cols-4">
                                 <dt>Assigned</dt>
                                 <dd class="col-span-3">
                                     <div class="w-1/2">

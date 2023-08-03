@@ -19,6 +19,11 @@ class Task extends Model
         return $this->morphMany(File::class, 'attached');
     }
 
+    public function group()
+    {
+        return $this->belongsTo(TaskGroup::class, 'task_group_id');
+    }
+
     public function comments()
     {
         return $this->morphMany(Comment::class, 'attached');

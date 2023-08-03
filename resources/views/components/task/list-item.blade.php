@@ -30,7 +30,7 @@
                 {{ $task->name }}
             </div>
 
-                
+
             <a
                 href="{{ route('tasks.show', [$task]) }}"
                 class="md:hidden rounded-md justify-center flex ml-auto min-w-[2em] p-1 items-center text-zinc-600 hover:text-zinc-800 dark:text-zinc-400 dark:hover:text-white"
