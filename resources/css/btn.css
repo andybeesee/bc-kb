@@ -10,6 +10,11 @@
     @apply text-xs px-1 py-0.5;
 }
 
+.btn-attached-left {
+    border-bottom-left-radius: 0;
+    border-top-left-radius: 0;
+}
+
 .btn.icon {
     @apply inline-flex items-center;
 }
@@ -78,7 +83,7 @@
     }
 
     .btn.btn-white {
-        @apply bg-zinc-500 border-zinc-200 border text-zinc-100;
+        @apply bg-zinc-500 border-zinc-400 border text-zinc-100;
     }
 
     .btn.btn-white:hover {

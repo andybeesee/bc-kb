@@ -3,9 +3,11 @@
 namespace App\Livewire;
 
 use Livewire\Component;
+use Livewire\Features\SupportQueryString\Url;
 
 class TemplateIndexPage extends Component
 {
+    #[Url]
     public $tab = 'project-templates';
 
     public string $search = '';
