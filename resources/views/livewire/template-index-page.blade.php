@@ -1,4 +1,4 @@
-<div class="container">
+<div class="mx-4 md:mx-10 lg:mx-12">
     <div class="button-tabs mb-4">
         <button wire:click="$set('tab', 'templates')" type="button" class="{{ $tab === 'templates' ? 'active' : '' }}">
             Templates
@@ -11,12 +11,13 @@
     @if($tab === 'templates')
         <div>
             <div class="mb-4">
-                <x-form.input type="text" name="search" class="w-full" placeholder="Search" wire:model="search" />
+                <x-form.input autofocus type="text" name="search" class="w-full" placeholder="Search" wire:model="search" />
             </div>
-            proj templs
+            <div>
+                proj templates, filters and whatever else
+            </div>
         </div>
     @endif
-
 
     @if($tab === 'create')
         <div>

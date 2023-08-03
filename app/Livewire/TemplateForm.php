@@ -2,8 +2,6 @@
 
 namespace App\Livewire;
 
-use App\Models\ProjectTemplate;
-use App\Models\TaskGroupTemplate;
 use App\Models\Template;
 use Livewire\Component;
 

@@ -1,7 +1,7 @@
 <div>
     <form wire:submit="saveTemplate">
         <div class="grid gap-4">
-            <x-form.select :options="['project', 'task-group']" name="type" label="Type" />
+            <x-form.select :options="['project' => 'Project', 'task-group' => 'Task Group']" name="type" label="Type" />
 
             <x-form.input type="text" name="name" wire:model="name" label="Name" />
 
@@ -17,8 +17,14 @@
                         newTask: '',
                         init() {
                             new Sortable(this.$refs.taskList, {
+                                onSort() {
+                                    console.log('on sort');
+                                },
+                                onUpdate() {
+                                    console.log('on update');
+                                },
                                 onEnd: () => {
-                                    console.log('you got sorted!');
+                                    console.log('on end hit!');
                                     const newTasks = [];
 
                                     Array.from(this.$refs.taskList.querySelectorAll(`[data-task]`))
@@ -29,7 +35,7 @@
                                             })
                                         })
 
-                                    console.log('newtasks', newTasks);
+                                    // console.log('newtasks', newTasks);
                                     this.tasks = newTasks;
                                 }
                             })
@@ -39,14 +45,23 @@
                             this.newTask = '';
                         },
                         removeTask(id) {
-                            this.tasks = this.tasks.filter(t => t.id !== id);
+                            const newTasks = [];
+
+                            $wire.get('tasks').forEach(t => {
+                                if(t.id !== id) {
+                                    newTasks.push(t);
+                                }
+                            });
+
+                            console.log('tasks', newTasks);
+                            this.tasks = newTasks;
                         }
                     }"
                     class="form-control-container"
                 >
 
                     <div class="w-1/3 flex items-center">
-                        <input class="form-control" placeholder="New Task" type="text" name="new-task-input" @keydown.enter="addTask" x-model="newTask" />
+                        <input class="form-control" placeholder="New Task" type="text" name="new-task-input" @keydown.enter.prevent="addTask" x-model="newTask" />
                         <button class="p-1 btn btn-white btn-attached-left flex-grow bg-white" type="button" @click="addTask">
                             Add task
                         </button>
@@ -60,15 +75,17 @@
                                     <x-icon icon="grip-vertical" class="h-4 w-4" />
                                 </div>
 
+                                <span x-text="task.id"></span>
                                 <span class="task-text" x-text="task.task"></span>
 
                                 <button @click="removeTask(task.id)" title="Remove task" class="ml-auto hover:text-red-600">
                                     <x-icon icon="x-circle" class="h-4 w-4" />
                                 </button>
                             </div>
-
                         </template>
                     </div>
+
+
                 </div>
             </div>
         </div>
