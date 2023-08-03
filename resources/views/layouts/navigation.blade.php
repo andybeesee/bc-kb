@@ -2,7 +2,7 @@
     $links = [
         ['name' => 'Projects', 'href' => route('projects.index')],
         // ['name' => 'Boards', 'href' => route('boards.index')],
-        ['name' => 'Templates', 'href' => '#'],
+        ['name' => 'Templates', 'href' => route('templates.index')],
     ];
 
     if(auth()->user()->admin){
