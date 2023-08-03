@@ -12,6 +12,7 @@
 
 .btn-attached-left {
     border-bottom-left-radius: 0;
+    border-left: none;
     border-top-left-radius: 0;
 }
 

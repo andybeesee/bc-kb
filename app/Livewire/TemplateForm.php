@@ -41,6 +41,16 @@ class TemplateForm extends Component
 
     public function saveTemplate()
     {
+        if(empty($this->template)) {
+            $this->template = new Template();
+        }
+
+        $this->template->name = $this->name;
+        $this->template->description = $this->description;
+        $this->template->tasks = $this->tasks;
+        $this->template->type = $this->type;
+        $this->template->save();
+
         if($this->saveRedirect) {
             \Log::debug("redirect");
         } else {

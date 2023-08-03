@@ -1,7 +1,7 @@
 <div>
     <form wire:submit="saveTemplate">
         <div class="grid gap-4">
-            <x-form.select :options="['project' => 'Project', 'task-group' => 'Task Group']" name="type" label="Type" />
+            <x-form.select wire:model="type" :options="['project' => 'Project', 'task-group' => 'Task Group']" name="type" label="Type" />
 
             <x-form.input type="text" name="name" wire:model="name" label="Name" />
 
@@ -15,8 +15,9 @@
                     x-data="{
                         tasks: @entangle('tasks'),
                         newTask: '',
+                        sortable: null,
                         init() {
-                            new Sortable(this.$refs.taskList, {
+                            this.sortable = new Sortable(this.$refs.taskList, {
                                 onSort() {
                                     console.log('on sort');
                                 },
@@ -24,19 +25,16 @@
                                     console.log('on update');
                                 },
                                 onEnd: () => {
-                                    console.log('on end hit!');
+                                    console.log('on end hit!', this.sortable.toArray());
                                     const newTasks = [];
 
-                                    Array.from(this.$refs.taskList.querySelectorAll(`[data-task]`))
-                                        .forEach((taskel) => {
-                                            newTasks.push({
-                                                id: taskel.getAttribute('data-task'),
+                                    this.tasks = Array.from(this.$refs.taskList.querySelectorAll(`[data-task]`))
+                                        .map((taskel) => {
+                                            return {
+                                                id: Math.random().toFixed(8).slice(2),
                                                 task: taskel.querySelector('.task-text').textContent
-                                            })
-                                        })
-
-                                    // console.log('newtasks', newTasks);
-                                    this.tasks = newTasks;
+                                            };
+                                        });
                                 }
                             })
                         },
@@ -45,37 +43,31 @@
                             this.newTask = '';
                         },
                         removeTask(id) {
-                            const newTasks = [];
+                            console.log('pre', this.tasks);
+                            // this.tasks = this.tasks.filter(t => t.id !== id)
 
-                            $wire.get('tasks').forEach(t => {
-                                if(t.id !== id) {
-                                    newTasks.push(t);
-                                }
-                            });
-
-                            console.log('tasks', newTasks);
-                            this.tasks = newTasks;
+                            $wire.set('tasks', this.tasks.filter(t => t.id !== id));
+                            console.log('post', this.tasks);
                         }
                     }"
                     class="form-control-container"
                 >
 
-                    <div class="w-1/3 flex items-center">
+                    <div class="w-1/3 px-1 flex items-center">
                         <input class="form-control" placeholder="New Task" type="text" name="new-task-input" @keydown.enter.prevent="addTask" x-model="newTask" />
-                        <button class="p-1 btn btn-white btn-attached-left flex-grow bg-white" type="button" @click="addTask">
-                            Add task
+                        <button class="p-1 text-sm btn btn-white btn-attached-left flex-grow bg-white" type="button" @click="addTask">
+                            Add
                         </button>
                     </div>
 
 
                     <div x-ref="taskList" class="mt-1 grid w-1/3">
                         <template x-for="task in tasks" :key="task.id">
-                            <div x-bind:data-task="task.id" class="py-0.5 flex items-center hover:bg-zinc-200 dark:hover:bg-zinc-600">
+                            <div x-bind:data-task="task.id" class="p-1 flex items-center hover:bg-zinc-200 dark:hover:bg-zinc-600">
                                 <div class="cursor-move mr-1">
                                     <x-icon icon="grip-vertical" class="h-4 w-4" />
                                 </div>
 
-                                <span x-text="task.id"></span>
                                 <span class="task-text" x-text="task.task"></span>
 
                                 <button @click="removeTask(task.id)" title="Remove task" class="ml-auto hover:text-red-600">
@@ -84,11 +76,18 @@
                             </div>
                         </template>
                     </div>
-
-
                 </div>
             </div>
-        </div>
+
+            <div class="form-group">
+                <div class="form-label"></div>
+                <div class="form-control-container">
+                    <button type="submit" class="btn btn-primary w-1/3">
+                        Add Template
+                    </button>
+                </div>
+            </div>
+        </div><!-- end of fields -->
     </form>
     {{-- Stop trying to control. --}}
 </div>
