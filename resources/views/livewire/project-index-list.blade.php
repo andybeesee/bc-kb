@@ -1,4 +1,21 @@
-<div x-data="{ open: @entangle('filtersOpen') }">
+<div
+    x-data="{
+    open: @entangle('filtersOpen'),
+    updateForm: @entangle('updateForm'),
+    openForm(projectId) {
+        $wire.set('updateForm', projectId);
+    },
+}">
+    @if(!empty($updateForm))
+        <div @modal-close="$wire.set('updateForm', null)" @project-status-updated="$wire.set('updatedForm', null)">
+            <x-modal name="modalname" :show="true">
+                <div class="p-4">
+                    <livewire:project-update-status-form :project-id="$updateForm" />
+                </div>
+            </x-modal>
+        </div>
+    @endif
+
     <div class="mb-3 flex items-center">
         <button
             @click="open = !open"
@@ -145,15 +162,8 @@
         </div><!--end of first column filters -->
         <div class="col-span-3 grid divide-y dark:divide-zinc-600 divide-zinc-400">
             @foreach($this->projects as $project)
-                <div
-                    class="cursor-pointer text-sm p-3 hover:bg-zinc-200 dark:hover:bg-zinc-700"
-                    title="{{ $project->name }} -- {{ $project->status }}"
-                    @click="window.location.href = '{{ route('projects.show', $project->id) }}'"
-                >
-                    <livewire:project-list-item
-                        :project="$project"
-                        :key="'proj-lind-lis-it-'.$project->id"
-                    />
+                <div>
+                    <x-project.list-item title="{{ $project->name }} -- {{ $project->status }}" :project="$project"/>
                 </div>
             @endforeach
         </div>

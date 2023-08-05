@@ -2,12 +2,13 @@
 
 namespace App\Models;
 
+use App\Traits\HasStatuses;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 class Project extends Model
 {
-    use HasFactory;
+    use HasFactory, HasStatuses;
 
     const CLOSED_PROJECT_STATUSES = [
         'complete',
@@ -30,11 +31,6 @@ class Project extends Model
     public function team()
     {
         return $this->belongsTo(Team::class);
-    }
-
-    public function currentStatus()
-    {
-        return $this->morphOne(CurrentStatus::class, 'attached')->orderBy('created_at', 'DESC');
     }
 
     public function owner()

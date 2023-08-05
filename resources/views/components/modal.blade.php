@@ -18,7 +18,7 @@ $maxWidth = [
 
 <div
     x-data="{
-        show: @js($show),
+        show: true,
         closeModal() {
             this.show = false;
             console.log('closeMOdal');

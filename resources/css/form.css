@@ -3,7 +3,7 @@
 }
 
 .form-label {
-    @apply w-1/4 text-right mr-4 text-sm mb-0.5 text-zinc-700 tracking-tight;
+    @apply w-1/4 text-right font-semibold mr-4 text-xs mb-0.5 text-zinc-700 tracking-tight;
 }
 
 /** Firefox doesn't like *has* selector - it is best option but Firefox...ugh

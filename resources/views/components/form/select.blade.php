@@ -1,4 +1,4 @@
-@props(['name', 'emptyStart' => true, 'simpleArray' => false, 'label' => '', 'help' => '', 'value' => null, 'options' => null])
+@props(['name', 'display' => 'horizontal', 'emptyStart' => true, 'simpleArray' => false, 'label' => '', 'help' => '', 'value' => null, 'options' => null])
 
 @php
     $inputId = $name.'-'.str($label)->slug();
@@ -19,7 +19,7 @@
     }
 @endphp
 
-<div class="form-group {{ $hasError ? 'has-validation' : '' }}">
+<div class="form-group  {{ $display }} {{ $hasError ? 'has-validation' : '' }}">
     @if(!empty($label))
         <label for="{{ $inputId }}" class="form-label {{ $hasError ? 'error' : '' }}">
             {{ $label }}
@@ -28,7 +28,7 @@
 
     <div class="form-control-container">
         @if($showRadios)
-            <div class="grid gap-2">
+            <div class="grid gap-1">
                 @foreach($options as $optKey => $display)
                     <label class="flex items-center space-x-1">
                         @if($display instanceof \Illuminate\Database\Eloquent\Model)

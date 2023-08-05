@@ -8,7 +8,7 @@ use App\Models\User;
 use Livewire\Attributes\Computed;
 use Livewire\Attributes\Url;
 use Livewire\Component;
-
+use Livewire\Attributes\On;
 // TODO: I want to show more here... with option to change project due date, status right here...
 class ProjectIndexList extends Component
 {
@@ -30,6 +30,8 @@ class ProjectIndexList extends Component
         'in_progress',
         'late',
     ];
+
+    public int|null $updateForm = null;
 
     public function render()
     {
@@ -64,6 +66,13 @@ class ProjectIndexList extends Component
     {
         $this->filterId = $id;
         $this->filterType = $type;
+    }
+
+    #[On('project-updated')]
+    public function closeForm()
+    {
+
+        $this->updateForm = null;
     }
 
     #[Computed]
