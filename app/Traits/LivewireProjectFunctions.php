@@ -19,7 +19,7 @@ trait LivewireProjectFunctions
 
         // TODO: Track Activity
 
-        $this->dispatch('projectUpdated', $projectId);
+        $this->dispatch('project-updated', $projectId);
     }
 
     #[On('update-project-due-date')]
@@ -32,7 +32,7 @@ trait LivewireProjectFunctions
                 'updated_at' => now(),
             ]);
 
-        $this->dispatch('projectUpdated', $projectId);
+        $this->dispatch('project-updated', $projectId);
     }
 
     #[On('remove-project-due-date')]
@@ -45,7 +45,7 @@ trait LivewireProjectFunctions
                 'updated_at' => now(),
             ]);
 
-        $this->dispatch('projectUpdated', $projectId);
+        $this->dispatch('project-updated', $projectId);
     }
 
 }

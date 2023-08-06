@@ -11,7 +11,7 @@ class ProjectForm extends Component
 
     public string $status = 'idea';
 
-    public int $teamId = 0;
+    public int|null $teamId = 0;
 
     public int $ownerId = 0;
 

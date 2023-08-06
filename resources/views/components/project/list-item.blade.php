@@ -13,6 +13,10 @@
                     {{ $project->name }}
                 </a>
 
+                @if($project->team)
+                    <span title="Team" class="ml-4 px-1 bg-zinc-100 dark:bg-zinc-700 rounded-md text-xs">{{ $project->team->name }}</span>
+                @endif
+
                 <div class="ml-auto flex items-center space-x-3">
                     @if($project->past_due_tasks_count > 0)
                         <div class="text-red-700 dark:text-red-500">

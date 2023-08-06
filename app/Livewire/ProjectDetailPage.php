@@ -27,7 +27,7 @@ class ProjectDetailPage extends Component
     {
         if($projectId === $this->project->id) {
             $this->tab = 'dashboard';
-            $this->project = $this->project->refresh();
+            $this->project = $this->project->refresh(['team']);
         }
     }
 
