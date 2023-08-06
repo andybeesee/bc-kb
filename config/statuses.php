@@ -3,7 +3,7 @@
 
 return [
     'idea' => 'Idea',
-    // 'planning' => 'Planning',
+    'pending' => 'Pending',
     // 'planned' => 'Planned',
     'in_progress' => 'In Progress',
     'complete' => 'Complete',

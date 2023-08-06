@@ -69,9 +69,8 @@ class ProjectIndexList extends Component
     }
 
     #[On('project-updated')]
-    public function closeForm()
+    public function closeProjectUpdateForm()
     {
-
         $this->updateForm = null;
     }
 

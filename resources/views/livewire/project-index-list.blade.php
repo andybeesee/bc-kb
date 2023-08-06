@@ -42,13 +42,17 @@
                     <div class="font-semibold mb-1 text-sm">Statuses to Show</div>
                     @foreach($statusOptions as $statusValue => $statusName)
                         <label class="py-1">
+
                             <input
                                 type="checkbox"
                                 value="{{ $statusValue }}"
                                 wire:model.live="statusesToShow"
                                 name="statuses_to_show[]"
                             />
+                            <span class="{{ \App\View\StatusColorUtils::getTextColor($statusValue) }}">
                             {{ $statusName }}
+                            </span>
+
                         </label>
                     @endforeach
                 </div>

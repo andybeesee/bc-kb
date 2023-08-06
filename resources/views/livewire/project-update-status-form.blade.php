@@ -21,7 +21,7 @@
                 <button type="submit" class="btn btn-primary">
                     Update Status
                 </button>
-                <button type="button" class="ml-4 btn btn-white">
+                <button wire:click="$parent.closeProjectUpdateForm" type="button" class="ml-4 btn btn-white">
                     Nevermind
                 </button>
             </div>

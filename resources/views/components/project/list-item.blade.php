@@ -1,10 +1,13 @@
 @props(['project'])
-<div class="flex p-2 items-center hover:bg-zinc-100 dark:bg-zinc-600">
+@php
+    $bgColors = \App\View\StatusColorUtils::getBackgroundColors($project->status);
+@endphp
+<div class="flex p-2 items-center {{ $bgColors }}">
     <div class="flex items-center w-full">
         <div class="flex-grow">
             <div class="flex items-center w-full">
                 <div class="mr-2 rounded-full bg-zinc-100 text-zinc-700 dark:bg-zinc-700 dark:text-zinc-300">
-                    <livewire:project-status-button wire:key="proj-stat-{{ $project->id }}-{{ $project->updated_at->getTimestamp() }}" :icon-only="true" icon-class="h-4 w-4" :project="$project" />
+                    <x-icon class="h-4 w-4 {{ \App\View\StatusColorUtils::getIconColors($project->status) }}" :icon="\App\View\StatusColorUtils::getIcon($project->status)" />
                 </div>
                 <a href="{{ route('projects.show', $project) }}" class="hover:underline font-semibold">
                     {{ $project->name }}

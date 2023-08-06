@@ -4,7 +4,8 @@ import forms from '@tailwindcss/forms';
 /** @type {import('tailwindcss').Config} */
 export default {
     content: [
-        './app/Http/Livewire/**/*.php',
+        './app/Livewire/**/*.php',
+        './app/View/**/*.php',
         './vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php',
         './storage/framework/views/*.php',
         './resources/views/**/*.blade.php',
