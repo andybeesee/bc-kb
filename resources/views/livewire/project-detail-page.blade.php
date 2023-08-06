@@ -9,11 +9,11 @@
     }"
 >
     <div class="mb-2">
-        <div class="flex justify-center">
-            <div class="mb-2 text-center text-3xl font-bold">{{ $project->name }}</div>
+        <div class="">
+            <div class="mb-2 text-3xl font-bold">{{ $project->name }}</div>
         </div>
 
-        <div class="flex justify-center items-center space-x-3">
+        <div class="flex items-center space-x-3">
             <button type="button" @click="" class="flex items-center p-0.5 hover:bg-zinc-100 rounded-md">
                 <x-icon class="mr-2 h-4 w-4 {{ \App\View\StatusColorUtils::getIconColors($project->status) }}" :icon="\App\View\StatusColorUtils::getIcon($project->status)" />
                 {{ config('statuses.'.$project->status) }}
@@ -27,15 +27,19 @@
                 change-event="update-project-due-date"
                 remove-event="remove-project-due-date"
             />
+
+            <button class="rounded-md bg-white border border-zinc-300 hover:bg-zinc-200 p-0.5" @click="openForm" type="button">
+                Update Status
+            </button>
         </div>
 
-        <div class="flex justify-center mx-4 md:mx-auto md:max-w-[50vw] bg-zinc-100 dark:bg-zinc-800 rounded-md p-1">
+        <div class="mt-1">
             @if($project->currentStatus)
                 <div>
-                    <div class="text-center font-semibold text-xs">Current Status Updated {{ $project->currentStatus->created_at->format(config('app.date_display')) }}</div>
+
+                    <span class="font-semibold text-xs">Status Updated {{ $project->currentStatus->created_at->format(config('app.date_display')) }}:</span>
                     {{ $project->currentStatus->status }}
-                    <div class="text-center">
-                        <button class="rounded-md bg-white border border-zinc-100 hover:bg-zinc-200 p-0.5" @click="openForm" type="button">Update Status</button>
+                    <div class="">
                     </div>
                 </div>
             @endif
