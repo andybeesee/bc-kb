@@ -1,11 +1,23 @@
-<div class="mx-2 md:mx-10 lg:mx-16">
+<div
+    class="mx-2 md:mx-10 lg:mx-16"
+    x-data="{
+        updateFormOpen: false,
+        openForm() {
+            this.updateFormOpen = true;
+            this.$dispatch('open-modal', 'proj-stat-form');
+        }
+    }"
+>
     <div class="mb-2">
         <div class="flex justify-center">
             <div class="mb-2 text-center text-3xl font-bold">{{ $project->name }}</div>
         </div>
 
         <div class="flex justify-center items-center space-x-3">
-            <livewire:project-status-button :project="$project" />
+            <button type="button" @click="" class="flex items-center p-0.5 hover:bg-zinc-100 rounded-md">
+                <x-icon class="mr-2 h-4 w-4 {{ \App\View\StatusColorUtils::getIconColors($project->status) }}" :icon="\App\View\StatusColorUtils::getIcon($project->status)" />
+                {{ config('statuses.'.$project->status) }}
+            </button>
 
             <x-date-change
                 :model-id="$project->id"
@@ -16,7 +28,30 @@
                 remove-event="remove-project-due-date"
             />
         </div>
+
+        <div class="flex justify-center mx-4 md:mx-auto md:max-w-[50vw] bg-zinc-100 dark:bg-zinc-800 rounded-md p-1">
+            @if($project->currentStatus)
+                <div>
+                    <div class="text-center font-semibold text-xs">Current Status Updated {{ $project->currentStatus->created_at->format(config('app.date_display')) }}</div>
+                    {{ $project->currentStatus->status }}
+                    <div class="text-center">
+                        <button class="rounded-md bg-white border border-zinc-100 hover:bg-zinc-200 p-0.5" @click="openForm" type="button">Update Status</button>
+                    </div>
+                </div>
+            @endif
+        </div>
     </div>
+
+    <div x-show="updateFormOpen" style="display: none;">
+        <div @project-updated="updateFormOpen = false" @close-project-update-form="updateFormOpen = false" @modal-close="updateFormOpen = false" @project-status-updated="updateFormOpen = false">
+            <x-modal name="proj-stat-form">
+                <div class="p-4">
+                    <livewire:project-update-status-form :project-id="$project->id" lazy />
+                </div>
+            </x-modal>
+        </div>
+    </div>
+
 
     <div class="mb-4">
         <div class="button-tabs">

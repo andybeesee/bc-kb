@@ -40,6 +40,8 @@ class ProjectUpdateStatusForm extends Component
             $this->project->save();
         }
 
+        $this->newStatusDescription = '';
+
         $this->dispatch('project-updated', $this->project->id);
     }
 }

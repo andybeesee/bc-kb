@@ -5,9 +5,13 @@
     openForm(projectId) {
         $wire.set('updateForm', projectId);
     },
+    closeForm() {
+        console.log('catches?');
+        $wire.set('updateForm', null);
+    }
 }">
     @if(!empty($updateForm))
-        <div @modal-close="$wire.set('updateForm', null)" @project-status-updated="$wire.set('updatedForm', null)">
+        <div @close-project-update-form="closeForm" @modal-close="$wire.set('updateForm', null)" @project-status-updated="$wire.set('updatedForm', null)">
             <x-modal name="modalname" :show="true">
                 <div class="p-4">
                     <livewire:project-update-status-form :project-id="$updateForm" />

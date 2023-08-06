@@ -29,7 +29,6 @@ class ProjectDetailPage extends Component
             $this->tab = 'dashboard';
             $this->project = $this->project->refresh();
         }
-
     }
 
 }

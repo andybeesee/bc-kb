@@ -11,7 +11,7 @@
         </div>
     @endif
 
-    <form wire:submit.prevent="updateThatStatus">
+    <form x-data="{}" wire:submit.prevent="updateThatStatus">
         <div class="grid gap-4">
             <x-form.select label="Change Project Status" display="vertical" :options="$statusOptions" name="project_status" wire:model="newStatus" />
 
@@ -21,13 +21,10 @@
                 <button type="submit" class="btn btn-primary">
                     Update Status
                 </button>
-                <button wire:click="$parent.closeProjectUpdateForm" type="button" class="ml-4 btn btn-white">
+                <button @click="$dispatch('close-project-update-form')" type="button" class="ml-4 btn btn-white">
                     Nevermind
                 </button>
             </div>
         </div>
     </form>
-    input,
-    save,
-    change sstatus option
 </div>
