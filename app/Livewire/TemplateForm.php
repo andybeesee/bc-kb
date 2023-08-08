@@ -21,7 +21,6 @@ class TemplateForm extends Component
         ['id' => 1, 'task' => 'Task One'],
         ['id' => 2, 'task' => 'Task Two'],
         ['id' => 3, 'task' => 'Task Three'],
-
     ];
 
     public function mount()

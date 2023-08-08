@@ -11,10 +11,8 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('templates', function (Blueprint $table) {
+        Schema::create('task_group_templates', function (Blueprint $table) {
             $table->id();
-
-            $table->string('type')->default('project');
 
             $table->string('name')->unique();
 
@@ -31,6 +29,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('templates');
+        Schema::dropIfExists('task_group_templates');
     }
 };
