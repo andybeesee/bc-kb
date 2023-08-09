@@ -10,6 +10,8 @@ class TemplateIndexPage extends Component
     #[Url]
     public $tab = 'templates';
 
+    public $newType = 'project';
+
     public string $search = '';
 
     public function render()

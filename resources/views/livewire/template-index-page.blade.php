@@ -21,7 +21,15 @@
 
     @if($tab === 'create')
         <div>
-            <livewire:template-form save-redirect="true" />
+            <div class="grid gap-4">
+                <x-form.select wire:model.live="newType" :options="['project' => 'Project', 'task_group' => 'Task Group']" name="type" label="Type" />
+
+                @if($newType === 'project')
+                    <livewire:template.project-form :save-redirect="true" />
+                @else
+                    <livewire:template.task-group-form :save-redirect="true" />
+                @endif
+            </div>
         </div>
     @endif
 </div>
