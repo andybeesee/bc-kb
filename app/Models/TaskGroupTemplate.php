@@ -8,4 +8,8 @@ use Illuminate\Database\Eloquent\Model;
 class TaskGroupTemplate extends Model
 {
     use HasFactory;
+
+    protected $casts = [
+        'tasks' => 'array',
+    ];
 }
