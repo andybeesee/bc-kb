@@ -8,8 +8,10 @@ use App\Models\CurrentStatus;
 use App\Models\Discussion;
 use App\Models\Project;
 use App\Models\Board;
+use App\Models\ProjectTemplate;
 use App\Models\Task;
 use App\Models\TaskGroup;
+use App\Models\TaskGroupTemplate;
 use App\Models\Team;
 use App\Models\User;
 use Database\Factories\BoardFactory;
@@ -81,6 +83,94 @@ class DatabaseSeeder extends Seeder
 
         $this->teams->load('boards');
 
+        $this->seedTemplates();
+        $this->seedProjects();
+    }
+
+
+    public function addComments($type, $id, $qty = null)
+    {
+        $qty = $qty ?? random_int(1, 60);
+
+
+        for($x = 0; $x < $qty; $x++) {
+            $commentAuthorId = $this->users->random()->id;
+            Comment::factory()
+                ->create([
+                    'attached_id' => $id,
+                    'attached_type' => $type,
+                    'created_by' => $commentAuthorId,
+                    'updated_by' => $commentAuthorId,
+                ]);
+
+            // TODO: Reactions
+        }
+    }
+
+    public function addStatuses($type, $id, $qty = 1)
+    {
+        for($x = 0; $x < $qty; $x++) {
+            $statusAuthorId = $this->users->random()->id;
+
+            CurrentStatus::factory()
+                ->create([
+                    'attached_id' => $id,
+                    'attached_type' => $type,
+                    'created_by' => $statusAuthorId,
+                    'updated_by' => $statusAuthorId,
+                ]);
+        }
+    }
+
+    public function addDiscussions($type, $id, $qty)
+    {
+        for($i = 0; $i < $qty; $i++) {
+            $commentQty = random_int(3, 50);
+            $userId = $this->users->random()->id;
+
+            $discussion = Discussion::factory()->create([
+                'attached_type' => $type,
+                'attached_id' => $id,
+                'created_by' => $userId,
+                'updated_by' => $userId,
+            ]);
+
+            $this->addComments('discussion', $discussion->id, $commentQty);
+
+        }
+    }
+
+    protected function seedTemplates()
+    {
+        $tgs = [];
+        for($i = 0; $i < 100; $i++) {
+            $tasks = [];
+            for($x = 0; $x < random_int(5, 100); $x++) {
+                $tasks[] = ['id' => $x + 1, 'task' => $this->faker->sentence];
+            }
+
+            $tg = new TaskGroupTemplate();
+            $tg->name = $this->faker->city.' '.$this->faker->colorName.' '.random_int(1111, 9999);
+            $tg->description = $this->faker->boolean ? null : $this->faker->sentence;
+            $tg->tasks = $tasks;
+            $tg->save();
+
+            $tgs[] = $tg->id;
+        }
+
+        $tgs = collect($tgs);
+        for($i = 0; $i < 200; $i++) {
+            $pg = new ProjectTemplate();
+            $pg->name = $this->faker->sentence.' ' .random_int(2222, 11111);
+            $pg->description = $this->faker->boolean ? $this->faker->sentence : $this->faker->paragraph;
+            $pg->save();
+
+            $pg->taskGroupTemplates()->sync($tgs->random(random_int(2, 25))->toArray());
+        }
+    }
+
+    protected function seedProjects()
+    {
         Project::factory()->count(random_int(100, 500))->create()
             ->each(function(Project $project) {
                 $team = $this->teams->random();
@@ -144,58 +234,5 @@ class DatabaseSeeder extends Seeder
                     }
                 }
             });
-    }
-
-
-    public function addComments($type, $id, $qty = null)
-    {
-        $qty = $qty ?? random_int(1, 60);
-
-
-        for($x = 0; $x < $qty; $x++) {
-            $commentAuthorId = $this->users->random()->id;
-            Comment::factory()
-                ->create([
-                    'attached_id' => $id,
-                    'attached_type' => $type,
-                    'created_by' => $commentAuthorId,
-                    'updated_by' => $commentAuthorId,
-                ]);
-
-            // TODO: Reactions
-        }
-    }
-
-    public function addStatuses($type, $id, $qty = 1)
-    {
-        for($x = 0; $x < $qty; $x++) {
-            $statusAuthorId = $this->users->random()->id;
-
-            CurrentStatus::factory()
-                ->create([
-                    'attached_id' => $id,
-                    'attached_type' => $type,
-                    'created_by' => $statusAuthorId,
-                    'updated_by' => $statusAuthorId,
-                ]);
-        }
-    }
-
-    public function addDiscussions($type, $id, $qty)
-    {
-        for($i = 0; $i < $qty; $i++) {
-            $commentQty = random_int(3, 50);
-            $userId = $this->users->random()->id;
-
-            $discussion = Discussion::factory()->create([
-                'attached_type' => $type,
-                'attached_id' => $id,
-                'created_by' => $userId,
-                'updated_by' => $userId,
-            ]);
-
-            $this->addComments('discussion', $discussion->id, $commentQty);
-
-        }
     }
 }

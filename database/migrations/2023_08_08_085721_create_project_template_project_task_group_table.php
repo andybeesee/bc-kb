@@ -11,7 +11,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('project_template_project_task_group', function (Blueprint $table) {
+        Schema::create('project_template_task_group_template', function (Blueprint $table) {
             $table->id();
 
             $table->unsignedBigInteger('project_template_id');
@@ -37,6 +37,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('project_template_project_task_group');
+        Schema::dropIfExists('project_template_task_group_template');
     }
 };
