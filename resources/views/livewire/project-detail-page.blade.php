@@ -14,10 +14,10 @@
         </div>
 
         <div class="flex items-center space-x-3">
-            <button type="button" @click="" class="flex items-center p-0.5 hover:bg-zinc-100 rounded-md">
+            <div type="button" @click="" class="flex items-center p-0.5">
                 <x-icon class="mr-2 h-4 w-4 {{ \App\View\StatusColorUtils::getIconColors($project->status) }}" :icon="\App\View\StatusColorUtils::getIcon($project->status)" />
                 {{ config('statuses.'.$project->status) }}
-            </button>
+            </div>
 
             <x-date-change
                 :model-id="$project->id"
@@ -28,7 +28,7 @@
                 remove-event="remove-project-due-date"
             />
 
-            <button class="rounded-md bg-white border border-zinc-300 hover:bg-zinc-200 p-0.5" @click="openForm" type="button">
+            <button class="btn btn-white btn-sm " @click="openForm" type="button">
                 Update Status
             </button>
         </div>

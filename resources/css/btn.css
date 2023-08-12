@@ -65,6 +65,13 @@
     @apply bg-emerald-800;
 }
 
+.btn.btn-dark {
+    @apply bg-zinc-900 text-zinc-100;
+}
+
+.btn.btn-dark:hover {
+    @apply bg-zinc-700;
+}
 
 @media(prefers-color-scheme: dark) {
     .btn {

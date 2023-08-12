@@ -20,6 +20,10 @@ return [
 
     'date_display' => 'M jS, Y',
 
+    'datetime_display' => 'M jS, Y h:ia',
+
+    'date_timezone' => 'America/Detroit',
+
     /*
     |--------------------------------------------------------------------------
     | Application Environment

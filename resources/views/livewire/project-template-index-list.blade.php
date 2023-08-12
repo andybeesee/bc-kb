@@ -15,7 +15,9 @@
             <tr>
                 <td>{{ $pTemplate->name }}</td>
                 <td>{{ $pTemplate->task_group_templates_count }}</td>
-                <td>{{ $pTemplate->updated_at }}</td>
+                <td>
+                    <x-datetime :date="$pTemplate->updated_at" />
+                </td>
             </tr>
         @endforeach
         </tbody>
