@@ -1,0 +1,46 @@
+table.table {
+    @apply w-full;
+}
+
+table.table thead tr {
+    @apply bg-zinc-800 text-white border-b border-zinc-400;
+}
+
+table.table thead th {
+    @apply px-2 py-1 text-left;
+}
+
+table.table tbody tr:hover {
+    @apply bg-zinc-300;
+}
+
+table.table tbody tr:nth-child(odd) {
+    @apply bg-zinc-200;
+}
+
+table.table tbody tr:nth-child(odd):hover {
+    @apply bg-zinc-300;
+}
+
+table.table tbody tr td {
+    @apply px-2 py-1;
+}
+
+
+@media (prefers-color-scheme: dark) {
+    table.table thead tr {
+        @apply bg-zinc-900;
+    }
+
+    table.table tbody tr:hover {
+        @apply bg-zinc-900;
+    }
+
+    table.table tbody tr:nth-child(odd) {
+        @apply bg-zinc-700;
+    }
+
+    table.table tbody tr:nth-child(odd):hover {
+        @apply bg-zinc-900;
+    }
+}
