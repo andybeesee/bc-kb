@@ -13,4 +13,24 @@ class ProjectTemplateDetailPage extends Component
     {
         return view('livewire.project-template-detail-page');
     }
+
+    public function updateOrder(array $ids)
+    {
+        foreach($ids as $index => $id) {
+            \DB::table('project_template_task_group_template')
+                ->where('project_template_id', $this->projectTemplate->id)
+                ->where('task_group_template_id', $id)
+                ->update(['sort' => $index + 1]);
+        }
+    }
+
+    public function addTaskGroup()
+    {
+
+    }
+
+    public function saveChanges()
+    {
+
+    }
 }
