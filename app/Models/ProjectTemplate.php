@@ -12,6 +12,7 @@ class ProjectTemplate extends Model
     public function taskGroupTemplates()
     {
         return $this->belongsToMany(TaskGroupTemplate::class)
+            ->withPivot('sort')
             ->orderBy('project_template_task_group_template.sort');
     }
 }

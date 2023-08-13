@@ -9,6 +9,16 @@
 
         <x-form.textarea wire:model="description" label="Description" name="description" help="optionally put additional info in here" />
 
+        @if($isNew)
+            <x-form.select
+                label="Project Template"
+                name="template"
+                wire:model="template"
+                style="max-width: 50%;"
+                :options="$this->templateOptions"
+            />
+        @endif
+
         <x-form.date-picker name="due_date" wire:model="due_date" label="Due Date" />
 
         <x-form.select wire:model="status" :empty-start="false" :options="$statuses" label="Status" name="status" />

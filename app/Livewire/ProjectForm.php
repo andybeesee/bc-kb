@@ -3,7 +3,9 @@
 namespace App\Livewire;
 
 use App\Models\Project;
+use App\Models\ProjectTemplate;
 use Livewire\Component;
+use Livewire\Attributes\Url;
 
 class ProjectForm extends Component
 {
@@ -21,11 +23,19 @@ class ProjectForm extends Component
 
     public string $dueDate = '';
 
+    public $highlightTemplate = false;
 
     public $isNew = false;
 
+    #[Url]
+    public $template = null;
+
     public function mount()
     {
+        if(!empty($this->template)) {
+            $this->highlightTemplate = true;
+        }
+
         if(empty($this->project)) {
             $this->isNew = true;
             $this->status = 'idea';
@@ -80,9 +90,19 @@ class ProjectForm extends Component
         $this->project->save();
 
         if($this->isNew) {
+            if(!empty($this->template)) {
+                $this->project->importProjectTemplate($this->template);
+            }
+
             $this->dispatch('projectCreated', $this->project->id);
+
         } else {
             $this->dispatch('projectUpdated', $this->project->id);
         }
+    }
+
+    public function getTemplateOptionsProperty()
+    {
+        return ProjectTemplate::orderBy('name')->get();
     }
 }

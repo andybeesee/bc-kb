@@ -5,6 +5,7 @@ namespace App\Models;
 use App\Traits\HasStatuses;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\DB;
 
 class Project extends Model
 {
@@ -101,5 +102,38 @@ class Project extends Model
         }
 
         return $this->due_date->isPast();
+    }
+
+    public function importProjectTemplate($templateId)
+    {
+        ProjectTemplate::with('taskGroupTemplates')
+            ->where('id', $templateId)
+            ->first()
+            ->taskGroupTemplates
+            ->each(function(TaskGroupTemplate $tgt, $index) {
+                $this->importTaskGroupTemplate($tgt, $tgt->pivot->sort);
+            });
+    }
+
+    public function importTaskGroupTemplate(TaskGroupTemplate $tgt, $sort = null)
+    {
+        if(is_null($sort)) {
+            $sort = DB::table('task_groups')->where('project_id', $this->id)->max('sort') + 1;
+        }
+        $tg = new TaskGroup();
+        $tg->name = $tgt->name;
+        $tg->description = $tgt;
+        $tg->project_id = $this->id;
+        $tg->sort = $sort;
+        $tg->save();
+
+        foreach($tgt->tasks as $index => $taskTemplate) {
+            $task = new Task();
+            $task->name = $taskTemplate['task'];
+            $task->project_id = $this->id;
+            $task->task_group_id = $tg->id;
+            $task->sort = $index + 1;
+            $task->save();
+        }
     }
 }

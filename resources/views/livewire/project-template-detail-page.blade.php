@@ -20,7 +20,12 @@
                 <h1>{{ $projectTemplate->name }}</h1>
             </div>
             <p class="max-w-2xl mb-4">{{ $projectTemplate->description }}</p>
-            <button class="btn btn-white btn-sm6" type="button" wire:click="$set('editing', true)">Edit Name/Description</button>
+
+            <div class="flex items-center space-x-3">
+                <button class="btn btn-white btn-sm" type="button" wire:click="$set('editing', true)">Edit Name/Description</button>
+                <a class="btn btn-primary btn-sm" href="{{ route('projects.index', ['tab' => 'new', 'template' => $projectTemplate->id]) }}">Start New Project</a>
+            </div>
+
         </div>
     @endif
     <div

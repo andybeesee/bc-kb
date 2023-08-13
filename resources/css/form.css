@@ -4,6 +4,7 @@
 
 .form-label {
     @apply w-1/4 text-right font-semibold mr-4 text-xs mb-0.5 text-zinc-700 tracking-tight;
+    min-width: 25%;
 }
 
 /** Firefox doesn't like *has* selector - it is best option but Firefox...ugh
