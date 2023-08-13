@@ -9,6 +9,16 @@
             class="form-control-container"
             x-data="{
                 groups: @entangle('groups').live,
+                init() {
+                    new Sortable(this.$refs.selectedTable, {
+                        onEnd: () => {
+                            console.log(this.$refs.selectedTable);
+                            this.groups = Array.from(this.$refs.selectedTable.querySelectorAll(`[data-id]`))
+                                .map(el => el.getAttribute('data-id'));
+                            console.log('sortable');
+                        }
+                    });
+                },
                 addGroup(id) {
                     this.groups.push(id);
                 },
@@ -34,9 +44,9 @@
                 </div>
                 <div>
                     <div class="text-xs text-zinc-400 mb-0.5">Selected Groups</div>
-                    <div class="h-[250px] overflow-y-scroll border-zinc-500 border divide-y divide-zinc-500">
+                    <div x-ref="selectedTable" class="h-[250px] overflow-y-scroll border-zinc-500 border divide-y divide-zinc-500">
                         @foreach($this->selectedGroups as $selGroup)
-                            <div class="p-1 hover:bg-zinc-100 dark:hover:bg-zinc-900 cursor-pointer" @click="removeGroup('{{ $selGroup->id }}')">
+                            <div data-id="{{ $selGroup->id }}" class="p-1 hover:bg-zinc-100 dark:hover:bg-zinc-900 cursor-pointer" @click="removeGroup('{{ $selGroup->id }}')">
                                 {{ $selGroup->name }}
                             </div>
                         @endforeach

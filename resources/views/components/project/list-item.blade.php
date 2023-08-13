@@ -36,14 +36,14 @@
             <div class="text-xs mt-1 flex items-center space-x-4 text-zinc-500 dark:text-zinc-400">
                 @if($project->currentStatus)
                     <div title="Update entered by {{ $project->currentStatus->creator->name }}">
-                        Last update {{ $project->currentStatus->created_at->format(config('app.date_display')) }}: {{ $project->currentStatus->status }}
+                        Last update <x-date :date="$project->currentStatus->created_at" />: {{ $project->currentStatus->status }}
                         <button @click="openForm({{ $project->id }})" class="underline hover:text-zinc-800" type="button">Update</button>
                     </div>
                 @endif
                 @if($project->due_date)
                     {{-- TODO: inline due date change? --}}
                     <div class="ml-auto {{ $project->isLate ? 'text-red-600' : '' }}">
-                        Due {{ $project->due_date->format(config('app.date_display')) }}
+                        Due <x-date :date="$project->due_date" />
                     </div>
                 @endif
             </div>

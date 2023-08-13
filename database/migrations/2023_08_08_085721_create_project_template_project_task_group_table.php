@@ -28,6 +28,8 @@ return new class extends Migration
                 ->onDelete('cascade')
                 ->onUpdate('cascade');
 
+            $table->unsignedBigInteger('sort')->default(0);
+
             $table->timestamps();
         });
     }
