@@ -43,7 +43,15 @@ class ProjectForm extends Component
             return [];
         }
 
-        return TaskGroupTemplate::whereIn('id', $this->groups)->orderBy('name')->get();
+        $sorted = [];
+
+        $q = TaskGroupTemplate::whereIn('id', $this->groups);
+
+        if(count($this->groups) > 1) {
+            $q = $q->orderByRaw('FIELD(id,'.implode(',', $this->groups).')');
+        }
+
+        return $q->get();
     }
 
     public function save()
@@ -59,7 +67,14 @@ class ProjectForm extends Component
         $pt->description = $this->description;
         $pt->save();
 
-        $pt->taskGroupTemplates()->sync($this->groups);
+
+        $idSync = [];
+
+        foreach($this->groups as $index => $id) {
+            $idSync[$id] = ['sort' => $index + 1];
+        }
+
+        $pt->taskGroupTemplates()->sync($idSync);
 
         return $this->redirect(route('project-templates.show', $pt));
     }

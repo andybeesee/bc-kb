@@ -11,6 +11,7 @@ class ProjectTemplate extends Model
 
     public function taskGroupTemplates()
     {
-        return $this->belongsToMany(TaskGroupTemplate::class);
+        return $this->belongsToMany(TaskGroupTemplate::class)
+            ->orderBy('project_template_task_group_template.sort');
     }
 }

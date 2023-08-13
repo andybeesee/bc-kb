@@ -165,7 +165,13 @@ class DatabaseSeeder extends Seeder
             $pg->description = $this->faker->boolean ? $this->faker->sentence : $this->faker->paragraph;
             $pg->save();
 
-            $pg->taskGroupTemplates()->sync($tgs->random(random_int(2, 25))->toArray());
+            $idSync = [];
+            $ids = $tgs->random(random_int(2, 25))->toArray();
+            foreach($ids as $index => $id) {
+                $idSync[$id] = ['sort' => $index + 1];
+            }
+
+            $pg->taskGroupTemplates()->sync($idSync);
         }
     }
 
