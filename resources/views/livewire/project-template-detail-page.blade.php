@@ -1,7 +1,28 @@
 <div class="container">
-    <span class="text-sm">Project Template</span>
-    <h1>{{ $projectTemplate->name }}</h1>
-    <p class="max-w-2xl mb-4">{{ $projectTemplate->description }}</p>
+
+    @if($editing)
+        <form class="grid gap-4 mb-4" wire:submit.prevent="saveChanges">
+            <x-form.input display="vertical" type="text" label="Template Name" wire:model="updatedName" name="updatedName" />
+
+            <x-form.textarea display="vertical" label="Template description" wire:model="updatedDescription" name="updatedDescription" />
+
+            <div class="flex items-center">
+                <button type="submit" class="btn btn-primary">Save Changes</button>
+                <button type="button" wire:click="$set('editing', false)" class="ml-4 btn btn-white">Nevermind</button>
+            </div>
+
+        </form>
+    @else
+        <div class="mb-4">
+            <span class="text-sm">Project Template</span>
+
+            <div class="flex items-center">
+                <h1>{{ $projectTemplate->name }}</h1>
+            </div>
+            <p class="max-w-2xl mb-4">{{ $projectTemplate->description }}</p>
+            <button class="btn btn-white btn-sm6" type="button" wire:click="$set('editing', true)">Edit Name/Description</button>
+        </div>
+    @endif
     <div
         class="card"
         x-data="{
@@ -28,5 +49,15 @@
                 </div>
             @endforeach
         </div>
+        <form class="p-3" wire:submit="addTaskGroup">
+            <x-form.select display="vertical" label="Add New Task Group" name="newtaskgroup" wire:model="newTaskGroup">
+                <option value=""></option>
+                @foreach($this->newGroupOptions as $opt)
+                    <option value="{{ $opt->id }}">{{ $opt->name }}</option>
+                @endforeach
+            </x-form.select>
+
+            <button class="btn btn-primary mt-4">Add Task Group Template</button>
+        </form>
     </div>
 </div>
