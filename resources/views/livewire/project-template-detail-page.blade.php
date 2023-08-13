@@ -46,6 +46,9 @@
                 <div class="px-3 py-1 flex items-center" data-id="{{ $tgt->id }}">
                     <x-icon icon="grip-vertical" class="handle cursor-move h-3 w-3 mr-1" />
                     <a class="link" href="{{ route('task-group-templates.show', $tgt->id) }}">{{ $tgt->name }}</a>
+                    <button type="button" wire:click="removeTaskGroup({{ $tgt->id }})" class="text-red-800 dark:text-red-300" title="Remove Group">
+                        <x-icon icon="x-circle" class="h-4 w-4 ml-2" />
+                    </button>
                 </div>
             @endforeach
         </div>

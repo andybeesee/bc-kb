@@ -45,6 +45,14 @@ class ProjectTemplateDetailPage extends Component
             ->get();
     }
 
+    public function removeTaskGroup($id)
+    {
+        \DB::table('project_template_task_group_template')
+            ->where('project_template_id', $this->projectTemplate->id)
+            ->where('task_group_template_id', $id)
+            ->delete();
+    }
+
     public function addTaskGroup()
     {
         $maxSort = \DB::table('project_template_task_group_template')
