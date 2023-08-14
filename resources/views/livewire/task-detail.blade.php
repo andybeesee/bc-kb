@@ -33,7 +33,7 @@
                                     </a>
                                 </dd>
                             </div>
-                            @if(!empty($task->task_group_id))
+                            @if(!empty($task->checklist_id))
                                 <div class="px-2 py-1 grid grid-cols-4">
                                     <dt>Group</dt>
                                     <dd class="col-span-3">

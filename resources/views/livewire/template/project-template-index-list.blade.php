@@ -24,7 +24,7 @@
                         {{ $pTemplate->name }}
                     </a>
                 </td>
-                <td>{{ $pTemplate->task_group_templates_count }}</td>
+                <td>{{ $pTemplate->checklist_templates_count }}</td>
                 <td>
                     <x-datetime :date="$pTemplate->updated_at" />
                 </td>

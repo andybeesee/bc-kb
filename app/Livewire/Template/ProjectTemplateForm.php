@@ -7,7 +7,7 @@ use App\Models\Checklist;
 use App\Models\ChecklistTemplate;
 use Livewire\Component;
 
-class ProjectForm extends Component
+class ProjectTemplateForm extends Component
 {
     public string $name = '';
 
@@ -19,7 +19,7 @@ class ProjectForm extends Component
 
     public function render()
     {
-        return view('livewire.template.project-form');
+        return view('livewire.template.project-template-form');
     }
 
     public function getGroupOptionsProperty()
@@ -59,7 +59,7 @@ class ProjectForm extends Component
         $this->validate([
             'name' => 'required|unique:project_templates',
             'groups' => 'array',
-            'groups.*' => 'exists:task_group_templates,id',
+            'groups.*' => 'exists:checklist_templates,id',
         ]);
 
         $pt = new ProjectTemplate();
@@ -74,7 +74,7 @@ class ProjectForm extends Component
             $idSync[$id] = ['sort' => $index + 1];
         }
 
-        $pt->taskGroupTemplates()->sync($idSync);
+        $pt->checklistTemplates()->sync($idSync);
 
         return $this->redirect(route('project-templates.show', $pt));
     }

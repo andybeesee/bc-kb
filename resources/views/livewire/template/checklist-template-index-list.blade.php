@@ -11,7 +11,7 @@
         </tr>
         </thead>
         <tbody>
-        @foreach($taskGroupTemplates as $tgTemplate)
+        @foreach($checklistTemplates as $tgTemplate)
             <tr>
                 <td>{{ $tgTemplate->name }}</td>
                 <td>{{ count($tgTemplate->tasks) }}</td>
@@ -22,6 +22,6 @@
     </table>
 
     <div class="mt-4">
-        {!! $taskGroupTemplates->links() !!}
+        {!! $checklistTemplates->links() !!}
     </div>
 </div>

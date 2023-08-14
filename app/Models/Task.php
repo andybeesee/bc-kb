@@ -21,7 +21,7 @@ class Task extends Model
 
     public function group()
     {
-        return $this->belongsTo(Checklist::class, 'task_group_id');
+        return $this->belongsTo(Checklist::class, 'checklist_id');
     }
 
     public function comments()

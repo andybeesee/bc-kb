@@ -31,9 +31,9 @@ Route::middleware('auth')->group(function () {
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 
-    Route::get('/templates', \App\Livewire\TemplateIndexPage::class)->name('templates.index');
-    Route::get('/project-templates/{projectTemplate}', \App\Livewire\ProjectTemplateDetailPage::class)->name('project-templates.show');
-    Route::get('/task-group-templates/{taskGroup}', \App\Livewire\TaskGroupTemplateDetailPage::class)->name('task-group-templates.show');
+    Route::get('/templates', \App\Livewire\Template\TemplateIndexPage::class)->name('templates.index');
+    Route::get('/project-templates/{projectTemplate}', \App\Livewire\Template\ProjectTemplateDetailPage::class)->name('project-templates.show');
+    Route::get('/checklist-templates/{checklist}', \App\Livewire\Template\ChecklistTemplateDetailPage::class)->name('checklist-templates.show');
 
     Route::get('/projects', \App\Livewire\ProjectIndexPage::class)->name('projects.index');
     Route::get('/projects/{project}', \App\Livewire\ProjectDetailPage::class)->name('projects.show');

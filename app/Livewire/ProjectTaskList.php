@@ -26,7 +26,7 @@ class ProjectTaskList extends Component
 
     public function render()
     {
-        $groups = Checklist::with(['tasks' => fn($tq) => $tq->with(['completedBy', 'assignedTo'])->withCount('files')])
+        $checklists = Checklist::with(['tasks' => fn($tq) => $tq->with(['completedBy', 'assignedTo'])->withCount('files')])
             ->where('project_id', $this->projectId)
             ->orderBy('sort')
             ->get();
@@ -34,13 +34,13 @@ class ProjectTaskList extends Component
         $tasks = Task::with(['completedBy', 'assignedTo'])
             ->withCount(['files', 'comments'])
             ->where('project_id', $this->projectId)
-            ->whereNull('task_group_id')
+            ->whereNull('checklist_id')
             ->orderBy('sort')
             ->get();
 
         return view('livewire.project-task-list')
             ->with('tasks', $tasks)
-            ->with('groups', $groups);
+            ->with('checklists', $checklists);
     }
 
     public function openDetail($taskId, $tab = null)
@@ -55,26 +55,26 @@ class ProjectTaskList extends Component
     }
 
     #[On('movedList')]
-    public function handleTaskMove($taskId, $groupId, $items)
+    public function handleTaskMove($taskId, $checklistId, $items)
     {
         DB::table('tasks')
             ->where('id', $taskId)
             ->update([
-                'task_group_id' => empty($groupId) ? null : $groupId,
+                'checklist_id' => empty($checklistId) ? null : $checklistId,
             ]);
 
-        $this->handleSort($items, $groupId);
+        $this->handleSort($items, $checklistId);
     }
 
     #[On('sorted')]
-    public function handleSort($items, $groupId = null)
+    public function handleSort($items, $checklistId = null)
     {
         $taskQuery = DB::table('tasks')->where('project_id', $this->projectId);
 
-        if(!empty($groupId)) {
-            $taskQuery = $taskQuery->whereNull('task_group_id');
+        if(!empty($checklistId)) {
+            $taskQuery = $taskQuery->whereNull('checklist_id');
         } else {
-            $taskQuery = $taskQuery->where('task_group_id', $groupId);
+            $taskQuery = $taskQuery->where('checklist_id', $checklistId);
         }
 
         $tasks = $taskQuery->get()->pluck('id', 'sort')->toArray();
@@ -97,27 +97,27 @@ class ProjectTaskList extends Component
         }
     }
 
-    #[On('groupSorted')]
-    public function handleGroupSorted($groupIds)
+    #[On('checklistSorted')]
+    public function handleChecklistSorted($checklistIds)
     {
-        $groups = DB::table('task_groups')
+        $checklists = DB::table('checklists')
             ->where('project_id', $this->projectId)
             ->get()
             ->pluck('id', 'sort')
             ->toArray();
 
-        foreach($groupIds as $data) {
-            $groupId = $data['id'];
+        foreach($checklistIds as $data) {
+            $checklistId = $data['id'];
             $newSort = $data['sort'];
 
-            $curSort = $groups[$groupId] ?? 0;
+            $curSort = $checklists[$checklistId] ?? 0;
             if($curSort === $newSort) {
                 continue;
             }
 
-            DB::table('task_groups')
+            DB::table('checklists')
                 ->where('project_id', $this->projectId)
-                ->where('id', $groupId)
+                ->where('id', $checklistId)
                 ->update([
                     'sort' => $newSort,
                 ]);

@@ -44,21 +44,21 @@
             }
         }"
     >
-        <div class="card-title">Task Groups</div>
+        <div class="card-title">Checklists</div>
         <div x-ref="groupList">
             {{-- TODO: INline sorting/editing right here to add/remove --}}
-            @foreach($projectTemplate->taskGroupTemplates as $tgt)
+            @foreach($projectTemplate->checklistTemplates as $tgt)
                 <div class="px-3 py-1 flex items-center" data-id="{{ $tgt->id }}">
                     <x-icon icon="grip-vertical" class="handle cursor-move h-3 w-3 mr-1" />
-                    <a class="link" href="{{ route('task-group-templates.show', $tgt->id) }}">{{ $tgt->name }}</a>
-                    <button type="button" wire:click="removeTaskGroup({{ $tgt->id }})" class="text-red-800 dark:text-red-300" title="Remove Group">
+                    <a class="link" href="{{ route('checklist-templates.show', $tgt->id) }}">{{ $tgt->name }}</a>
+                    <button type="button" wire:click="removeChecklist({{ $tgt->id }})" class="text-red-800 dark:text-red-300" title="Remove Group">
                         <x-icon icon="x-circle" class="h-4 w-4 ml-2" />
                     </button>
                 </div>
             @endforeach
         </div>
-        <form class="p-3" wire:submit="addTaskGroup">
-            <x-form.select display="vertical" label="Add New Task Group" name="newtaskgroup" wire:model="newTaskGroup">
+        <form class="p-3" wire:submit="addChecklist">
+            <x-form.select display="vertical" label="Add New Task Group" name="newchecklist" wire:model="newChecklistTemplate">
                 <option value=""></option>
                 @foreach($this->newGroupOptions as $opt)
                     <option value="{{ $opt->id }}">{{ $opt->name }}</option>

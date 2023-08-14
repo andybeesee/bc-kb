@@ -5,7 +5,7 @@ namespace App\Livewire\Template;
 use App\Models\ChecklistTemplate;
 use Livewire\Component;
 
-class TaskGroupForm extends Component
+class ChecklistTemplateForm extends Component
 {
     public string $name = '';
 
@@ -22,11 +22,11 @@ class TaskGroupForm extends Component
 
     public bool $isNew = true;
 
-    public int $taskGroupId;
+    public int $checklistId;
 
     public function render()
     {
-        return view('livewire.template.task-group-form');
+        return view('livewire.template.checklist-template-form');
     }
 
     public function save()
@@ -34,25 +34,25 @@ class TaskGroupForm extends Component
         $this->validate([
             'name' => [
                 'required',
-                'unique:task_group_templates,name'.($this->isNew ? '' : ','.$this->taskGroupId),
+                'unique:checklist_templates,name'.($this->isNew ? '' : ','.$this->checklistId),
             ],
             'tasks' => 'array',
         ]);
         if($this->isNew) {
-            $taskGroupTemplate = new ChecklistTemplate();
+            $checklistTemplate = new ChecklistTemplate();
         } else {
-            $taskGroupTemplate = ChecklistTemplate::findOrFail($this->taskGroupId);
+            $checklistTemplate = ChecklistTemplate::findOrFail($this->checklistId);
         }
 
-        $taskGroupTemplate->name = $this->name;
-        $taskGroupTemplate->description = $this->description;
-        $taskGroupTemplate->tasks = $this->tasks;
-        $taskGroupTemplate->save();
+        $checklistTemplate->name = $this->name;
+        $checklistTemplate->description = $this->description;
+        $checklistTemplate->tasks = $this->tasks;
+        $checklistTemplate->save();
 
         if($this->saveRedirect) {
-            return $this->redirect(route('task-group-templates.show', $taskGroupTemplate));
+            return $this->redirect(route('task-group-templates.show', $checklistTemplate));
         } else {
-            $this->dispatch('task-group-template-saved', $taskGroupTemplate->id);
+            $this->dispatch('task-group-template-saved', $checklistTemplate->id);
         }
     }
 }
