@@ -48,6 +48,8 @@ Route::middleware('auth')->group(function () {
 
     Route::resource('boards', \App\Http\Controllers\BoardController::class);
     Route::resource('tasks', \App\Http\Controllers\TaskController::class);
+
+    route::get('knowledge-base', \App\Livewire\Kb\IndexPage::class)->name('kb.index');
 });
 
 Route::middleware(['auth', 'admin'])->name('admin.')->prefix('/admin')->group(function() {

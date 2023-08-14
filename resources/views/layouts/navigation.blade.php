@@ -1,5 +1,6 @@
 @php
     $links = [
+        ['name' => 'Knowledge Base', 'href' => route('kb.index')],
         ['name' => 'Projects', 'href' => route('projects.index')],
         // ['name' => 'Boards', 'href' => route('boards.index')],
         ['name' => 'Templates', 'href' => route('templates.index')],
