@@ -4,7 +4,7 @@ namespace App\Livewire;
 
 use App\Models\File;
 use App\Models\Task;
-use App\Models\TaskGroup;
+use App\Models\Checklist;
 use App\Traits\LivewireTaskFunctions;
 use Illuminate\Support\Facades\DB;
 use Livewire\Component;
@@ -26,7 +26,7 @@ class ProjectTaskList extends Component
 
     public function render()
     {
-        $groups = TaskGroup::with(['tasks' => fn($tq) => $tq->with(['completedBy', 'assignedTo'])->withCount('files')])
+        $groups = Checklist::with(['tasks' => fn($tq) => $tq->with(['completedBy', 'assignedTo'])->withCount('files')])
             ->where('project_id', $this->projectId)
             ->orderBy('sort')
             ->get();

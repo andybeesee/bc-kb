@@ -3,7 +3,7 @@
 namespace App\Livewire;
 
 use App\Models\ProjectTemplate;
-use App\Models\TaskGroupTemplate;
+use App\Models\ChecklistTemplate;
 use Livewire\Component;
 
 class ProjectTemplateDetailPage extends Component
@@ -40,7 +40,7 @@ class ProjectTemplateDetailPage extends Component
 
     public function getNewGroupOptionsProperty()
     {
-        return TaskGroupTemplate::whereNotIn('task_group_templates.id', $this->projectTemplate->taskGroupTemplates()->pluck('task_group_templates.id')->toArray())
+        return ChecklistTemplate::whereNotIn('task_group_templates.id', $this->projectTemplate->taskGroupTemplates()->pluck('task_group_templates.id')->toArray())
             ->orderBy('task_group_templates.name')
             ->get();
     }

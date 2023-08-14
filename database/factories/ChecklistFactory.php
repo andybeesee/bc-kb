@@ -5,9 +5,9 @@ namespace Database\Factories;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\TaskGroup>
+ * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Checklist>
  */
-class TaskGroupFactory extends Factory
+class ChecklistFactory extends Factory
 {
     /**
      * Define the model's default state.

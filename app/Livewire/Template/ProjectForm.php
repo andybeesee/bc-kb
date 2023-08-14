@@ -3,8 +3,8 @@
 namespace App\Livewire\Template;
 
 use App\Models\ProjectTemplate;
-use App\Models\TaskGroup;
-use App\Models\TaskGroupTemplate;
+use App\Models\Checklist;
+use App\Models\ChecklistTemplate;
 use Livewire\Component;
 
 class ProjectForm extends Component
@@ -24,7 +24,7 @@ class ProjectForm extends Component
 
     public function getGroupOptionsProperty()
     {
-        $q = TaskGroupTemplate::orderBy('name');
+        $q = ChecklistTemplate::orderBy('name');
 
         if(!empty($this->groupSearch)) {
             $q = $q->where('name', 'LIKE', '%'.$this->groupSearch.'%');
@@ -45,7 +45,7 @@ class ProjectForm extends Component
 
         $sorted = [];
 
-        $q = TaskGroupTemplate::whereIn('id', $this->groups);
+        $q = ChecklistTemplate::whereIn('id', $this->groups);
 
         if(count($this->groups) > 1) {
             $q = $q->orderByRaw('FIELD(id,'.implode(',', $this->groups).')');

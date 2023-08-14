@@ -2,7 +2,7 @@
 
 namespace App\Livewire;
 
-use App\Models\TaskGroupTemplate;
+use App\Models\ChecklistTemplate;
 use Livewire\Component;
 use Livewire\WithPagination;
 
@@ -14,7 +14,7 @@ class TaskGroupTemplateIndexList extends Component
 
     public function render()
     {
-        $q = TaskGroupTemplate::query();
+        $q = ChecklistTemplate::query();
 
         $taskGroupTemplates =  $q->paginate(50, pageName: 'task-group-templates');
 

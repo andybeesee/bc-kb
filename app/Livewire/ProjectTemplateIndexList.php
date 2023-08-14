@@ -3,7 +3,7 @@
 namespace App\Livewire;
 
 use App\Models\ProjectTemplate;
-use App\Models\TaskGroupTemplate;
+use App\Models\ChecklistTemplate;
 use Livewire\Component;
 use Livewire\WithPagination;
 

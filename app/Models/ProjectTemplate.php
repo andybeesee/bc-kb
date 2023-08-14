@@ -9,10 +9,10 @@ class ProjectTemplate extends Model
 {
     use HasFactory;
 
-    public function taskGroupTemplates()
+    public function checklistTemplates()
     {
-        return $this->belongsToMany(TaskGroupTemplate::class)
+        return $this->belongsToMany(ChecklistTemplate::class, 'project_template_checklist_template')
             ->withPivot('sort')
-            ->orderBy('project_template_task_group_template.sort');
+            ->orderBy('project_template_checklist_template.sort');
     }
 }

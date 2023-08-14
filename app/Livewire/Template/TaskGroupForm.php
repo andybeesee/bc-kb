@@ -2,7 +2,7 @@
 
 namespace App\Livewire\Template;
 
-use App\Models\TaskGroupTemplate;
+use App\Models\ChecklistTemplate;
 use Livewire\Component;
 
 class TaskGroupForm extends Component
@@ -39,9 +39,9 @@ class TaskGroupForm extends Component
             'tasks' => 'array',
         ]);
         if($this->isNew) {
-            $taskGroupTemplate = new TaskGroupTemplate();
+            $taskGroupTemplate = new ChecklistTemplate();
         } else {
-            $taskGroupTemplate = TaskGroupTemplate::findOrFail($this->taskGroupId);
+            $taskGroupTemplate = ChecklistTemplate::findOrFail($this->taskGroupId);
         }
 
         $taskGroupTemplate->name = $this->name;

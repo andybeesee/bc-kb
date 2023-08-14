@@ -10,12 +10,12 @@ use App\Models\Project;
 use App\Models\Board;
 use App\Models\ProjectTemplate;
 use App\Models\Task;
-use App\Models\TaskGroup;
-use App\Models\TaskGroupTemplate;
+use App\Models\Checklist;
+use App\Models\ChecklistTemplate;
 use App\Models\Team;
 use App\Models\User;
 use Database\Factories\BoardFactory;
-use Database\Factories\TaskGroupFactory;
+use Database\Factories\ChecklistFactory;
 use Illuminate\Database\Seeder;
 use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Support\Facades\DB;
@@ -149,7 +149,7 @@ class DatabaseSeeder extends Seeder
                 $tasks[] = ['id' => $x + 1, 'task' => $this->faker->sentence];
             }
 
-            $tg = new TaskGroupTemplate();
+            $tg = new ChecklistTemplate();
             $tg->name = $this->faker->city.' '.$this->faker->colorName.' '.random_int(1111, 9999);
             $tg->description = $this->faker->boolean ? null : $this->faker->sentence;
             $tg->tasks = $tasks;
@@ -171,7 +171,7 @@ class DatabaseSeeder extends Seeder
                 $idSync[$id] = ['sort' => $index + 1];
             }
 
-            $pg->taskGroupTemplates()->sync($idSync);
+            $pg->checklistTemplates()->sync($idSync);
         }
     }
 
@@ -211,7 +211,7 @@ class DatabaseSeeder extends Seeder
 
                 $tasksToMake = random_int(20, 200);
 
-                $groups = $tasksToMake > 50 ? TaskGroup::factory()->count(random_int(2, 20))->create(['project_id' => $project->id]) : collect();
+                $groups = $tasksToMake > 50 ? Checklist::factory()->count(random_int(2, 20))->create(['project_id' => $project->id]) : collect();
 
                 for($t = 0; $t < random_int(20, 100); $t++) {
                     $dueDate = $this->faker->dateTimeBetween('-1 year', '+11 years')->format('Y-m-d');
@@ -224,7 +224,7 @@ class DatabaseSeeder extends Seeder
                         ->create([
                             'sort' => $t + 1,
                             'project_id' => $project->id,
-                            'task_group_id' => $groupId,
+                            'checklist_id' => $groupId,
                             'due_date' => $this->faker->boolean() ? $dueDate : null,
                             'assigned_to' => $this->faker->boolean(40) ? $team->members->random()->id : null,
                             'completed_date' => $isComplete ? $completeDated : null,
