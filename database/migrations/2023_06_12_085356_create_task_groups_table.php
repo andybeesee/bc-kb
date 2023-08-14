@@ -11,7 +11,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('task_groups', function (Blueprint $table) {
+        Schema::create('checklists', function (Blueprint $table) {
             $table->id();
 
             $table->string('name');
@@ -35,6 +35,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('task_groups');
+        Schema::dropIfExists('checklists');
     }
 };

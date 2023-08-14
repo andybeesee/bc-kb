@@ -22,11 +22,11 @@ return new class extends Migration
                 ->onUpdate('cascade')
                 ->onDelete('cascade');
 
-            $table->foreignId('task_group_id')
+            $table->foreignId('checklist_id')
                 ->nullable()
                 ->default(null)
                 ->references('id')
-                ->on('task_groups')
+                ->on('checklists')
                 ->onUpdate('cascade')
                 ->onDelete('cascade');
 
