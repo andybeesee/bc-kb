@@ -8,7 +8,8 @@
 * Project Detail dashboard
 * Standalone checklist (not on a project) - owned by a team and/or user
 * Project task groups - add task group, import template
-
+* perfroamcne on project/tasks page - for 15+ groups with 100+ tasks
+* 
 # Version 2 - Knowledge base
 * Content Chunks - reusable pieces of content
   * text
