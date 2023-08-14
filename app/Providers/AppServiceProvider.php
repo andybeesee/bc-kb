@@ -33,8 +33,10 @@ class AppServiceProvider extends ServiceProvider
         });
 
         Relation::morphMap([
+            'article' => \App\Models\Article::class,
             'board' => \App\Models\Board::class,
             'comment' => \App\Models\Comment::class,
+            'content_chunk' => \App\Models\ContentChunk::class,
             'discussion' => \App\Models\Discussion::class,
             'project' => \App\Models\Project::class,
             'task' => \App\Models\Task::class,

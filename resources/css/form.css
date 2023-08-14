@@ -17,6 +17,11 @@
     @apply w-full flex-grow;
 }
 
+.form-group .form-control-container.checkbox {
+    @apply justify-start;
+}
+
+
 .form-group.error .form-label {
     @apply text-red-700;
 }
@@ -33,7 +38,7 @@
     @apply text-red-700;
 }
 
-.form-control {
+.form-control:not([type="checkbox"]) {
     @apply block p-1 bg-white shadow-inner border border-zinc-600;
     min-width: 175px;
 }

@@ -44,7 +44,7 @@
                 <livewire:kb.chunk-list-index />
                 @break
             @case('new-article')
-                TODO: new article form
+                <livewire:kb.new-article-form />
                 @break
             @case('dashboard')
                 <div>
