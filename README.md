@@ -1,5 +1,5 @@
 # Version 1 remaining - project/task stuff
-* Create Project from Project Template
+* ~~Create Project from Project Template~~
 * Rename Task Group to Checklist
 * Rename TaskGroupTemplate to CHecklistTemplate
 * ChecklistTemplate CRUD
