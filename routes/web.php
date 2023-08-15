@@ -33,7 +33,7 @@ Route::middleware('auth')->group(function () {
 
     Route::get('/templates', \App\Livewire\Template\TemplateIndexPage::class)->name('templates.index');
     Route::get('/project-templates/{projectTemplate}', \App\Livewire\Template\ProjectTemplateDetailPage::class)->name('project-templates.show');
-    Route::get('/checklist-templates/{checklist}', \App\Livewire\Template\ChecklistTemplateDetailPage::class)->name('checklist-templates.show');
+    Route::get('/checklist-templates/{checklistTemplate}', \App\Livewire\Template\ChecklistTemplateDetailPage::class)->name('checklist-templates.show');
 
     Route::get('/projects', \App\Livewire\ProjectIndexPage::class)->name('projects.index');
     Route::get('/projects/{project}', \App\Livewire\ProjectDetailPage::class)->name('projects.show');

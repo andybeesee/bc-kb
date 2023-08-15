@@ -14,7 +14,11 @@ class ChecklistTemplateIndexList extends Component
 
     public function render()
     {
-        $q = ChecklistTemplate::query();
+        $q = ChecklistTemplate::orderBy('name');
+
+        if(!empty($this->search)) {
+            $q = $q->where('name', 'LIKE', '%'.$this->search.'%');
+        }
 
         $checklistTemplates =  $q->paginate(50, pageName: 'checklist-templates');
 
