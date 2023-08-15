@@ -1,9 +1,9 @@
 <?php
 
-namespace App\Livewire;
+namespace App\Livewire\Template;
 
+use App\Models\ChecklistTemplate;
 use App\Models\ProjectTemplate;
-use App\Models\TaskGroupTemplate;
 use Livewire\Component;
 
 class ProjectTemplateDetailPage extends Component
@@ -15,7 +15,7 @@ class ProjectTemplateDetailPage extends Component
     public $updatedName;
     public $updatedDescription;
 
-    public $newTaskGroup = null;
+    public $newChecklistTemplate = null;
 
     public function mount()
     {
@@ -25,42 +25,42 @@ class ProjectTemplateDetailPage extends Component
 
     public function render()
     {
-        return view('livewire.project-template-detail-page');
+        return view('livewire.template.project-template-detail-page');
     }
 
     public function updateOrder(array $ids)
     {
         foreach($ids as $index => $id) {
-            \DB::table('project_template_task_group_template')
+            \DB::table('project_template_checklist_template')
                 ->where('project_template_id', $this->projectTemplate->id)
-                ->where('task_group_template_id', $id)
+                ->where('checklist_template_id', $id)
                 ->update(['sort' => $index + 1]);
         }
     }
 
     public function getNewGroupOptionsProperty()
     {
-        return TaskGroupTemplate::whereNotIn('task_group_templates.id', $this->projectTemplate->taskGroupTemplates()->pluck('task_group_templates.id')->toArray())
-            ->orderBy('task_group_templates.name')
+        return ChecklistTemplate::whereNotIn('checklist_templates.id', $this->projectTemplate->checklistTemplates()->pluck('checklist_templates.id')->toArray())
+            ->orderBy('checklist_templates.name')
             ->get();
     }
 
-    public function removeTaskGroup($id)
+    public function removeChecklist($id)
     {
-        \DB::table('project_template_task_group_template')
+        \DB::table('project_template_checklist_template')
             ->where('project_template_id', $this->projectTemplate->id)
-            ->where('task_group_template_id', $id)
+            ->where('checklist_template_id', $id)
             ->delete();
     }
 
-    public function addTaskGroup()
+    public function addChecklist()
     {
-        $maxSort = \DB::table('project_template_task_group_template')
+        $maxSort = \DB::table('project_template_checklist_template')
             ->where('project_template_id', $this->projectTemplate->id)
             ->max('sort') + 1;
 
-        $this->projectTemplate->taskGroupTemplates()->attach($this->newTaskGroup, ['sort' => $maxSort]);
-        $this->newTaskGroup = null;
+        $this->projectTemplate->checklistTemplates()->attach($this->newChecklistTemplate, ['sort' => $maxSort]);
+        $this->newChecklistTemplate = null;
     }
 
     public function saveChanges()

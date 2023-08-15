@@ -11,7 +11,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('project_template_task_group_template', function (Blueprint $table) {
+        Schema::create('project_template_checklist_template', function (Blueprint $table) {
             $table->id();
 
             $table->unsignedBigInteger('project_template_id');
@@ -21,10 +21,10 @@ return new class extends Migration
                 ->onDelete('cascade')
                 ->onUpdate('cascade');
 
-            $table->unsignedBigInteger('task_group_template_id');
-            $table->foreign('task_group_template_id', 'pj_tg_template_fk')
+            $table->unsignedBigInteger('checklist_template_id');
+            $table->foreign('checklist_template_id', 'pj_cl_template_fk')
                 ->references('id')
-                ->on('task_group_templates')
+                ->on('checklist_templates')
                 ->onDelete('cascade')
                 ->onUpdate('cascade');
 
@@ -39,6 +39,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('project_template_task_group_template');
+        Schema::dropIfExists('project_template_checklist_template');
     }
 };

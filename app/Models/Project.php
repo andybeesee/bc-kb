@@ -106,21 +106,22 @@ class Project extends Model
 
     public function importProjectTemplate($templateId)
     {
-        ProjectTemplate::with('taskGroupTemplates')
+        ProjectTemplate::with('checklistTemplates')
             ->where('id', $templateId)
             ->first()
-            ->taskGroupTemplates
-            ->each(function(TaskGroupTemplate $tgt, $index) {
-                $this->importTaskGroupTemplate($tgt, $tgt->pivot->sort);
+            ->checklistTemplates
+            ->each(function(ChecklistTemplate $tgt, $index) {
+                $this->importChecklistTemplate($tgt, $tgt->pivot->sort);
             });
     }
 
-    public function importTaskGroupTemplate(TaskGroupTemplate $tgt, $sort = null)
+    public function importChecklistTemplate(ChecklistTemplate $tgt, $sort = null)
     {
         if(is_null($sort)) {
-            $sort = DB::table('task_groups')->where('project_id', $this->id)->max('sort') + 1;
+            $sort = DB::table('checklists')->where('project_id', $this->id)->max('sort') + 1;
         }
-        $tg = new TaskGroup();
+
+        $tg = new Checklist();
         $tg->name = $tgt->name;
         $tg->description = $tgt;
         $tg->project_id = $this->id;
@@ -131,7 +132,7 @@ class Project extends Model
             $task = new Task();
             $task->name = $taskTemplate['task'];
             $task->project_id = $this->id;
-            $task->task_group_id = $tg->id;
+            $task->checklist_id = $tg->id;
             $task->sort = $index + 1;
             $task->save();
         }

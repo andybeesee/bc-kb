@@ -3,11 +3,11 @@
 namespace App\Livewire\Template;
 
 use App\Models\ProjectTemplate;
-use App\Models\TaskGroup;
-use App\Models\TaskGroupTemplate;
+use App\Models\Checklist;
+use App\Models\ChecklistTemplate;
 use Livewire\Component;
 
-class ProjectForm extends Component
+class ProjectTemplateForm extends Component
 {
     public string $name = '';
 
@@ -19,12 +19,12 @@ class ProjectForm extends Component
 
     public function render()
     {
-        return view('livewire.template.project-form');
+        return view('livewire.template.project-template-form');
     }
 
     public function getGroupOptionsProperty()
     {
-        $q = TaskGroupTemplate::orderBy('name');
+        $q = ChecklistTemplate::orderBy('name');
 
         if(!empty($this->groupSearch)) {
             $q = $q->where('name', 'LIKE', '%'.$this->groupSearch.'%');
@@ -45,7 +45,7 @@ class ProjectForm extends Component
 
         $sorted = [];
 
-        $q = TaskGroupTemplate::whereIn('id', $this->groups);
+        $q = ChecklistTemplate::whereIn('id', $this->groups);
 
         if(count($this->groups) > 1) {
             $q = $q->orderByRaw('FIELD(id,'.implode(',', $this->groups).')');
@@ -59,7 +59,7 @@ class ProjectForm extends Component
         $this->validate([
             'name' => 'required|unique:project_templates',
             'groups' => 'array',
-            'groups.*' => 'exists:task_group_templates,id',
+            'groups.*' => 'exists:checklist_templates,id',
         ]);
 
         $pt = new ProjectTemplate();
@@ -74,7 +74,7 @@ class ProjectForm extends Component
             $idSync[$id] = ['sort' => $index + 1];
         }
 
-        $pt->taskGroupTemplates()->sync($idSync);
+        $pt->checklistTemplates()->sync($idSync);
 
         return $this->redirect(route('project-templates.show', $pt));
     }

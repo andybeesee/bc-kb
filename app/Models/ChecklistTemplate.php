@@ -5,12 +5,11 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class TaskGroup extends Model
+class ChecklistTemplate extends Model
 {
     use HasFactory;
 
-    public function tasks()
-    {
-        return $this->hasMany(Task::class)->orderBy('sort');
-    }
+    protected $casts = [
+        'tasks' => 'array',
+    ];
 }

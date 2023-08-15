@@ -7,7 +7,7 @@
         <tr>
             <th style="width: 2%">ID</th>
             <th style="width: 13%">Name</th>
-            <th style="width: 3%">Task Groups</th>
+            <th style="width: 3%">Checklists</th>
             <th style="width: 5%">Updated</th>
         </tr>
         </thead>
@@ -24,7 +24,7 @@
                         {{ $pTemplate->name }}
                     </a>
                 </td>
-                <td>{{ $pTemplate->task_group_templates_count }}</td>
+                <td>{{ $pTemplate->checklist_templates_count }}</td>
                 <td>
                     <x-datetime :date="$pTemplate->updated_at" />
                 </td>

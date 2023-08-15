@@ -86,7 +86,7 @@
         <div class="form-label"></div>
         <div class="form-control-container">
             <button class="btn btn-primary w-1/3">
-                Save Task Group Template
+                Save Checklist Template
             </button>
         </div>
     </div>

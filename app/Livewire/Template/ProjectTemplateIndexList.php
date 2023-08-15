@@ -1,9 +1,8 @@
 <?php
 
-namespace App\Livewire;
+namespace App\Livewire\Template;
 
 use App\Models\ProjectTemplate;
-use App\Models\TaskGroupTemplate;
 use Livewire\Component;
 use Livewire\WithPagination;
 
@@ -15,7 +14,7 @@ class ProjectTemplateIndexList extends Component
 
     public function render()
     {
-        $q = ProjectTemplate::withCount('taskGroupTemplates');
+        $q = ProjectTemplate::withCount('checklistTemplates');
 
         if(!empty($this->search)) {
             $q = $q->where('name', 'LIKE', '%'.$this->search.'%');
@@ -23,7 +22,7 @@ class ProjectTemplateIndexList extends Component
 
         $projectTemplates = $q->paginate(30, pageName: 'project-templates-page');
 
-        return view('livewire.project-template-index-list')
+        return view('livewire.template.project-template-index-list')
             ->with('projectTemplates', $projectTemplates);
     }
 }
