@@ -4,7 +4,7 @@
             Project Templates
         </button>
         <button wire:click="$set('tab', 'checklist-templates')" type="button" class="{{ $tab === 'checklist-templates' ? 'active' : '' }}">
-            Task Group Templates
+            Checklist Templates
         </button>
         <button wire:click="$set('tab', 'create')" type="button" class="{{ $tab === 'create' ? 'active' : '' }}">
             New Template

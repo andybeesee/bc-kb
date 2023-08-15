@@ -4,7 +4,7 @@
     <x-form.textarea name="description" wire:model="description" label="Description" help="When should you use this?" />
 
     <div class="form-group">
-        <div class="form-label">Include Task Groups</div>
+        <div class="form-label">Include Checklists</div>
         <div
             class="form-control-container"
             x-data="{

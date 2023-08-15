@@ -7,7 +7,7 @@
         <tr>
             <th style="width: 2%">ID</th>
             <th style="width: 13%">Name</th>
-            <th style="width: 3%">Task Groups</th>
+            <th style="width: 3%">Checklists</th>
             <th style="width: 5%">Updated</th>
         </tr>
         </thead>

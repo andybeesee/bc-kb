@@ -58,14 +58,14 @@
             @endforeach
         </div>
         <form class="p-3" wire:submit="addChecklist">
-            <x-form.select display="vertical" label="Add New Task Group" name="newchecklist" wire:model="newChecklistTemplate">
+            <x-form.select display="vertical" label="Add New Checklist" name="newchecklist" wire:model="newChecklistTemplate">
                 <option value=""></option>
                 @foreach($this->newGroupOptions as $opt)
                     <option value="{{ $opt->id }}">{{ $opt->name }}</option>
                 @endforeach
             </x-form.select>
 
-            <button class="btn btn-primary mt-4">Add Task Group Template</button>
+            <button class="btn btn-primary mt-4">Add Checklist Template</button>
         </form>
     </div>
 </div>
