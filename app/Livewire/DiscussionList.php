@@ -22,9 +22,7 @@ class DiscussionList extends Component
 
     public function render()
     {
-        // TODO: does clicking on it show detail in place of list? or do we go to a different page?
-
-        $discussions = Discussion::with(['creator'])
+        $discussions = Discussion::with(['creator', 'lastComment'])
             ->withCount(['comments'])
             ->where('attached_id', $this->attachedId)
             ->where('attached_type', $this->attachedType)

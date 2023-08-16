@@ -21,9 +21,20 @@
             </button>
         </div>
     </form>
-    @foreach($discussions as $discussion)
-        <div>
-            {{ $discussion->subject }}
-        </div>
-    @endforeach
+
+    <div class="mt-4 grid divide-y dark:divide-zinc-700 divide-zinc-400">
+        @foreach($discussions as $discussion)
+            <div class="p-2">
+                <button class="link" type="button">{{ $discussion->subject }}</button>
+                <div class="flex items-center">
+                    <div class="text-zinc-600 dark:text-zinc-400">
+                        Last Post by {{ $discussion->lastComment->creator->name  }} on <x-datetime :date="$discussion->lastComment->created_at" />
+                    </div>
+                    <div class="ml-auto text-zinc-600 dark:text-zinc-400">
+                        Started by {{ $discussion->creator->name }} on <x-datetime :date="$discussion->created_at" />
+                    </div>
+                </div>
+            </div>
+        @endforeach
+    </div>
 </div>
