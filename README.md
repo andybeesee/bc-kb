@@ -2,7 +2,7 @@
 * ~~Create Project from Project Template~~
 * ~~Rename Task Group to Checklist~~
 * ~~Rename TaskGroupTemplate to CHecklistTemplate~~
-* ChecklistTemplate CRUD
+* ~~ChecklistTemplate CRUD~~
 * Finish project dashboard (links, editing on dashboard)
 * Discussions on projects
 * Project Detail dashboard
