@@ -8,6 +8,8 @@ use Livewire\Component;
 
 class ProjectIndexDashboard extends Component
 {
+    public $updating = null;
+
     public function render()
     {
         $currentProjects = Project::with('team')
