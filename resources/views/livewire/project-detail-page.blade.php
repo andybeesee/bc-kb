@@ -101,8 +101,7 @@
                 @break
             @case('discussions')
                 <div>
-                    <div>Discussions</div>
-                    TODO
+                    <livewire:discussion-list attached-type="project" :attached-id="$project->id" />
                 </div>
                 @break
         @endswitch

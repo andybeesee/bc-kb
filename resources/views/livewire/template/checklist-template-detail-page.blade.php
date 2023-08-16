@@ -27,7 +27,7 @@
     <div>
         <h2>Tasks</h2>
 
-        <div x-data="{
+        <div class="md:max-w-[50vw]" x-data="{
             newTask: '',
             tasks: @entangle('tasks').live,
             init() {
@@ -74,10 +74,10 @@
             },
         }">
             <div class="mb-2">
-                <div class="font-semibold text-sm">New Task</div>
+                <div class="font-semibold text-sm mb-2">New Task</div>
                 <div class="flex items-center mb-2">
-                    <input class="form-control form-control-sm" type="text" x-model="newTask" @keydown.enter="addTask" />
-                    <button class="ml-1 btn-sm btn-white" type="button" @click="addTask">
+                    <input class="form-control w-[400px] form-control-sm" type="text" x-model="newTask" @keydown.enter="addTask" placeholder="Some new task" />
+                    <button class="ml-1 btn btn-sm btn-white" type="button" @click="addTask">
                         Add Task
                     </button>
                 </div>
@@ -87,7 +87,7 @@
                     <div :data-task-id="task.id" class="py-1 flex items-center">
                         <x-icon icon="grip-vertical" class="handle h-4 w-4 mr-1" />
                         <input
-                            class="form-control form-control-sm"
+                            class="form-control w-full form-control-sm"
                             type="text"
                             :value="task.task"
                             @input.debounce="updateTask(task.id, $event.target.value)"

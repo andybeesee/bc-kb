@@ -2,6 +2,7 @@
 
 namespace App\Livewire;
 
+use App\Models\Comment;
 use App\Models\Discussion;
 use Livewire\Component;
 
@@ -13,17 +14,56 @@ class DiscussionList extends Component
 
     public $showDetailId = null;
 
+    public $adding = false;
+
+    public $newSubject = '';
+
+    public $newDiscussionPost = '';
+
+    public $openPostId = null;
+
     public function render()
     {
-        // TODO: does clicking on it show detail in place of list? or do we go to a different page?
-
-        $discussions = Discussion::with(['creator'])
+        $discussions = Discussion::with(['creator', 'lastComment'])
             ->withCount(['comments'])
             ->where('attached_id', $this->attachedId)
             ->where('attached_type', $this->attachedType)
-            ->orderBy('updated_at')
+            ->orderBy('updated_at', 'DESC')
             ->get();
 
         return view('livewire.discussion-list')->with('discussions', $discussions);
+    }
+
+    public function getOpenDiscussionProperty()
+    {
+        if(empty($this->openPostId)) {
+            return null;
+        }
+
+        return Discussion::findOrFail($this->openPostId);
+    }
+
+    public function addNewDiscussion()
+    {
+        $this->validate([
+            'newSubject' => 'required',
+            'newDiscussionPost' => 'required',
+        ]);
+
+        $discussion = new Discussion();
+        $discussion->subject = $this->newSubject;
+        $discussion->attached_id = $this->attachedId;
+        $discussion->attached_type = $this->attachedType;
+        $discussion->save();
+
+        $c = new Comment();
+        $c->comment = $this->newDiscussionPost;
+        $c->attached_type = 'discussion';
+        $c->attached_id = $discussion->id;
+        $c->save();
+
+        $this->adding = false;
+        $this->newSubject = '';
+        $this->newDiscussionPost = '';
     }
 }

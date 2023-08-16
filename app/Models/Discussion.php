@@ -15,6 +15,11 @@ class Discussion extends Model
         return $this->morphMany(Comment::class, 'attached');
     }
 
+    public function lastComment()
+    {
+        return $this->morphOne(Comment::class, 'attached')->orderBy('created_at', 'DESC');
+    }
+
     public function attached()
     {
         return $this->morphTo('attached');
