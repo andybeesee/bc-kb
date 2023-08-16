@@ -4,7 +4,7 @@
 * ~~Rename TaskGroupTemplate to CHecklistTemplate~~
 * ~~ChecklistTemplate CRUD~~
 * Finish project dashboard (links, editing on dashboard)
-* Discussions on projects
+* ~~Discussions on projects~~ - done but bad
 * Project Detail dashboard
 * Standalone checklist (not on a project) - owned by a team and/or user
 * Project task groups - add task group, import template
