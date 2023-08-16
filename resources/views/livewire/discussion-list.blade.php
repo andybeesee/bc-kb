@@ -1,7 +1,19 @@
 <div x-data="{ adding: @entangle('adding') }">
+    @if($openPostId)
+        <div @modal-close="$wire.set('openPostId', null)">
+            <x-modal name="whatevers">
+                <div class="p-4">
+                    <livewire:discussion-detail :discussion="$this->openDiscussion" />
+                </div>
+            </x-modal>
+        </div>
+
+    @endif
     <button type="button" class="btn btn-white" @click="adding = true" x-show="!adding">
         Start a New Discussion
     </button>
+
+    {{ $openPostId }}
 
     <form class="card" x-show="adding" class="my-2" wire:submit="addNewDiscussion">
         <div class="card-title">
@@ -25,7 +37,7 @@
     <div class="mt-4 grid divide-y dark:divide-zinc-700 divide-zinc-400">
         @foreach($discussions as $discussion)
             <div class="p-2">
-                <button class="link" type="button">{{ $discussion->subject }}</button>
+                <button @click="$wire.set('openPostId', {{ $discussion->id }})" class="link" type="button">{{ $discussion->subject }}</button>
                 <div class="flex items-center">
                     <div class="text-zinc-600 dark:text-zinc-400">
                         Last Post by {{ $discussion->lastComment->creator->name  }} on <x-datetime :date="$discussion->lastComment->created_at" />

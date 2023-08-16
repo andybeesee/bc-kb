@@ -20,16 +20,27 @@ class DiscussionList extends Component
 
     public $newDiscussionPost = '';
 
+    public $openPostId = null;
+
     public function render()
     {
         $discussions = Discussion::with(['creator', 'lastComment'])
             ->withCount(['comments'])
             ->where('attached_id', $this->attachedId)
             ->where('attached_type', $this->attachedType)
-            ->orderBy('updated_at')
+            ->orderBy('updated_at', 'DESC')
             ->get();
 
         return view('livewire.discussion-list')->with('discussions', $discussions);
+    }
+
+    public function getOpenDiscussionProperty()
+    {
+        if(empty($this->openPostId)) {
+            return null;
+        }
+
+        return Discussion::findOrFail($this->openPostId);
     }
 
     public function addNewDiscussion()
