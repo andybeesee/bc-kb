@@ -3,7 +3,7 @@
 * ~~Rename Task Group to Checklist~~
 * ~~Rename TaskGroupTemplate to CHecklistTemplate~~
 * ~~ChecklistTemplate CRUD~~
-* Finish project dashboard (links, editing on dashboard)
+* ~~Finish project dashboard (links, editing on dashboard)~~
   * ~~update project status on dashboard~~
   * click task for detail page
   * complete task on dashboard

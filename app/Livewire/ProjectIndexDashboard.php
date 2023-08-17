@@ -20,6 +20,7 @@ class ProjectIndexDashboard extends Component
 
     public function mount()
     {
+        //we track ids up here, so that when someone completes a task it stays on the dashboard until they refresh
         $this->pastDueTasksIds = Task::incomplete()
             ->where('due_date', '<', date('Y-m-d'))
             ->where('assigned_to', auth()->user()->id)
