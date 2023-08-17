@@ -15,7 +15,7 @@ class ProjectDetailPage extends Component
     public Project $project;
 
     #[Url]
-    public string $tab = 'dashboard';
+    public string $tab = 'tasks';
 
     public function render()
     {
