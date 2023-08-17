@@ -18,7 +18,16 @@
         <div
             data-group-id="" class="divide-y divide-zinc-300 dark:divide-zinc-700" x-sortable="{ options: { handle: '.handle', group: { name: 'tasks', put: 'tasks', pull: 'tasks' } } }">
             @foreach($tasks as $task)
-                <x-task.list-item class="py-2 px-1" :task="$task" :sortable="true" :key="'ungrouped-'.$task->id" />
+                @php
+                    $taskBgClass = '';
+                    if($task->is_complete) {
+                        $taskBgClass = ''; // bg-green-100 dark:bg-green-900 dark:hover:bg-green-800';
+                    } elseif($task->assigned_to === auth()->user()->id) {
+                        $taskBgClass = 'bg-blue-100 dark:bg-blue-900 dark:hover:bg-blue-800';
+                    }
+
+                @endphp
+                <x-task.list-item class="py-2 px-1 {{ $taskBgClass }}" :task="$task" :sortable="true" :key="'ungrouped-'.$task->id" />
             @endforeach
         </div>
     </div>

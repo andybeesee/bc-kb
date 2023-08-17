@@ -71,9 +71,9 @@
 
     <div class="mb-4">
         <div class="button-tabs">
-            <button wire:click="$set('tab', 'dashboard')" type="button" class="{{ $tab === 'dashboard' ? 'active' : '' }}">
+            {{--<button wire:click="$set('tab', 'dashboard')" type="button" class="{{ $tab === 'dashboard' ? 'active' : '' }}">
                 Dashboard
-            </button>
+            </button>--}}
             <button wire:click="$set('tab', 'tasks')" type="button" class="{{ $tab === 'tasks' ? 'active' : '' }}">
                 Tasks
             </button>
@@ -90,11 +90,11 @@
     </div>
     <div>
         @switch($tab)
-            @case('dashboard')
+            {{--@case('dashboard')
                 <div>
                     <livewire:project-dashboard :project="$project" :key="$project->id.'-projdet-dashboard'"/>
                 </div>
-                @break
+                @break--}}
             @case('tasks')
                 <div>
                     <livewire:project-task-list :project-id="$project->id" :key="$project->id.'-projdet-taskslist'"/>
