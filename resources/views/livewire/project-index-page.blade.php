@@ -30,7 +30,7 @@
     <div>
         @switch($tab)
             @case('dashboard')
-                <x-project.dashboard :dashboard-data="$dashboardData" />
+                <livewire:project-index-dashboard />
                 @break
             @case('new')
                 <livewire:project-form />

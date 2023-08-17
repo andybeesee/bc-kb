@@ -13,9 +13,9 @@ class ProjectForm extends Component
 
     public string $status = 'idea';
 
-    public int|null $teamId = 0;
+    public int|null $teamId = null;
 
-    public int $ownerId = 0;
+    public int|null $ownerId = null;
 
     public string $name = '';
 
@@ -94,10 +94,10 @@ class ProjectForm extends Component
                 $this->project->importProjectTemplate($this->template);
             }
 
-            $this->dispatch('projectCreated', $this->project->id);
+            $this->dispatch('project-created', $this->project->id);
 
         } else {
-            $this->dispatch('projectUpdated', $this->project->id);
+            $this->dispatch('project-updated', $this->project->id);
         }
     }
 

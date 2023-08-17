@@ -24,61 +24,18 @@ class ProjectIndexPage extends Component
 
     public function render()
     {
-        $dashboardData = $this->tab === 'dashboard' ? $this->getDashboardData() : [] ;
-
-        return view('livewire.project-index-page')
-            ->with('dashboardData', $dashboardData);
+        return view('livewire.project-index-page');
     }
 
-    #[On('projectUpdated')]
+    #[On('project-updated')]
     public function handleProjectUpdate()
     {
         // TODO: probably something
     }
 
-    #[On('projectCreated')]
+    #[On('project-created')]
     public function showProject($projectId)
     {
         $this->redirect(route('projects.show', $projectId));
-    }
-
-    protected function getDashboardData()
-    {
-        $data = [];
-        $data['currentProjects'] = Project::with('team')
-            ->whereIn('status', [
-                'planning',
-                'planned',
-                'in_progress',
-                'late',
-            ])
-            ->where('owner_id', auth()->user()->id)
-            ->get();
-
-        $data['pastDueTasks'] = Task::incomplete()
-            ->with('project')
-            ->where('due_date', '<', date('Y-m-d'))
-            ->where('assigned_to', auth()->user()->id)
-            ->orderBy('due_date', 'ASC')
-            ->get();
-
-        $data['upcomingDueTasks'] = Task::incomplete()
-            ->with('project')
-            ->whereNotNull('due_date')
-            ->whereBetween('due_date', [
-                date('Y-m-d'),
-                date('Y-m-d', strtotime('+2 weeks'))
-            ])
-            ->orderBy('due_date', 'ASC')
-            ->where('assigned_to', auth()->user()->id)
-            ->get();
-
-        $data['incompleteTasks'] = Task::incomplete()
-            ->with('project')
-            ->whereNull('due_date')
-            ->where('assigned_to', auth()->user()->id)
-            ->get();
-
-        return $data;
     }
 }

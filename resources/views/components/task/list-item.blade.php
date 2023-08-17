@@ -1,4 +1,4 @@
-@props(['task', 'sortable' => false, 'showGroup' => false, 'showProject' => false])
+@props(['task', 'sortable' => false, 'showChecklist' => false, 'showProject' => false])
 
 <div
     id="task-{{ $task->id }}"
@@ -30,6 +30,17 @@
                 {{ $task->name }}
             </div>
 
+            @if($showProject && $task->project)
+                <span class="ml-2">
+                    (<a href="{{ route('projects.show', $task->project_id) }}">{{ $task->project->name }}</a>)
+                </span>
+            @endif
+
+            @if($showChecklist && $task->checklist)
+                <span class="ml-2">
+                    (<a href="{{ route('checklists.show', $task->checklist_id) }}">{{ $task->checklist->name }}</a>)
+                </span>
+            @endif
 
             <a
                 href="{{ route('tasks.show', [$task]) }}"

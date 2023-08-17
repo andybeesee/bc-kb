@@ -19,7 +19,7 @@ class Task extends Model
         return $this->morphMany(File::class, 'attached');
     }
 
-    public function group()
+    public function checklist()
     {
         return $this->belongsTo(Checklist::class, 'checklist_id');
     }

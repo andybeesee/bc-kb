@@ -4,8 +4,8 @@
     </div>
 
     @if(!empty($project->currentStatus))
-        <div class="my-2 px-3 py-2 border-l-4 border-blue-800 bg-blue-50">
-            <span class="text-xs text-blue-700">Current status</span>
+        <div class="my-2 px-3 py-2 border-l-4 border-blue-800 bg-blue-50 dark:bg-blue-800">
+            <span class="text-xs text-blue-700 dark:text-blue-200">Current status</span>
             <br>
             {{ $project->currentStatus->status }}
         </div>

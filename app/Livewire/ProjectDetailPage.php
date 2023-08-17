@@ -15,7 +15,7 @@ class ProjectDetailPage extends Component
     public Project $project;
 
     #[Url]
-    public string $tab = 'dashboard';
+    public string $tab = 'tasks';
 
     public function render()
     {
@@ -26,8 +26,8 @@ class ProjectDetailPage extends Component
     public function handleProjectUpdate($projectId)
     {
         if($projectId === $this->project->id) {
-            $this->tab = 'dashboard';
-            $this->project = $this->project->refresh(['team']);
+            // $this->tab = 'dashboard';
+            $this->project = $this->project->refresh(['team', 'owner']);
         }
     }
 

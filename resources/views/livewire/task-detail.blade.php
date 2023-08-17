@@ -35,9 +35,9 @@
                             </div>
                             @if(!empty($task->checklist_id))
                                 <div class="px-2 py-1 grid grid-cols-4">
-                                    <dt>Group</dt>
+                                    <dt>Checklist</dt>
                                     <dd class="col-span-3">
-                                        {{ $task->group->name }}
+                                        {{ $task->checklist->name }}
                                     </dd>
                                 </div>
                             @endif

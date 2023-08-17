@@ -19,7 +19,7 @@
             />
         @endif
 
-        <x-form.date-picker name="due_date" wire:model="due_date" label="Due Date" />
+        <x-form.date-picker name="due_date" wire:model="dueDate" label="Due Date" />
 
         <x-form.select wire:model="status" :empty-start="false" :options="$statuses" label="Status" name="status" />
 

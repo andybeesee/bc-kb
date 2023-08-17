@@ -3,12 +3,17 @@
 * ~~Rename Task Group to Checklist~~
 * ~~Rename TaskGroupTemplate to CHecklistTemplate~~
 * ~~ChecklistTemplate CRUD~~
-* Finish project dashboard (links, editing on dashboard)
-* Discussions on projects
-* Project Detail dashboard
+* ~~Finish project dashboard (links, editing on dashboard)~~
+  * ~~update project status on dashboard~~
+  * ~~click task for detail page~~
+  * ~~complete task on dashboard~~
+  * ~~update due date on task on dashboard~~
+* ~~Discussions on projects~~ - done but bad
+* ~~Project Detail dashboard~~ (disabled lol)
+* Project checklists - add checklist, import template
+* performance on project/tasks page - for 15+ groups with 100+ tasks
+* Checklist detail page
 * Standalone checklist (not on a project) - owned by a team and/or user
-* Project task groups - add task group, import template
-* perfroamcne on project/tasks page - for 15+ groups with 100+ tasks
 * 
 # Version 2 - Knowledge base
 * Content Chunks - reusable pieces of content
