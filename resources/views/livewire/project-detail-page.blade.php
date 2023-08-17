@@ -31,6 +31,18 @@
             <button class="btn btn-white btn-sm " @click="openForm" type="button">
                 Update Status
             </button>
+
+            @if($project->team)
+                <div>
+                    Team: {{ $project->team->name }}
+                </div>
+            @endif
+
+            @if($project->owner)
+                <div>
+                    Owner: {{ $project->owner->name }}
+                </div>
+            @endif
         </div>
 
         <div class="mt-1">

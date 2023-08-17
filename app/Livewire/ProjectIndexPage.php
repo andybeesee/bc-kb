@@ -27,13 +27,13 @@ class ProjectIndexPage extends Component
         return view('livewire.project-index-page');
     }
 
-    #[On('projectUpdated')]
+    #[On('project-updated')]
     public function handleProjectUpdate()
     {
         // TODO: probably something
     }
 
-    #[On('projectCreated')]
+    #[On('project-created')]
     public function showProject($projectId)
     {
         $this->redirect(route('projects.show', $projectId));
