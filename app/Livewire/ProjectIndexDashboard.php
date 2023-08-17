@@ -18,8 +18,11 @@ class ProjectIndexDashboard extends Component
     public $upcomingDueTasksIds;
     public $incompleteTasksIds;
 
+    public $maxSoonDate;
+
     public function mount()
     {
+        $this->maxSoonDate = date('Y-m-d', strtotime('+2 weeks'));
         //we track ids up here, so that when someone completes a task it stays on the dashboard until they refresh
         $this->pastDueTasksIds = Task::incomplete()
             ->where('due_date', '<', date('Y-m-d'))
@@ -28,16 +31,15 @@ class ProjectIndexDashboard extends Component
             ->pluck('id')->toArray();
 
         $this->incompleteTasksIds = Task::incomplete()
-            ->whereNull('due_date')
             ->where('assigned_to', auth()->user()->id)
+            ->where(function($dq) {
+                return $dq->whereNull('due_date')->orWhere('due_date', '>', $this->maxSoonDate);
+            })
             ->get()->pluck('id')->toArray();
 
         $this->upcomingDueTasksIds = Task::incomplete()
             ->whereNotNull('due_date')
-            ->whereBetween('due_date', [
-                date('Y-m-d'),
-                date('Y-m-d', strtotime('+2 weeks'))
-            ])
+            ->whereBetween('due_date', [date('Y-m-d'), $this->maxSoonDate])
             ->orderBy('due_date', 'ASC')
             ->where('assigned_to', auth()->user()->id)
             ->get()
@@ -67,6 +69,7 @@ class ProjectIndexDashboard extends Component
 
         $incompleteTasks = Task::with('project')
             ->whereIn('id', $this->incompleteTasksIds)
+            ->orderBy('due_date', 'ASC')
             ->get();
 
         return view('livewire.project-index-dashboard')
