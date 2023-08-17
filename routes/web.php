@@ -42,6 +42,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/projects/{project}/discussions', \App\Http\Controllers\ProjectDiscussionController::class)->name('projects.discussions.index');
     Route::get('/projects/{project}/files', \App\Http\Controllers\ProjectFileController::class)->name('projects.files.index');
 
+    Route::get('/checklists/{checklist}', \App\Livewire\ChecklistDetailPage::class)->name('checklists.show');
 
     Route::resource('projects.boards', \App\Http\Controllers\ProjectBoardController::class);
     Route::resource('projects.boards.tasks', \App\Http\Controllers\ProjectBoardTaskController::class);
