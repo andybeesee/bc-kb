@@ -22,6 +22,8 @@ class ProjectTaskList extends Component
 
     public null|int $showDetailTask = null;
 
+    public $addingGroup = false;
+
     public null|string $startingTab = null;
 
     public function render()

@@ -1,4 +1,4 @@
-<div x-data="{ addingGroup: false }">
+<div x-data="{ addingGroup: @entangle('addingGroup').live }">
     {{-- TODO: we still get the odd livewire state error when sorting items - but I don't know why --}}
     {{-- This div has to be outside the if/else --}}
     <div @modal-close="$wire.closeDetail()">
@@ -13,7 +13,7 @@
 
     <div class="card">
         <div class="card-title">
-            Tasks <span class="text-sm font-normal text-zinc-50 dark:text-zinc-600 ml-2">Not part of a specific checklist</span>
+            Tasks <span class="text-sm font-normal text-zinc-400 dark:text-zinc-600 ml-2">Not part of a specific checklist</span>
         </div>
         <div
             data-group-id="" class="divide-y divide-zinc-300 dark:divide-zinc-700" x-sortable="{ options: { handle: '.handle', group: { name: 'tasks', put: 'tasks', pull: 'tasks' } } }">
@@ -38,21 +38,28 @@
                 Add Checklist
             </button>
         </div>
-        <div class="card" x-show="addingGroup">
-            <div class="card-title">
-                New Checklist
-            </div>
-            <form action="">
-                <div class="card-body">
-                    group name, new tasks, or import 'template group' option...after/before option?
+        @if($addingGroup)
+            <x-modal name="cl-modal">
+                <div class="card" x-show="addingGroup">
+                    <div class="card-title">
+                        New Checklist
+                    </div>
+                    <form action="">
+                        <div class="card-body">
+
+                            group name, new tasks, or import 'template group' option...after/before option?
+                        </div>
+                        <div class="card-footer">
+                            <button type="submit" class="btn btn-primary">Add Checklist</button>
+                            <button type="button" class="btn btn-white" @click="addingGroup = false">Cancel</button>
+                        </div>
+                    </form>
                 </div>
-                <div class="card-footer">
-                    <button type="submit" class="btn btn-primary">Add Checklist</button>
-                    <button type="button" class="btn btn-white" @click="addingGroup = false">Cancel</button>
-                </div>
-            </form>
-        </div>
+            </x-modal>
+        @endif
+
     </div>
+
     <div x-sortable="{ event: 'checklistSorted', idAttribute: 'data-checklist-id', options: { handle: '.handle', group: { name: 'checklists', put: 'checklists', pull: 'checklists' } } }">
         @foreach($checklists as $checklist)
             {{-- TODO: Dropdown to change color of section --}}
