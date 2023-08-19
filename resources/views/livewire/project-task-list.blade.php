@@ -40,21 +40,7 @@
         </div>
         @if($addingGroup)
             <x-modal name="cl-modal">
-                <div class="card" x-show="addingGroup">
-                    <div class="card-title">
-                        New Checklist
-                    </div>
-                    <form action="">
-                        <div class="card-body">
-
-                            group name, new tasks, or import 'template group' option...after/before option?
-                        </div>
-                        <div class="card-footer">
-                            <button type="submit" class="btn btn-primary">Add Checklist</button>
-                            <button type="button" class="btn btn-white" @click="addingGroup = false">Cancel</button>
-                        </div>
-                    </form>
-                </div>
+                <livewire:project-new-checklist-form :project-id="$projectId" />
             </x-modal>
         @endif
 

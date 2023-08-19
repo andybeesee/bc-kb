@@ -22,7 +22,7 @@ class ProjectTaskList extends Component
 
     public null|int $showDetailTask = null;
 
-    public $addingGroup = false;
+    public $addingGroup = true;
 
     public null|string $startingTab = null;
 
