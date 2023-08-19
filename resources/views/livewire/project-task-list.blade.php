@@ -11,6 +11,25 @@
         @endif
     </div>
 
+    <div @cancel="$wire.set('addingGroup', false)" @modal-close="$wire.set('addingGroup', false)" class="my-3">
+        <div>
+            <button class="btn btn-white" type="button" @click="addingGroup = true">
+                Add Checklist
+            </button>
+
+            <button type="button" class="btn btn-white">
+                Add Task(s)
+            </button>
+        </div>
+        @if($addingGroup)
+            <x-modal name="cl-modal">
+                <livewire:project-new-checklist-form :project-id="$projectId" />
+            </x-modal>
+        @endif
+
+    </div>
+
+
     <div class="card">
         <div class="card-title">
             Tasks <span class="text-sm font-normal text-zinc-400 dark:text-zinc-600 ml-2">Not part of a specific checklist</span>
@@ -30,20 +49,6 @@
                 <x-task.list-item class="py-2 px-1 {{ $taskBgClass }}" :task="$task" :sortable="true" :key="'ungrouped-'.$task->id" />
             @endforeach
         </div>
-    </div>
-
-    <div class="my-3">
-        <div>
-            <button class="btn btn-white" x-show="!addingGroup" type="button" @click="addingGroup = true">
-                Add Checklist
-            </button>
-        </div>
-        @if($addingGroup)
-            <x-modal name="cl-modal">
-                <livewire:project-new-checklist-form :project-id="$projectId" />
-            </x-modal>
-        @endif
-
     </div>
 
     <div x-sortable="{ event: 'checklistSorted', idAttribute: 'data-checklist-id', options: { handle: '.handle', group: { name: 'checklists', put: 'checklists', pull: 'checklists' } } }">

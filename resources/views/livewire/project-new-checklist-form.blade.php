@@ -7,6 +7,14 @@ new class extends Component {
 
     public $how = 'new';
 
+    public $name = '';
+
+    public $tasks = '';
+
+    public $copyFromProject = null;
+
+    public $importChecklistTemplateIds = [];
+
     public function getChecklistTemplateOptionsProperty()
     {
         if($this->how === 'import') {
@@ -15,10 +23,46 @@ new class extends Component {
 
         return [];
     }
+
+    public function getProjectOptionsProperty()
+    {
+
+    }
+
+    public function handleAdd()
+    {
+        switch ($this->how) {
+            case 'new':
+                $this->validate(['name' => 'required']);
+
+                $cl = new \App\Models\Checklist();
+                $cl->project_id = $this->projectId;
+                $cl->name = $this->name;
+                $cl->save();
+
+                if(!empty($this->tasks)) {
+                    foreach(preg_split('/\r\n|\r|\n/', $this->tasks) as $index => $taskName) {
+                        $this->addTask($cl, $taskName, $index + 1);
+                    }
+                }
+                break;
+
+        }
+    }
+
+    protected function addTask(\App\Models\Checklist $checklist, $taskName, $sort)
+    {
+        $t = new \App\Models\Task();
+        $t->project_id = $this->projectId;
+        $t->checklist_id = $checklist->id;
+        $t->name = $taskName;
+        $t->sort = $sort;
+        $t->save();
+    }
 } ?>
 
 <form wire:submit="handleAdd" class="card">
-    <div class="card-header">
+    <div class="card-title">
         Checklist Form
     </div>
     <div class="card-body">
@@ -27,31 +71,34 @@ new class extends Component {
             <x-form.radio name="how" value="new" wire:model.live="how" label="Brand New Checklist" />
             <x-form.radio name="how" value="copy" wire:model.live="how" label="Copy from another Project" />
         </x-form.radio-container>
+
+
+        @switch($how)
+            @case('template')
+                <div>
+                    template
+                </div>
+                @break
+            @case('new')
+                <div class="mt-4 grid gap-4">
+                    <x-form.input label="Checklist Name" wire:model="name" name="clname" />
+                    <x-form.textarea name="tasktea" label="Tasks" rows="8" wire:model="tasks" help="One task per line" />
+                </div>
+                @break
+            @case('copy')
+                <div>
+                    copy
+                </div>
+                @break
+        @endswitch
     </div>
 
-    @switch($how)
-        @case('template')
-            <div>
-                template
-            </div>
-        @break
-        @case('new')
-            <div>
-                new
-            </div>
-        @break
-        @case('copy')
-            <div>
-                copy
-            </div>
-        @break
-    @endswitch
 
     <div class="card-footer">
         <button type="submit" class="btn btn-primary">
             Add
         </button>
-        <button type="button" class="btn btn-white">
+        <button @click="$dispatch('cancel')" type="button" class="btn btn-white">
             Nevermind
         </button>
     </div>
