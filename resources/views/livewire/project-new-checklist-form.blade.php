@@ -5,7 +5,7 @@ use Livewire\Volt\Component;
 new class extends Component {
     public $projectId;
 
-    public $how = 'new';
+    public $how = 'template';
 
     public $name = '';
 
@@ -13,20 +13,39 @@ new class extends Component {
 
     public $copyFromProject = null;
 
-    public $importChecklistTemplateIds = [];
+    public $selectedTemplates = [];
+
+    public $templateSearch = '';
 
     public function getChecklistTemplateOptionsProperty()
     {
-        if($this->how === 'import') {
-            return ['1', 'two'];
+        if($this->how === 'template') {
+            $q = \App\Models\ChecklistTemplate::with('projectTemplates')->with('projectTemplates')->orderBy('name');
+
+            if(!empty($this->templateSearch)) {
+                $q = $q->where(function($sq) {
+                    $term = '%'.$this->templateSearch.'%';
+                    return $sq->where('name', 'LIKE', $term)
+                        ->orWhereHas('projectTemplates', fn($pq) => $pq->where('name', 'LIKE', $term));
+                });
+            }
+
+            if(count($this->selectedTemplates) > 0) {
+                $q = $q->whereNotIn('id', $this->selectedTemplates);
+            }
+            return $q->limit(100)->get();
         }
 
         return [];
     }
 
-    public function getProjectOptionsProperty()
+    public function getSelectedTemplateModelsProperty()
     {
+        if(count($this->selectedTemplates) === 0) {
+            return [];
+        }
 
+        return \App\Models\ChecklistTemplate::whereIn('id', $this->selectedTemplates)->get();
     }
 
     public function handleAdd()
@@ -46,7 +65,17 @@ new class extends Component {
                     }
                 }
                 break;
+            case 'template':
+                $this->validate(['selectedTemplates' => 'min:1']);
 
+                $project = \App\Models\Project::findOr($this->projectId);
+
+                \App\Models\ChecklistTemplate::whereIn('id', $this->selectedTemplates)
+                    ->get()
+                    ->each(function(\App\Models\ChecklistTemplate $checklistTemplate) use($project) {
+                        $project->importChecklistTemplate($checklistTemplate);
+                    });
+                break;
         }
     }
 
@@ -75,8 +104,62 @@ new class extends Component {
 
         @switch($how)
             @case('template')
-                <div>
-                    template
+                <div x-data="{
+                    init() {
+                        this.$nextTick(() => this.$refs.search.focus());
+                    },
+                    selectedTemplates: @entangle('selectedTemplates').live,
+                    toggle(id) {
+                        const idx = this.selectedTemplates.indexOf(id);
+                        if(idx > -1) {
+                            this.selectedTemplates = this.selectedTemplates.filter(t => t !== id);
+                        } else {
+                            this.selectedTemplates.push(id);
+                        }
+                    }
+                }" class="mt-4">
+                    <div class="form-group">
+                        <div class="form-label">Select Template(s)</div>
+                        <div class="form-control-container">
+                            <div class="grid grid-cols-2 items-start gap-5">
+                                <div class="grid items-start">
+                                    <div class="text-xs">Select Checklists</div>
+                                    <div class="flex flex-col items-start divide-y divide-zinc-200 border border-zinc-300 max-h-[200px] min-h-[200px] overflow-y-scroll">
+                                        <input x-ref="search" autofocus placeholder="Search" type="text" wire:model.live.debounce="templateSearch" class="w-full sticky top-0" />
+                                        @foreach($this->checklistTemplateOptions as $tempOption)
+                                            <div @click="toggle({{ $tempOption->id }})" class="w-full p-0.5 cursor-pointer hover:bg-zinc-100">
+                                                <div class="font-semibold">{{ $tempOption->name }}</div>
+                                                <div class="text-xs">{{ count($tempOption->tasks) }} Tasks</div>
+                                                @if($tempOption->projectTemplates->count() > 0)
+                                                    <div class="text-xs">
+                                                        @if($tempOption->projectTemplates->count() > 3)
+                                                            <span title=" {{ $tempOption->projectTemplates->pluck('name')->implode("\r\n") }}">
+                                                                Used in {{ $tempOption->projectTemplates->count() }} project templates
+                                                            </span>
+                                                        @else
+                                                            Used in these {{ $tempOption->projectTemplates->count() }} templates: {{ $tempOption->projectTemplates->pluck('name')->implode(',') }}
+                                                        @endif
+                                                    </div>
+                                                @endif
+                                            </div>
+                                        @endforeach
+                                    </div>
+                                </div>
+                                <div>
+                                    <div class="text-xs">Selected Checklists</div>
+                                    <div class="flex divide-y divide-zinc-200 flex-col border items-start border-zinc-300 max-h-[200px] min-h-[200px] overflow-y-scroll">
+                                        @foreach($this->selectedTemplateModels as $tempOption)
+                                            <div @click="toggle({{ $tempOption->id }})" class="w-full p-0.5 cursor-pointer hover:bg-zinc-100">
+                                                <div class="font-semibold">{{ $tempOption->name }}</div>
+                                                <div class="text-xs">{{ count($tempOption->tasks) }} Tasks</div>
+                                            </div>
+                                        @endforeach
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
                 </div>
                 @break
             @case('new')
