@@ -5,7 +5,7 @@ use Livewire\Volt\Component;
 new class extends Component {
     public $projectId;
 
-    public $how = 'template';
+    public $how = 'new';
 
     public $name = '';
 
@@ -16,6 +16,17 @@ new class extends Component {
     public $selectedTemplates = [];
 
     public $templateSearch = '';
+
+    public $projectSearch = '';
+
+    public $selectedProject = null;
+
+    public $selectedChecklists = [];
+
+    public $defaultChecklistOption;
+
+    public $checklistOptions;
+
 
     public function getChecklistTemplateOptionsProperty()
     {
@@ -48,6 +59,42 @@ new class extends Component {
         return \App\Models\ChecklistTemplate::whereIn('id', $this->selectedTemplates)->get();
     }
 
+    public function getProjectOptionsProperty()
+    {
+        if($this->how !== 'copy') {
+            return [];
+        }
+
+        $q = \App\Models\Project::orderBy('name');
+
+        if(!empty($this->projectSearch)) {
+            $q = $q->where('name', 'LIKE', '%'.$this->projectSearch.'%');
+        }
+
+        if(!empty($this->selectedProject)) {
+            $q = $q->orWhere('id', $this->selectedProject);
+        }
+
+        return $q->limit(100)->get();
+    }
+
+    public function setProject($id)
+    {
+        if($id === $this->selectedProject) {
+            $this->selectedProject = null;
+
+            $this->defaultChecklistOption = null;
+            $this->checklistOptions = [];
+        } else {
+            $this->selectedProject = $id;
+
+            $this->defaultChecklistOption = (object) ['id' => 'default', 'name' => 'Default Checklist', 'tasks_count' => \App\Models\Task::whereNull('checklist_id')->where('project_id', $id)->count()];
+            $this->checklistOptions = \App\Models\Checklist::where('project_id', $id)->withCount('tasks')->get();
+            $this->selectedChecklists = ['default', ...$this->checklistOptions->pluck('id')->toArray()];
+        }
+
+    }
+
     public function handleAdd()
     {
         switch ($this->how) {
@@ -76,6 +123,16 @@ new class extends Component {
                         $project->importChecklistTemplate($checklistTemplate);
                     });
                 break;
+            case 'copy':
+                $this->validate(['selectedProject' => 'required', 'selectedChecklists' => 'min:1']);
+
+                $project = \App\Models\Project::findOrFail($this->projectId);
+
+                foreach($this->selectedChecklists as $clid) {
+                    $project->copyFrom($this->selectedProject, $clid);
+                }
+
+                break;
         }
     }
 
@@ -96,9 +153,9 @@ new class extends Component {
     </div>
     <div class="card-body">
         <x-form.radio-container label="How you doing this?">
-            <x-form.radio name="how" value="template" wire:model.live="how" label="Import from a Template" />
             <x-form.radio name="how" value="new" wire:model.live="how" label="Brand New Checklist" />
             <x-form.radio name="how" value="copy" wire:model.live="how" label="Copy from another Project" />
+            <x-form.radio name="how" value="template" wire:model.live="how" label="Import from a Template" />
         </x-form.radio-container>
 
 
@@ -124,7 +181,7 @@ new class extends Component {
                             <div class="grid grid-cols-2 items-start gap-5">
                                 <div class="grid items-start">
                                     <div class="text-xs">Select Checklists</div>
-                                    <div class="flex flex-col items-start divide-y divide-zinc-200 border border-zinc-300 max-h-[200px] min-h-[200px] overflow-y-scroll">
+                                    <div class="flex flex-col items-start divide-y divide-zinc-200 border border-zinc-300 max-h-[200px] min-h-[200px] md:max-h-[400px] md:min-h-[400px] overflow-y-scroll">
                                         <input x-ref="search" autofocus placeholder="Search" type="text" wire:model.live.debounce="templateSearch" class="w-full sticky top-0" />
                                         @foreach($this->checklistTemplateOptions as $tempOption)
                                             <div @click="toggle({{ $tempOption->id }})" class="w-full p-0.5 cursor-pointer hover:bg-zinc-100">
@@ -147,7 +204,7 @@ new class extends Component {
                                 </div>
                                 <div>
                                     <div class="text-xs">Selected Checklists</div>
-                                    <div class="flex divide-y divide-zinc-200 flex-col border items-start border-zinc-300 max-h-[200px] min-h-[200px] overflow-y-scroll">
+                                    <div class="flex divide-y divide-zinc-200 flex-col border items-start border-zinc-300 max-h-[200px] min-h-[200px] md:max-h-[400px] md:min-h-[400px] overflow-y-scroll">
                                         @foreach($this->selectedTemplateModels as $tempOption)
                                             <div @click="toggle({{ $tempOption->id }})" class="w-full p-0.5 cursor-pointer hover:bg-zinc-100">
                                                 <div class="font-semibold">{{ $tempOption->name }}</div>
@@ -159,7 +216,6 @@ new class extends Component {
                             </div>
                         </div>
                     </div>
-
                 </div>
                 @break
             @case('new')
@@ -169,8 +225,54 @@ new class extends Component {
                 </div>
                 @break
             @case('copy')
-                <div>
-                    copy
+                <div
+                    class="mt-4"
+                    x-data="{
+                        init() {
+                           this.$nextTick(() => this.$refs.search.focus());
+                        },
+                    }"
+                >
+                    <div class="form-group">
+                        <div class="form-label">Select Project</div>
+                        <div class="form-control-container grid grid-cols-2 gap-4 items-start">
+                            <div class="flex flex-col items-start divide-y border border-zinc-300 max-h-[200px] min-h-[200px] md:max-h-[400px] md:min-h-[400px] overflow-y-scroll">
+                                <input x-ref="search" class="p-0.5 w-full" type="text" wire:model.live.debounce="projectSearch" placeholder="Search" />
+                                @foreach($this->projectOptions as $projectOpt)
+                                    <div wire:click="setProject({{ $projectOpt->id }})" class="p-0.5 w-full cursor-pointer hover:bg-zinc-100">
+                                        <div class="">{{ $projectOpt->name }}</div>
+                                    </div>
+                                @endforeach
+                            </div>
+                            <div class="flex flex-col items-start divide-y border border-zinc-300 max-h-[200px] min-h-[200px] md:max-h-[400px] md:min-h-[400px] overflow-y-scroll">
+                                @if(empty($selectedProject))
+                                    <div class="text-zinc-500 p-0.5">Select a project on the left</div>
+                                @else
+                                    <div class="p-0.5 w-full">
+                                        <label class="flex items-center">
+                                            <input value="default" type="checkbox" name="selchecklists[]" wire:model="selectedChecklists" />
+                                            <span class="ml-1">
+                                                {{ $defaultChecklistOption->name }}
+                                                {{ $defaultChecklistOption->tasks_count }} Tasks
+                                            </span>
+                                        </label>
+                                    </div>
+                                    @foreach($checklistOptions as $clistOpt)
+                                        <div class="p-0.5 w-full">
+                                            <label class="flex items-center">
+                                                <input value="{{ $clistOpt->id }}" type="checkbox" name="selchecklists[]" wire:model="selectedChecklists" />
+                                                <span class="ml-1">
+                                                    {{ $clistOpt->name }}
+                                                    {{ $clistOpt->tasks_count }} Tasks
+                                                </span>
+                                            </label>
+                                        </div>
+                                    @endforeach
+
+                                @endif
+                            </div>
+                        </div>
+                    </div>
                 </div>
                 @break
         @endswitch
