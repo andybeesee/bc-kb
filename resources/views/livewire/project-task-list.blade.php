@@ -14,11 +14,7 @@
     <div @cancel="$wire.set('addingGroup', false)" @modal-close="$wire.set('addingGroup', false)" class="my-3">
         <div>
             <button class="btn btn-white" type="button" @click="addingGroup = true">
-                Add Checklist
-            </button>
-
-            <button type="button" class="btn btn-white">
-                Add Task(s)
+                Add/Import Checklist(s)
             </button>
         </div>
         @if($addingGroup)
