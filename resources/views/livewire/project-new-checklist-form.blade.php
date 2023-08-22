@@ -184,7 +184,7 @@ new class extends Component {
                                     <div class="flex flex-col items-start divide-y divide-zinc-200 border border-zinc-300 max-h-[200px] min-h-[200px] md:max-h-[400px] md:min-h-[400px] overflow-y-scroll">
                                         <input x-ref="search" autofocus placeholder="Search" type="text" wire:model.live.debounce="templateSearch" class="w-full sticky top-0" />
                                         @foreach($this->checklistTemplateOptions as $tempOption)
-                                            <div @click="toggle({{ $tempOption->id }})" class="w-full p-0.5 cursor-pointer hover:bg-zinc-100">
+                                            <div @click="toggle({{ $tempOption->id }})" class="w-full p-0.5 cursor-pointer hover:bg-zinc-100 dark:hover:bg-zinc-900">
                                                 <div class="font-semibold">{{ $tempOption->name }}</div>
                                                 <div class="text-xs">{{ count($tempOption->tasks) }} Tasks</div>
                                                 @if($tempOption->projectTemplates->count() > 0)
@@ -206,7 +206,7 @@ new class extends Component {
                                     <div class="text-xs">Selected Checklists</div>
                                     <div class="flex divide-y divide-zinc-200 flex-col border items-start border-zinc-300 max-h-[200px] min-h-[200px] md:max-h-[400px] md:min-h-[400px] overflow-y-scroll">
                                         @foreach($this->selectedTemplateModels as $tempOption)
-                                            <div @click="toggle({{ $tempOption->id }})" class="w-full p-0.5 cursor-pointer hover:bg-zinc-100">
+                                            <div @click="toggle({{ $tempOption->id }})" class="w-full p-0.5 cursor-pointer hover:bg-zinc-100 dark:hover:bg-zinc-900">
                                                 <div class="font-semibold">{{ $tempOption->name }}</div>
                                                 <div class="text-xs">{{ count($tempOption->tasks) }} Tasks</div>
                                             </div>
@@ -239,7 +239,7 @@ new class extends Component {
                             <div class="flex flex-col items-start divide-y border border-zinc-300 max-h-[200px] min-h-[200px] md:max-h-[400px] md:min-h-[400px] overflow-y-scroll">
                                 <input x-ref="search" class="p-0.5 w-full" type="text" wire:model.live.debounce="projectSearch" placeholder="Search" />
                                 @foreach($this->projectOptions as $projectOpt)
-                                    <div wire:click="setProject({{ $projectOpt->id }})" class="p-0.5 w-full cursor-pointer hover:bg-zinc-100">
+                                    <div wire:click="setProject({{ $projectOpt->id }})" class="p-0.5 w-full cursor-pointer hover:bg-zinc-100 dark:hover:bg-zinc-900">
                                         <div class="">{{ $projectOpt->name }}</div>
                                     </div>
                                 @endforeach
