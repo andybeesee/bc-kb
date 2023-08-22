@@ -24,6 +24,10 @@ class ProjectTaskList extends Component
 
     public $addingGroup = false;
 
+    public $addingTask = true;
+
+    public $addingTaskToChecklist = null;
+
     public null|string $startingTab = null;
 
     public function render()
@@ -66,6 +70,18 @@ class ProjectTaskList extends Component
             ]);
 
         $this->handleSort($items, $checklistId);
+    }
+
+    #[On('task-added')]
+    public function handleTaskAdd()
+    {
+
+    }
+
+    public function openAddTask($checklistId)
+    {
+        $this->addingTask = true;
+        $this->addingTaskToChecklist = $checklistId;
     }
 
     #[On('sorted')]

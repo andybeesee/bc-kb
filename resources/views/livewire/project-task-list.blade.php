@@ -1,4 +1,4 @@
-<div x-data="{ addingGroup: @entangle('addingGroup').live }">
+<div x-data="{ addingGroup: @entangle('addingGroup').live, addingTask: @entangle('addingTask').live }">
     {{-- TODO: we still get the odd livewire state error when sorting items - but I don't know why --}}
     {{-- This div has to be outside the if/else --}}
     <div @modal-close="$wire.closeDetail()">
@@ -11,7 +11,11 @@
         @endif
     </div>
 
-    <div @cancel="$wire.set('addingGroup', false)" @modal-close="$wire.set('addingGroup', false)" class="my-3">
+    <div
+        @cancel="$wire.set('addingGroup', false)"
+        @modal-close="$wire.set('addingGroup', false)"
+        class="my-3"
+    >
         <div>
             <button class="btn btn-white" type="button" @click="addingGroup = true">
                 Add/Import Checklist(s)
@@ -22,13 +26,28 @@
                 <livewire:project-new-checklist-form :project-id="$projectId" />
             </x-modal>
         @endif
+    </div>
 
+
+    <div @modal-close="addingTask = false" @cancel="addingTask = false">
+        @if($addingTask)
+            <x-modal name="add-task-modal">
+                <livewire:new-task-form
+                    :project-id="$projectId"
+                    :checklist-id="$addingTaskToChecklist"
+                    :show-project-select="false"
+                    :show-checklist-select="true"
+                />
+            </x-modal>
+        @endif
     </div>
 
 
     <div class="card">
-        <div class="card-title">
+        <div class="card-title flex items-center">
             Tasks <span class="text-sm font-normal text-zinc-400 dark:text-zinc-600 ml-2">Not part of a specific checklist</span>
+
+            <button wire:click="openAddTask(null)" class="ml-auto btn btn-sm btn-white" type="button">Add Task(s)</button>
         </div>
         <div
             data-group-id="" class="divide-y divide-zinc-300 dark:divide-zinc-700" x-sortable="{ options: { handle: '.handle', group: { name: 'tasks', put: 'tasks', pull: 'tasks' } } }">
@@ -57,6 +76,8 @@
                             <x-icon icon="grip-vertical" class="h-4 w-4" />
                         </div>
                         {{ $checklist->name }}
+
+                        <button wire:click="openAddTask({{ $checklist->id }})" class="ml-auto btn btn-sm btn-white" type="button">Add Task(s)</button>
                     </div>
 
                     <div

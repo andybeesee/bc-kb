@@ -61,7 +61,7 @@
             {{ $attributes->merge(['class' => "".($hasError ? 'error' : '')]) }}
         />
 
-        <button x-ref="btn" @click="openCalendar" type="button" class="form-control flex items-center hover:bg-zinc-100">
+        <button x-ref="btn" @click="openCalendar" type="button" class="form-control flex items-center hover:bg-zinc-100 dark:hover:bg-zinc-900">
             <span x-html="formattedDate"></span>
             <span class="ml-auto flex items-center">
             <x-icon @click.self.stop="removeDate" x-show="date" icon="x-circle" class="h-4 w-4 text-red-600 hover:text-white rounded-full hover:bg-red-600 ml-auto mr-2" />
