@@ -24,7 +24,7 @@ class ProjectTaskList extends Component
 
     public $addingGroup = false;
 
-    public $addingTask = true;
+    public $addingTask = false;
 
     public $addingTaskToChecklist = null;
 

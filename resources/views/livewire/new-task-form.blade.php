@@ -46,7 +46,7 @@ new class extends Component {
     <div class="card-title card-header">
         New Task
     </div>
-    <div class="card-body grid gap-4">
+    <div x-data="{ init() { this.$nextTick(() => this.$refs.nameinput.focus()) } }" class="card-body grid gap-4">
         @if($added)
             <div class="bg-green-100 flex justify-center dark:bg-green-900 rounded p-4">
                 <span class="font-bold">Added Task!</span>
@@ -55,7 +55,7 @@ new class extends Component {
                 </button>
             </div>
         @endif
-        <x-form.input type="text" name="name" wire:model="taskName" label="Task Name" />
+        <x-form.input x-ref="nameinput" type="text" name="name" wire:model="taskName" label="Task Name" />
 
         <x-form.date-picker name="due" wire:model="dueDate" label="Due Date" />
 

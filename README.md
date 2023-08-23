@@ -11,7 +11,7 @@
 * ~~Discussions on projects~~ - done but bad
 * ~~Project Detail dashboard~~ (disabled lol)
 * ~~Project checklists - add checklist, import template~~
-* add tasks to default checklists, other checklists
+* ~~add tasks to default checklists, other checklists~~
 * performance on project/tasks page - for 15+ groups with 100+ tasks
 * Checklist detail page
 * Standalone checklist (not on a project) - owned by a team and/or user
