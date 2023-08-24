@@ -104,7 +104,7 @@ class ProjectTaskList extends Component
 
     }
 
-    public function openAddTask($checklistId)
+    public function openAddTask($checklistId = null)
     {
         $this->addingTask = true;
         $this->addingTaskToChecklist = $checklistId;

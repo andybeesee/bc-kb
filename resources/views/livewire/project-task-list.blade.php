@@ -16,11 +16,6 @@
         @modal-close="$wire.set('addingGroup', false)"
         class="my-3"
     >
-        <div>
-            <button class="btn btn-white" type="button" @click="addingGroup = true">
-                Add/Import Checklist(s)
-            </button>
-        </div>
         @if($addingGroup)
             <x-modal name="cl-modal">
                 <livewire:project-new-checklist-form :project-id="$projectId" />
@@ -49,6 +44,12 @@
                 class="flex flex-col divide-y dark:divide-zinc-700 divide-zinc-200"
                 x-sortable="{ event: 'checklistSorted', idAttribute: 'data-checklist-id', options: { handle: '.handle', group: { name: 'checklists', put: 'checklists', pull: 'checklists' } } }"
             >
+                <div>
+                    this could open in the other panel...
+                    <button class="btn btn-white" type="button" @click="addingGroup = true">
+                        Add/Import Checklist(s)
+                    </button>
+                </div>
                 <div
                     id="group-task-list-ungrouped"
                     class="p-1 cursor-pointer  {{ empty($openedChecklist) ? 'bg-blue-100 dark:bg-blue-700' : 'hover:bg-zinc-100 dark:hover:bg-zinc-900' }}"
@@ -98,7 +99,6 @@
                     class="sortable-chosen-hide divide-y divide-zinc-300 dark:divide-zinc-700"
                     x-sortable="{ options: { handle: '.handle',  group: { name: 'tasks', put: 'tasks', pull: 'tasks' } } }"
                 >
-                    {{ $openedChecklist }}
                     @foreach($this->tasksToShow as $task)
                         <x-task.list-item
                             class="py-2 px-1"
