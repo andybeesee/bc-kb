@@ -43,59 +43,72 @@
     </div>
 
 
-    <div class="card">
-        <div class="card-title flex items-center">
-            Tasks <span class="text-sm font-normal text-zinc-400 dark:text-zinc-600 ml-2">Not part of a specific checklist</span>
-
-            <button wire:click="openAddTask(null)" class="ml-auto btn btn-sm btn-white" type="button">Add Task(s)</button>
-        </div>
-        <div
-            data-group-id="" class="divide-y divide-zinc-300 dark:divide-zinc-700" x-sortable="{ options: { handle: '.handle', group: { name: 'tasks', put: 'tasks', pull: 'tasks' } } }">
-            @foreach($tasks as $task)
-                @php
-                    $taskBgClass = '';
-                    if($task->is_complete) {
-                        $taskBgClass = ''; // bg-green-100 dark:bg-green-900 dark:hover:bg-green-800';
-                    } elseif($task->assigned_to === auth()->user()->id) {
-                        $taskBgClass = 'bg-blue-100 dark:bg-blue-900 dark:hover:bg-blue-800';
-                    }
-
-                @endphp
-                <x-task.list-item class="py-2 px-1 {{ $taskBgClass }}" :task="$task" :sortable="true" :key="'ungrouped-'.$task->id" />
-            @endforeach
-        </div>
-    </div>
-
-    <div x-sortable="{ event: 'checklistSorted', idAttribute: 'data-checklist-id', options: { handle: '.handle', group: { name: 'checklists', put: 'checklists', pull: 'checklists' } } }">
-        @foreach($checklists as $checklist)
-            {{-- TODO: make this a livewire component that lazy loads... --}}
-            {{-- TODO: Dropdown to change color of section --}}
-            <div id="group-task-list-{{ $checklist->id }}" data-checklist-id="{{ $checklist->id }}" class="mt-4 grid gap-4">
-                <div class="card">
-                    <div class="card-title sticky top-0 z-[4] flex items-center">
-                        <div class="mr-1 cursor-move handle">
-                            <x-icon icon="grip-vertical" class="h-4 w-4" />
-                        </div>
-                        {{ $checklist->name }}
-
-                        <button wire:click="openAddTask({{ $checklist->id }})" class="ml-auto btn btn-sm btn-white" type="button">Add Task(s)</button>
+    <div class="grid grid-cols-7 gap-6 items-start">
+        <div class="col-span-2 ">
+            <div
+                class="flex flex-col divide-y dark:divide-zinc-700 divide-zinc-200"
+                x-sortable="{ event: 'checklistSorted', idAttribute: 'data-checklist-id', options: { handle: '.handle', group: { name: 'checklists', put: 'checklists', pull: 'checklists' } } }"
+            >
+                <div
+                    id="group-task-list-ungrouped"
+                    class="p-1 cursor-pointer  {{ empty($openedChecklist) ? 'bg-blue-100 dark:bg-blue-700' : 'hover:bg-zinc-100 dark:hover:bg-zinc-900' }}"
+                    title="Ungrouped"
+                    wire:click="$set('openedChecklist', null)"
+                >
+                    <div class="flex items-center truncate">
+                        Ungrouped
+                    </div>
+                    <div class="text-sm">
+                        x tasks, 5 late
                     </div>
 
+                </div>
+                @foreach($checklists as $checklist)
+                    {{-- TODO: make this a livewire component that lazy loads... --}}
+                    {{-- TODO: Dropdown to change color of section --}}
                     <div
-                        class="sortable-chosen-hide divide-y divide-zinc-300 dark:divide-zinc-700"
-                        x-sortable="{ options: { handle: '.handle',  group: { name: 'tasks', put: 'tasks', pull: 'tasks' } } }"
+                        id="group-task-list-{{ $checklist->id }}"
+                        data-checklist-id="{{ $checklist->id }}"
+                        class="p-1 cursor-pointer  {{ $checklist->id === $openedChecklist ? 'bg-blue-100 dark:bg-blue-700' : 'hover:bg-zinc-100 dark:hover:bg-zinc-900' }}"
+                        title="{{  $checklist->name }}"
+                        wire:click="$set('openedChecklist', {{ $checklist->id }})"
                     >
-                        @foreach($checklist->tasks as $task)
-                            <x-task.list-item
-                                class="py-2 px-1"
-                                :task="$task"
-                                :sortable="true"
-                            />
-                        @endforeach
+                        <div class="flex items-center truncate">
+                            <div class="mr-1 cursor-move handle">
+                                <x-icon icon="grip-vertical" class="h-4 w-4" />
+                            </div>
+
+                            {{ $checklist->name }}
+                        </div>
+                        <div class="ml-5 text-sm">
+                            x tasks, 5 late
+                        </div>
+
                     </div>
+                @endforeach
+            </div>
+        </div>
+        <div class="col-span-5">
+            <div class="card">
+                <div class="flex items-center card-title justify-between">
+                    {{ $this->openChecklistDetail ? $this->openChecklistDetail->name : 'Ungrouped Tasks' }}
+                    <button wire:click="openAddTask({{ $openedChecklist }})" class="ml-auto btn btn-sm btn-white" type="button">Add Task(s)</button>
+                </div>
+                <div
+                    class="sortable-chosen-hide divide-y divide-zinc-300 dark:divide-zinc-700"
+                    x-sortable="{ options: { handle: '.handle',  group: { name: 'tasks', put: 'tasks', pull: 'tasks' } } }"
+                >
+                    {{ $openedChecklist }}
+                    @foreach($this->tasksToShow as $task)
+                        <x-task.list-item
+                            class="py-2 px-1"
+                            :task="$task"
+                            :sortable="true"
+                        />
+                    @endforeach
                 </div>
             </div>
-        @endforeach
+        </div>
     </div>
 
 </div>

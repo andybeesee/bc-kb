@@ -24,6 +24,8 @@ class ProjectTaskList extends Component
 
     public $addingGroup = false;
 
+    public $openedChecklist = null;
+
     public $addingTask = false;
 
     public $addingTaskToChecklist = null;
@@ -58,6 +60,30 @@ class ProjectTaskList extends Component
     public function closeDetail()
     {
         $this->showDetailTask = null;
+    }
+
+    public function getOpenChecklistDetailProperty()
+    {
+        if(empty($this->openedChecklist)) {
+            return false;
+        }
+
+        return Checklist::with('tasks')->findOrFail($this->openedChecklist);
+    }
+
+    public function getTasksToShowProperty()
+    {
+        $q = Task::where('project_id', $this->projectId)
+            ->orderBy('sort')
+            ->with(['assignedTo', 'completedBy']);
+
+        if(empty($this->openedChecklist)) {
+            $q = $q->whereNull('checklist_id');
+        } else {
+            $q = $q->where('checklist_id', $this->openedChecklist);
+        }
+
+        return $q->get();
     }
 
     #[On('movedList')]
