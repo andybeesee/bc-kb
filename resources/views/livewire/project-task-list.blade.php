@@ -52,19 +52,19 @@
                 </div>
                 <div
                     id="group-task-list-ungrouped"
-                    class="p-1 cursor-pointer  {{ empty($openedChecklist) ? 'bg-blue-100 dark:bg-blue-700' : 'hover:bg-zinc-100 dark:hover:bg-zinc-900' }}"
+                    class="p-1 pl-6 cursor-pointer  {{ empty($openedChecklist) ? 'bg-blue-100 dark:bg-blue-700' : 'hover:bg-zinc-100 dark:hover:bg-zinc-900' }}"
                     title="Ungrouped"
                     wire:click="$set('openedChecklist', null)"
                 >
                     <div class="flex items-center truncate">
                         Ungrouped
                     </div>
-                    <div class="text-sm">
-                        x tasks, 5 late
+                    <div class="w-2/3">
+                        <x-checklist.count-box :checklist="$this->defaultChecklist" />
                     </div>
 
                 </div>
-                @foreach($checklists as $checklist)
+                @foreach($this->checklists as $checklist)
                     {{-- TODO: make this a livewire component that lazy loads... --}}
                     {{-- TODO: Dropdown to change color of section --}}
                     <div
@@ -81,8 +81,8 @@
 
                             {{ $checklist->name }}
                         </div>
-                        <div class="ml-5 text-sm">
-                            x tasks, 5 late
+                        <div class="ml-5 w-2/3">
+                            <x-checklist.count-box :checklist="$checklist" />
                         </div>
 
                     </div>

@@ -34,21 +34,33 @@ class ProjectTaskList extends Component
 
     public function render()
     {
-        $checklists = Checklist::with(['tasks' => fn($tq) => $tq->with(['completedBy', 'assignedTo'])->withCount('files')])
+        return view('livewire.project-task-list');
+    }
+
+    public function getDefaultChecklistProperty()
+    {
+        $q = Task::where('project_id', $this->projectId)->whereNull('checklist_id');
+
+        return (object) [
+            'incomplete_tasks_count' => (clone $q)->isIncomplete()->count(),
+            'complete_tasks_count' => (clone $q)->isComplete()->count(),
+            'late_tasks_count' => (clone $q)->isLate()->count(),
+            'incomplete_assigned_to_user_tasks_count' => (clone $q)->isAssignedTo(auth()->user()->id)->count()
+        ];
+    }
+
+    public function getChecklistsProperty()
+    {
+        return Checklist::withCount([
+            // 'tasks',
+            'incompleteTasks',
+            'completeTasks',
+            'lateTasks',
+            'incompleteAssignedToUserTasks'
+        ])
             ->where('project_id', $this->projectId)
             ->orderBy('sort')
             ->get();
-
-        $tasks = Task::with(['completedBy', 'assignedTo'])
-            ->withCount(['files', 'comments'])
-            ->where('project_id', $this->projectId)
-            ->whereNull('checklist_id')
-            ->orderBy('sort')
-            ->get();
-
-        return view('livewire.project-task-list')
-            ->with('tasks', $tasks)
-            ->with('checklists', $checklists);
     }
 
     public function openDetail($taskId, $tab = null)
