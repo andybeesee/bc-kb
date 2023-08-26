@@ -11,17 +11,6 @@
         @endif
     </div>
 
-    <div
-        @cancel="$wire.set('addingGroup', false)"
-        @modal-close="$wire.set('addingGroup', false)"
-        class="my-3"
-    >
-        @if($addingGroup)
-            <x-modal name="cl-modal">
-                <livewire:project-new-checklist-form :project-id="$projectId" />
-            </x-modal>
-        @endif
-    </div>
 
 
     <div @modal-close="addingTask = false" @cancel="addingTask = false">
@@ -81,33 +70,39 @@
 
                             {{ $checklist->name }}
                         </div>
-                        <div class="ml-5 w-2/3">
+                        <div class="ml-5 mt-1.5 w-2/3">
                             <x-checklist.count-box :checklist="$checklist" />
                         </div>
-
                     </div>
                 @endforeach
             </div>
         </div>
         <div class="col-span-5">
-            <div class="card">
-                <div class="flex items-center card-title justify-between">
-                    {{ $this->openChecklistDetail ? $this->openChecklistDetail->name : 'Ungrouped Tasks' }}
-                    <button wire:click="openAddTask({{ $openedChecklist }})" class="ml-auto btn btn-sm btn-white" type="button">Add Task(s)</button>
+            @if($addingGroup)
+                <div @cancel="$wire.set('addingGroup', false)">
+                    <livewire:project-new-checklist-form :project-id="$projectId" />
                 </div>
-                <div
-                    class="sortable-chosen-hide divide-y divide-zinc-300 dark:divide-zinc-700"
-                    x-sortable="{ options: { handle: '.handle',  group: { name: 'tasks', put: 'tasks', pull: 'tasks' } } }"
-                >
-                    @foreach($this->tasksToShow as $task)
-                        <x-task.list-item
-                            class="py-2 px-1"
-                            :task="$task"
-                            :sortable="true"
-                        />
-                    @endforeach
+
+            @else
+                <div class="card">
+                    <div class="flex items-center card-title justify-between">
+                        {{ $this->openChecklistDetail ? $this->openChecklistDetail->name : 'Ungrouped Tasks' }}
+                        <button wire:click="openAddTask({{ $openedChecklist }})" class="ml-auto btn btn-sm btn-white" type="button">Add Task(s)</button>
+                    </div>
+                    <div
+                        class="sortable-chosen-hide divide-y divide-zinc-300 dark:divide-zinc-700"
+                        x-sortable="{ options: { handle: '.handle',  group: { name: 'tasks', put: 'tasks', pull: 'tasks' } } }"
+                    >
+                        @foreach($this->tasksToShow as $task)
+                            <x-task.list-item
+                                class="py-2 px-1"
+                                :task="$task"
+                                :sortable="true"
+                            />
+                        @endforeach
+                    </div>
                 </div>
-            </div>
+            @endif
         </div>
     </div>
 
