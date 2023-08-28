@@ -30,28 +30,30 @@
     <div class="grid grid-cols-7 gap-6 items-start">
         <div class="col-span-2 ">
             <div
-                class="flex flex-col divide-y dark:divide-zinc-700 divide-zinc-200"
+                class="flex flex-col"
                 x-sortable="{ event: 'checklistSorted', idAttribute: 'data-checklist-id', options: { handle: '.handle', group: { name: 'checklists', put: 'checklists', pull: 'checklists' } } }"
             >
-                <div>
-                    this could open in the other panel...
-                    <button class="btn btn-white" type="button" @click="addingGroup = true">
+                <div @click="addingGroup = true" class="p-1 cursor-pointer rounded-md {{ $addingGroup ? 'bg-blue-100 dark:bg-blue-700' : 'hover:bg-zinc-100 dark:hover:bg-zinc-900' }}">
+                    <div class="flex text-sm items-center">
+                        <x-icon icon="plus-circle" class="h-4 w-4 mr-1.5" />
                         Add/Import Checklist(s)
-                    </button>
+                    </div>
                 </div>
                 <div
                     id="group-task-list-ungrouped"
-                    class="p-1 pl-6 cursor-pointer  {{ empty($openedChecklist) ? 'bg-blue-100 dark:bg-blue-700' : 'hover:bg-zinc-100 dark:hover:bg-zinc-900' }}"
+                    class="p-1 cursor-pointer rounded-md {{ empty($openedChecklist) ? 'bg-blue-100 dark:bg-blue-700' : 'hover:bg-zinc-100 dark:hover:bg-zinc-900' }}"
                     title="Ungrouped"
                     wire:click="$set('openedChecklist', null)"
                 >
                     <div class="flex items-center truncate">
-                        Ungrouped
+                        <x-icon icon="card-list" class="h-4 w-4 mr-1.5" />
+                        <div class="w-3/4 truncate">
+                            Ungrouped
+                        </div>
+                        <div class="ml-auto flex-grow">
+                            <x-checklist.count-box :checklist="$this->defaultChecklist" />
+                        </div>
                     </div>
-                    <div class="w-2/3">
-                        <x-checklist.count-box :checklist="$this->defaultChecklist" />
-                    </div>
-
                 </div>
                 @foreach($this->checklists as $checklist)
                     {{-- TODO: make this a livewire component that lazy loads... --}}
@@ -59,19 +61,23 @@
                     <div
                         id="group-task-list-{{ $checklist->id }}"
                         data-checklist-id="{{ $checklist->id }}"
-                        class="p-1 cursor-pointer  {{ $checklist->id === $openedChecklist ? 'bg-blue-100 dark:bg-blue-700' : 'hover:bg-zinc-100 dark:hover:bg-zinc-900' }}"
+                        class="p-1 rounded-md cursor-pointer  {{ $checklist->id === $openedChecklist ? 'bg-blue-100 dark:bg-blue-700' : 'hover:bg-zinc-100 dark:hover:bg-zinc-900' }}"
                         title="{{  $checklist->name }}"
                         wire:click="$set('openedChecklist', {{ $checklist->id }})"
                     >
-                        <div class="flex items-center truncate">
+                        <div class="flex items-center ">
                             <div class="mr-1 cursor-move handle">
                                 <x-icon icon="grip-vertical" class="h-4 w-4" />
                             </div>
 
-                            {{ $checklist->name }}
-                        </div>
-                        <div class="ml-5 mt-1.5 w-2/3">
-                            <x-checklist.count-box :checklist="$checklist" />
+                            <div class="truncate w-3/4" title="{{ $checklist->name }}">
+                                {{ $checklist->name }}
+                            </div>
+
+
+                            <div class="flex-grow ml-auto">
+                                <x-checklist.count-box :checklist="$checklist" />
+                            </div>
                         </div>
                     </div>
                 @endforeach
