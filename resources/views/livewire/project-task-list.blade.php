@@ -56,8 +56,7 @@
                     </div>
                 </div>
                 @foreach($this->checklists as $checklist)
-                    {{-- TODO: make this a livewire component that lazy loads... --}}
-                    {{-- TODO: Dropdown to change color of section --}}
+                    {{-- TODO: Dropdown to change color of checklist? add an emoji? --}}
                     <div
                         id="group-task-list-{{ $checklist->id }}"
                         data-checklist-id="{{ $checklist->id }}"
