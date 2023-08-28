@@ -19,6 +19,7 @@
   * due in the next 7 days
   * due in the next 20 days
   * no due date
+* Project/tasks page - drag task on to a new checklist to move it 
 * Checklist detail page
 * Standalone checklist (not on a project) - owned by a team and/or user
 * 
