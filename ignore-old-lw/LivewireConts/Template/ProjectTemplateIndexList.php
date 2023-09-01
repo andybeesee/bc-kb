@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Livewire\Template;
+namespace ignore-old-lw\Livewire\Template-old-lw\Livewire\Template-old-lw\Livewire\Template;
 
 use App\Models\ProjectTemplate;
 use Livewire\Component;

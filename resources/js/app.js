@@ -1,35 +1,28 @@
 import './bootstrap';
+import '../css/app.css';
 
-import { createPopper } from '@popperjs/core';
-import addActiveToLinks from "./utils/add-active-to-links";
-import sortableDirective from './directives/sortable.js';
-import filedropDirective from './directives/filedrop.js';
-import Sortable from "sortablejs";
-import flatpickr from "flatpickr";
-window.flatpickr = flatpickr;
+import { createApp, h } from 'vue';
+import { createInertiaApp } from '@inertiajs/vue3';
+import { resolvePageComponent } from 'laravel-vite-plugin/inertia-helpers';
+import { ZiggyVue } from '../../vendor/tightenco/ziggy/dist/vue.m';
 
-window.Sortable = Sortable;
+const appName = import.meta.env.VITE_APP_NAME || 'Laravel';
+import AppLayout from './AppLayout.vue';
 
-window.createPopper = createPopper;
-
-import { Livewire, Alpine } from '../../vendor/livewire/livewire/dist/livewire.esm';
-
-//window.Alpine = Alpine;
-Alpine.directive('filedrop', filedropDirective);
-Alpine.directive('sortable', sortableDirective)
-
-Livewire.start();
-// Alpine.start();
-
-function scrollStuffIntoView() {
-    Array.from(document.querySelectorAll('[data-scroll-into-view]'))
-        .forEach((el) => {
-            console.log('scroll in to view', el);
-            el.scrollIntoView();
-        })
-}
-
-window.onload = function() {
-    addActiveToLinks();
-    scrollStuffIntoView();
-}
+createInertiaApp({
+    title: (title) => `${title} - ${appName}`,
+    resolve: async (name) => {
+        const page = await resolvePageComponent(`./pages/${name}.vue`, import.meta.glob('./pages/**/*.vue'));
+        page.default.layout = page.layout || AppLayout;
+        return page;
+    },
+    setup({ el, App, props, plugin }) {
+        return createApp({ render: () => h(App, props) })
+            .use(plugin)
+            .use(ZiggyVue, Ziggy)
+            .mount(el);
+    },
+    progress: {
+        color: '#4B5563',
+    },
+});

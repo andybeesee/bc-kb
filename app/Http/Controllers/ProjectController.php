@@ -5,20 +5,21 @@ namespace App\Http\Controllers;
 use App\Models\Board;
 use App\Models\Project;
 use Illuminate\Http\Request;
+use Inertia\Inertia;
 
 class ProjectController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
         $projects = Project::with(['team', 'owner'])
             ->withCount(['pastDueTasks', 'incompleteTasks'])
             ->orderBy('name')
             ->paginate(25);
 
-        return view('projects.index')->with('projects', $projects);
+        return Inertia::render('Projects/Index');
     }
 
     /**
