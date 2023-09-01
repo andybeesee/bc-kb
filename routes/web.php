@@ -56,3 +56,7 @@ Route::middleware(['auth', 'admin'])->name('admin.')->prefix('/admin')->group(fu
 });
 
 require __DIR__.'/auth.php';
+
+Route::middleware(['auth'])->prefix('api')->name('api.')->group(function() {
+   Route::get('/projects', \App\Http\Controllers\API\ProjectIndexController::class)->name('projects.index');
+});

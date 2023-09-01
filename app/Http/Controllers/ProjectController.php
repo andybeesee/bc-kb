@@ -14,11 +14,6 @@ class ProjectController extends Controller
      */
     public function index(Request $request)
     {
-        $projects = Project::with(['team', 'owner'])
-            ->withCount(['pastDueTasks', 'incompleteTasks'])
-            ->orderBy('name')
-            ->paginate(25);
-
         return Inertia::render('Projects/Index');
     }
 
