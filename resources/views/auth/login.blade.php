@@ -7,13 +7,13 @@
 
         <!-- Email Address -->
         <div>
-            <x-form.input label="Email" name="email" />
+            <input label="Email" name="email" />
         </div>
 
         <!-- Password -->
         <div class="mt-4">
 
-            <x-form.input type="password" label="Password" name="password" />
+            <input type="password" label="Password" name="password" />
         </div>
 
         <!-- Remember Me -->

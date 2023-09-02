@@ -15,8 +15,10 @@
         "vite": "^4.0.0"
     },
     "dependencies": {
-        "@vitejs/plugin-vue": "^4.3.4",
         "@inertiajs/vue3": "^1.0.11",
+        "@vitejs/plugin-vue": "^4.3.4",
+        "@vueuse/components": "^10.4.1",
+        "@vueuse/core": "^10.4.1",
         "flatpickr": "^4.6.13",
         "lodash": "^4.17.21",
         "sortablejs": "^1.15.0",
