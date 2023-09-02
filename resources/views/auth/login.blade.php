@@ -7,13 +7,14 @@
 
         <!-- Email Address -->
         <div>
-            <input label="Email" name="email" />
+            <label class="text-sm font-medium" for="email">E-mail</label>
+            <input id="email" label="Email" name="email" class="w-full border rounded border-zinc-400 p-1"/>
         </div>
 
         <!-- Password -->
         <div class="mt-4">
-
-            <input type="password" label="Password" name="password" />
+            <label class="text-sm font-medium" for="password">Password</label>
+            <input id="password" type="password" label="Password" name="password" class="w-full border rounded border-zinc-400 p-1"/>
         </div>
 
         <!-- Remember Me -->
