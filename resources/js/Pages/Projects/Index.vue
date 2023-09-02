@@ -1,13 +1,23 @@
 <template>
     <div>
+        <TabNav @change="tab = $event" :tabs="tabs" :active="tab" />
         <h1>Projects Index</h1>
 
-        <div class="mb-4 grid divide-y">
-            <div v-for="project in projects">
-                #{{ project.id }} {{ project.name }}
-            </div>
+        <div v-if="tab === 'dashboard'">
+            Dashboard
         </div>
-        <PageLinks @change="loadProjects" :paginator="paginator" />
+
+        <div v-if="tab === 'all'" class="mb-4">
+            <div class="mb-4 grid divide-y">
+                <ProjectListItem v-for="project in projects" :key="project.id" :project="project" />
+            </div>
+            <PageLinks @change="loadProjects" :paginator="paginator" />
+        </div>
+
+        <div v-if="tab === 'new'">
+            New project form
+        </div>
+
     </div>
 
 </template>
@@ -15,14 +25,22 @@
 import getPagination from "../../utils/getPagination.js";
 import axios from "axios";
 import PageLinks from "../../Components/PageLinks.vue";
+import ProjectListItem from "../../Components/Project/ProjectListItem.vue";
+import TabNav from "../../Components/TabNav.vue";
 
 export default  {
-    components: { PageLinks },
+    components: {TabNav, ProjectListItem, PageLinks },
     data() {
         return {
+            tab: 'all',
             projects: [],
             loading: true,
             paginator: {},
+            tabs: [
+                { id: 'dashboard', name: 'Dashboard', icon: 'chart' },
+                { id: 'all', name: 'All Projects', icon: 'list' },
+                { id: 'create', name: 'New Projects', icon: 'plus-circle' },
+            ]
         };
     },
     beforeMount() {
