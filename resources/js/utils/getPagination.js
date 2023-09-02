@@ -6,8 +6,8 @@ export default function(obj, pagesToShow = 10) {
         from: obj.from,
         to: obj.to,
         last_page: obj.last_page,
-        next_page: obj.next_page_url < obj.last_page ? obj.current_page + 1 : null,
-        previous_page: obj.prev_page_url < obj.last_page ? obj.current_page - 1 : null,
+        next_page: obj.next_page_url ? obj.current_page + 1 : null,
+        previous_page: obj.prev_page_url ? obj.current_page - 1 : null,
         per_page: obj.per_page,
         // pages: makePageLinks(obj.current, obj.to, pagesToShow),
         // TODO: do we want to generate those extra links here? maybe? I don't know
