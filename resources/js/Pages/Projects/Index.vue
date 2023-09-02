@@ -2,11 +2,12 @@
     <div>
         <h1>Projects Index</h1>
 
-        <div class="mb-4">
-
+        <div class="mb-4 grid divide-y">
+            <div v-for="project in projects">
+                #{{ project.id }} {{ project.name }}
+            </div>
         </div>
         <PageLinks @change="loadProjects" :paginator="paginator" />
-        {{ paginator }}
     </div>
 
 </template>

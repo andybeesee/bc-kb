@@ -4,6 +4,7 @@ export default function(obj, pagesToShow = 10) {
         on_last_page: obj.current_page === obj.last_page,
         on_first_page: obj.current_page === 1,
         from: obj.from,
+        total: obj.total,
         to: obj.to,
         last_page: obj.last_page,
         next_page: obj.next_page_url ? obj.current_page + 1 : null,

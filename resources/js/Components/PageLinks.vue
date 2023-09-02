@@ -1,5 +1,8 @@
 <template>
-    <div>
+    <div class="justify-between flex items-center">
+        <div class="font-medium text-zinc-600">
+            Showing {{ paginator.from }} to {{ paginator.to }} of {{ paginator.total }}
+        </div>
         <div class="flex items-center">
             <button title="First Pge" @click="$emit('change', 1)" class="border-l border-y rounded-l-md px-3 py-1 hover:bg-zinc-100" v-if="!paginator.on_first_page">
                 <i class="far fa-chevron-double-left"></i>

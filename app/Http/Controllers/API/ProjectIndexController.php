@@ -16,6 +16,6 @@ class ProjectIndexController extends Controller
         // TODO: Search, sort
         // TODO: filters - complete/incomplete/whatever else
 
-        return $q->paginate(50);
+        return $q->paginate($request->get('per_page', 50));
     }
 }
