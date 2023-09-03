@@ -11,7 +11,12 @@ class ProjectIndexController extends Controller
     public function __invoke(Request $request)
     {
         $q = Project::with(['team', 'owner'])
-            ->withCount(['pastDueTasks', 'incompleteTasks']);
+            ->withCount([
+                'tasks',
+                'pastDueTasks',
+                'incompleteTasks',
+                'incompleteUserTasks',
+            ]);
 
         // TODO: Search, sort
         // TODO: filters - complete/incomplete/whatever else

@@ -17,7 +17,7 @@
                 <i class="far fa-chevron-left"></i>
             </div>
             <div class="relative">
-                <button class="border-x border-y px-3 py-1" type="button" @click="isOpen = true">
+                <button class="border-x border-y px-3 py-1" type="button" @click="openDropdown">
                     Page {{ paginator.current }} of {{ paginator.last_page }}
                 </button>
                 <div v-if="isOpen" class="min-w-[100px] divide-y max-h-[200px] grid bg-white overflow-y-scroll absolute rounded-md  shadow" v-click-outside="closeDropdown">
@@ -43,7 +43,6 @@
     </div>
 </template>
 <script>
-// TODO: We need icons
 export default {
     emits: ['change'],
     props: {
@@ -59,6 +58,10 @@ export default {
         closeDropdown() {
             this.isOpen = false
         },
+        openDropdown() {
+            this.isOpen = true;
+            // TODO: we want to calculate position to pop-up if near bottom of screen
+        }
     },
     computed: {
         pages() {

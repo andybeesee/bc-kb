@@ -2,7 +2,7 @@
     <div>
         <div class="border-b flex items-center justify-between mb-4">
             <div class="flex items-center">
-                <a class="p-2" href="/">
+                <a class="p-2 font-extrabold hover:underline text-purple-600" href="/">
                     BC PMKB
                 </a>
             </div>

@@ -8,6 +8,7 @@ import { ZiggyVue } from '../../vendor/tightenco/ziggy/dist/vue.m';
 import { vOnClickOutside } from '@vueuse/components'
 const appName = import.meta.env.VITE_APP_NAME || 'Laravel';
 import AppLayout from './AppLayout.vue';
+import { Link } from '@inertiajs/vue3';
 
 createInertiaApp({
     title: (title) => `${title} - ${appName}`,
@@ -21,6 +22,7 @@ createInertiaApp({
             .use(plugin)
             .use(ZiggyVue, Ziggy)
             .directive('click-outside', vOnClickOutside)
+            .component('Link', Link)
             .mount(el);
     },
     progress: {
