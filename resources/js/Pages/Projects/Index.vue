@@ -1,13 +1,14 @@
 <template>
     <div>
         <TabNav @change="tab = $event" :tabs="tabs" :active="tab" />
-        <h1>Projects Index</h1>
+
 
         <div v-if="tab === 'dashboard'">
             Dashboard
         </div>
 
-        <div v-if="tab === 'all'" class="mb-4">
+        <div v-if="tab === 'all'" class="mt-4">
+            <h1>All Projects</h1>
             <div class="mb-4 grid divide-y">
                 <ProjectListItem v-for="project in projects" :key="project.id" :project="project" />
             </div>

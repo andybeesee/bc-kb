@@ -10,7 +10,12 @@ class ProjectIndexController extends Controller
 {
     public function __invoke(Request $request)
     {
-        $q = Project::with(['team', 'owner'])
+        $q = Project::with([
+                'team',
+                'owner',
+                'currentStatus',
+                'currentStatus.creator',
+            ])
             ->withCount([
                 'tasks',
                 'pastDueTasks',
