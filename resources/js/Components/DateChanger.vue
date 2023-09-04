@@ -10,7 +10,7 @@
             @update:model-value="handleDateChange"
         >
             <template #trigger>
-                <button class="px-2 border rounded-md border-zinc-300 hover:bg-zinc-100" type="button">
+                <button class="px-2 border rounded border-zinc-300 hover:bg-zinc-100" type="button">
                     <span v-if="dateSelected">
                         {{ prefix }} {{ $filters.date(date) }}
                         <span title="Remove Date" class="ml-1 text-red-500 hover:text-red-600" @click.stop="remove">

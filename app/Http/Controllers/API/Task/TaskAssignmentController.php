@@ -10,6 +10,9 @@ class TaskAssignmentController extends Controller
 {
     public function __invoke(Request $request, Task $task)
     {
+        $task->assigned_to = $request->get('user', null);
+        $task->save();
 
+        return $task->fresh(['assignedTo']);
     }
 }

@@ -58,9 +58,11 @@ Route::middleware(['auth', 'admin'])->name('admin.')->prefix('/admin')->group(fu
 require __DIR__.'/auth.php';
 
 Route::middleware(['auth'])->prefix('api')->name('api.')->group(function() {
-   Route::get('/projects', \App\Http\Controllers\API\ProjectIndexController::class)->name('projects.index');
+    Route::get('/users', \App\Http\Controllers\API\UserIndexController::class)->name('users.index');
 
-   Route::get('/tasks', \App\Http\Controllers\API\TaskIndexController::class)->name('tasks.index');
-   Route::put('/tasks/{task}/due-date', \App\Http\Controllers\API\Task\TaskDueDateController::class)->name('tasks.update.due-date');
-   Route::put('/tasks/{task}/assigned', \App\Http\Controllers\API\Task\TaskAssignmentController::class)->name('tasks.update.assigned');
+    Route::get('/projects', \App\Http\Controllers\API\ProjectIndexController::class)->name('projects.index');
+
+    Route::get('/tasks', \App\Http\Controllers\API\TaskIndexController::class)->name('tasks.index');
+    Route::put('/tasks/{task}/due-date', \App\Http\Controllers\API\Task\TaskDueDateController::class)->name('tasks.update.due-date');
+    Route::put('/tasks/{task}/assigned', \App\Http\Controllers\API\Task\TaskAssignmentController::class)->name('tasks.update.assigned');
 });

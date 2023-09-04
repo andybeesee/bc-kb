@@ -34,7 +34,13 @@
                 <div v-if="task.complete">
                     Completion info
                 </div>
-                <div v-else>
+                <div class="flex items-center space-x-3" v-else>
+                    <UserSelector
+                        placeholder="Not Assigned"
+                        :user="task.assigned_to"
+                        @change="updatedAssignee"
+                    />
+
                     <DateChanger
                         prefix="Due"
                         :class="task.is_late ? 'text-red-700' : 'text-butt'"
@@ -42,8 +48,6 @@
                         :date="task.due_date"
                         @change="updateDueDate"
                     />
-
-                    <UserSelector placeholder="Not Assigned" :user="task.assigned_to" />
 
                 </div>
             </div>
@@ -63,15 +67,21 @@ export default {
     },
     methods: {
         updateDueDate(newDate) {
-            // TODO: persist that due date
-            console.log('do update', newDate);
             axios.put(route('api.tasks.update.due-date', this.task.id), {
                     due_date: newDate,
                 })
                 .then((r) => {
                     this.$emit('task-updated', r.data);
                 })
-        }
+        },
+        updatedAssignee(newId) {
+            axios.put(route('api.tasks.update.assigned', this.task.id), {
+                    user: newId,
+                })
+                .then((r) => {
+                    this.$emit('task-updated', r.data);
+                })
+        },
     }
 }
 </script>
