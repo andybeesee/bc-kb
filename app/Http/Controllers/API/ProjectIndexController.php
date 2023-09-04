@@ -23,6 +23,9 @@ class ProjectIndexController extends Controller
                 'incompleteUserTasks',
             ]);
 
+        if($request->filled('search')) {
+            $q = $q->where('name', 'LIKE', "%".$request->get('search')."%");
+        }
         // TODO: Search, sort
         // TODO: filters - complete/incomplete/whatever else
 

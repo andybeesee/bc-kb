@@ -8,11 +8,7 @@
         </div>
 
         <div v-if="tab === 'all'" class="mt-4">
-            <h1>All Projects</h1>
-            <div class="mb-4 grid divide-y">
-                <ProjectListItem v-for="project in projects" :key="project.id" :project="project" />
-            </div>
-            <PageLinks @change="loadProjects" :paginator="paginator" />
+            <ProjectIndexList />
         </div>
 
         <div v-if="tab === 'new'">
@@ -28,15 +24,13 @@ import axios from "axios";
 import PageLinks from "../../Components/PageLinks.vue";
 import ProjectListItem from "../../Components/Project/ProjectListItem.vue";
 import TabNav from "../../Components/TabNav.vue";
+import ProjectIndexList from "../../Components/Project/ProjectIndexList.vue";
 
 export default  {
-    components: {TabNav, ProjectListItem, PageLinks },
+    components: {ProjectIndexList, TabNav, ProjectListItem, PageLinks },
     data() {
         return {
             tab: 'all',
-            projects: [],
-            loading: true,
-            paginator: {},
             tabs: [
                 { id: 'dashboard', name: 'Dashboard', icon: 'chart' },
                 { id: 'all', name: 'All Projects', icon: 'list' },
@@ -44,18 +38,5 @@ export default  {
             ]
         };
     },
-    beforeMount() {
-        this.loadProjects();
-    },
-    methods: {
-        loadProjects(page = 1) {
-            this.loading = true;
-            axios.get(route('api.projects.index'), { params: { page }})
-                .then((r) => {
-                    this.projects = r.data.data;
-                    this.paginator = getPagination(r.data);
-                })
-        }
-    }
 }
 </script>

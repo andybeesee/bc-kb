@@ -9,7 +9,6 @@ import { vOnClickOutside } from '@vueuse/components'
 const appName = import.meta.env.VITE_APP_NAME || 'Laravel';
 import AppLayout from './AppLayout.vue';
 import { Link } from '@inertiajs/vue3';
-import Datetime from "./directives/Datetime.js";
 import datetime from "./directives/Datetime.js";
 
 createInertiaApp({

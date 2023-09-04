@@ -6,6 +6,7 @@
     @routes
     <link rel="stylesheet" href="{{ asset('fontawesome/css/fontawesome.min.css') }}">
     <link rel="stylesheet" href="{{ asset('fontawesome/css/regular.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('fontawesome/css/solid.min.css') }}">
     @vite('resources/js/app.js')
     @inertiaHead
 </head>

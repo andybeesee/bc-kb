@@ -1,6 +1,9 @@
 <template>
-    <div class="flex items-center">
+    <div v-if="status" class="flex items-center">
         {{ status.status }} {{ status.creator.name }} {{ $filters.datetime(status.created_at) }}
+    </div>
+    <div v-else>
+        No Status
     </div>
 </template>
 <script>

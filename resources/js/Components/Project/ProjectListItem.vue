@@ -1,9 +1,9 @@
 <template>
-    <div class="px-2 py-3 hover:bg-zinc-100">
+    <div class="px-2 py-3 hover:bg-zinc-100 dark:hover:bg-zinc-900">
         <div class="grid md:grid-cols-6 justify-between">
             <div class="col-span-5 grid md:grid-cols-4 md:gap-4">
                 <div class="flex items-center truncate ">
-                    <ProjectStatusBadge :icon-only="true" :project="project" />
+                    <ProjectStatusBadge class="text-lg" :icon-only="true" :project="project" />
                     <Link :title="project.name" :href="route('projects.show', project.id)" class="truncate ml-2 link font-medium">
                         #{{ project.id }} {{ project.name }}
                     </Link>

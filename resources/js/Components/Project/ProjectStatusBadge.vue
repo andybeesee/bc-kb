@@ -1,7 +1,7 @@
 <template>
     <div>
-        <div :title="titleCaseStatus" v-if="iconOnly" >
-            <i class="rounded-full" :class="statusIconClasses" />
+        <div :title="titleCaseStatus" v-if="iconOnly">
+            <i class="rounded-full my-auto" :class="statusIconClasses" />
         </div>
         <div class="px-2 rounded" :class="statusBadgeClasses"  v-else>
             {{ titleCaseStatus }}
@@ -24,18 +24,18 @@ export default {
         statusIconClasses() {
             switch (this.project.status) {
                 case 'abandoned':
-                    return 'far fa-ban bg-orange-100 text-orange-800';
+                    return 'fas fa-ban text-orange-800 dark:text-orange-400';
                 case 'late':
-                    return 'far fa-clock bg-red-100 text-red-800';
+                    return 'fas fa-clock text-red-800 dark:text-red-400';
                 case 'in_progress':
-                    return 'far fa-clock bg-blue-100 text-blue-800';
+                    return 'fas fa-clock text-blue-800 dark:text-blue-400';
                 case 'complete':
-                    return 'far fa-check-circle bg-emerald-100 text-emerald-800';
+                    return 'fas fa-check-circle text-emerald-800 dark:text-emerald-400';
                 case 'pending':
-                    return 'far fa-circle bg-purple-100 text-purple-800';
+                    return 'fas fa-circle text-purple-800 dark:text-purple-400';
                 case 'idea':
                 default:
-                    return 'far fa-lightbulb bg-zinc-100 text-zinc-800';
+                    return 'fas fa-lightbulb text-zinc-800 dark:text-zinc-400';
             }
         },
         statusBadgeClasses() {
