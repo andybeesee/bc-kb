@@ -9,7 +9,9 @@ import { vOnClickOutside } from '@vueuse/components'
 const appName = import.meta.env.VITE_APP_NAME || 'Laravel';
 import AppLayout from './AppLayout.vue';
 import { Link } from '@inertiajs/vue3';
-import datetime from "./directives/Datetime.js";
+import datetime from "./directives/datetime.js";
+import date from "./directives/date.js";
+import '@vuepic/vue-datepicker/dist/main.css'
 
 createInertiaApp({
     title: (title) => `${title} - ${appName}`,
@@ -26,7 +28,8 @@ createInertiaApp({
             .component('Link', Link);
 
         app.config.globalProperties.$filters = {
-            datetime: datetime,
+            datetime,
+            date,
         };
 
         return app.mount(el);

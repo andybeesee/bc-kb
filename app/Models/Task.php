@@ -14,6 +14,10 @@ class Task extends Model
         'completed_date' => 'date',
     ];
 
+    protected $appends = [
+        'isLate' => 'is_late',
+    ];
+
     public function files()
     {
         return $this->morphMany(File::class, 'attached');

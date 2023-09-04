@@ -1,6 +1,7 @@
 <template>
     <div class="grid divide-y divide-zinc-300 dark:divide-zinc-700">
         <TaskListItem
+            @task-updated="handleUpdate"
             v-for="task in tasks"
             :task="task"
             :sortable="sortable"
@@ -44,6 +45,16 @@ export default {
                 this.tasks = r.data;
             });
         },
+        handleUpdate(task) {
+            console.log('caughtupdate', task);
+            this.tasks = this.tasks.map(t => {
+                if(t.id === task.id) {
+                    return Object.assign(t, task);
+                }
+
+                return t;
+            })
+        }
     }
 }
 </script>

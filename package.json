@@ -17,6 +17,7 @@
     "dependencies": {
         "@inertiajs/vue3": "^1.0.11",
         "@vitejs/plugin-vue": "^4.3.4",
+        "@vuepic/vue-datepicker": "^6.0.3",
         "@vueuse/components": "^10.4.1",
         "@vueuse/core": "^10.4.1",
         "flatpickr": "^4.6.13",
