@@ -35,7 +35,7 @@ Route::middleware('auth')->group(function () {
     // Route::get('/checklist-templates/{checklistTemplate}', lw\Livewire\Template\ChecklistTemplateDetailPage::class)->name('checklist-templates.show');
 //
     Route::resource('projects', \App\Http\Controllers\ProjectController::class);
-//
+    Route::resource('checklists', \App\Http\Controllers\ChecklistController::class);
     // Route::put('/projects/{project}/boards/sort', \App\Http\Controllers\ProjectBoardSortController::class)->name('projects.boards.sort');
     // Route::get('/projects/{project}/discussions', \App\Http\Controllers\ProjectDiscussionController::class)->name('projects.discussions.index');
     // Route::get('/projects/{project}/files', \App\Http\Controllers\ProjectFileController::class)->name('projects.files.index');
@@ -59,4 +59,5 @@ require __DIR__.'/auth.php';
 
 Route::middleware(['auth'])->prefix('api')->name('api.')->group(function() {
    Route::get('/projects', \App\Http\Controllers\API\ProjectIndexController::class)->name('projects.index');
+   Route::get('/tasks', \App\Http\Controllers\API\TaskIndexController::class)->name('tasks.index');
 });

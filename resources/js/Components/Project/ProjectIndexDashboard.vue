@@ -2,20 +2,39 @@
     <div>
         <h1>Project Dashboard</h1>
 
-        <div class="card">
-            <div class="card-title">Current Projects</div>
-            <div class="divide-y dark:divide-zinc-700">
-                <ProjectListItem v-for="project in currentProjects" :project="project" />
+        <div class="grid gap-4">
+            <div class="card">
+                <div class="card-title">Current Projects</div>
+                <div class="divide-y dark:divide-zinc-700">
+                    <ProjectListItem v-for="project in currentProjects" :project="project" />
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="card-title">Past Due Tasks</div>
+                <TaskList :filters="['past_due']" :assigned-to="$page.props.auth.id" :show-checklist="true" :show-project="true" />
+            </div>
+
+            <div class="card">
+                <div class="card-title">Due Date Upcoming</div>
+                <TaskList :filters="['upcoming']" :assigned-to="$page.props.auth.id" :show-checklist="true" :show-project="true" />
+            </div>
+
+            <div class="card">
+                <div class="card-title">Incomplete Tasks</div>
+                <TaskList :filters="['incomplete']" :assigned-to="$page.props.auth.id" :show-checklist="true" :show-project="true" />
             </div>
         </div>
+
     </div>
 </template>
 <script>
 import axios from "axios";
 import ProjectListItem from "./ProjectListItem.vue";
+import TaskList from "./TaskList.vue";
 
 export default {
-    components: {ProjectListItem},
+    components: {TaskList, ProjectListItem},
     beforeMount() {
       this.loadCurrentProjects();
     },
