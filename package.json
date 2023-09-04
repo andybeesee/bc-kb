@@ -21,6 +21,7 @@
         "@vueuse/core": "^10.4.1",
         "flatpickr": "^4.6.13",
         "lodash": "^4.17.21",
+        "luxon": "^3.4.2",
         "sortablejs": "^1.15.0",
         "vue": "^3.3.4"
     }

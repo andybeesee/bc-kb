@@ -1,6 +1,6 @@
 <template>
     <div class="flex items-center">
-        {{ status.status }} {{ status.creator.name }} {{ status.created_at }}
+        {{ status.status }} {{ status.creator.name }} {{ $filters.datetime(status.created_at) }}
     </div>
 </template>
 <script>

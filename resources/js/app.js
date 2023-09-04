@@ -9,6 +9,8 @@ import { vOnClickOutside } from '@vueuse/components'
 const appName = import.meta.env.VITE_APP_NAME || 'Laravel';
 import AppLayout from './AppLayout.vue';
 import { Link } from '@inertiajs/vue3';
+import Datetime from "./directives/Datetime.js";
+import datetime from "./directives/Datetime.js";
 
 createInertiaApp({
     title: (title) => `${title} - ${appName}`,
@@ -18,12 +20,17 @@ createInertiaApp({
         return page;
     },
     setup({ el, App, props, plugin }) {
-        return createApp({ render: () => h(App, props) })
+        const app = createApp({ render: () => h(App, props) })
             .use(plugin)
             .use(ZiggyVue, Ziggy)
             .directive('click-outside', vOnClickOutside)
-            .component('Link', Link)
-            .mount(el);
+            .component('Link', Link);
+
+        app.config.globalProperties.$filters = {
+            datetime: datetime,
+        };
+
+        return app.mount(el);
     },
     progress: {
         color: '#4B5563',
