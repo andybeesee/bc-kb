@@ -1,6 +1,6 @@
 <template>
     <div v-if="status" class="flex items-center">
-        {{ status.status }} {{ status.creator.name }} {{ $filters.datetime(status.created_at) }}
+        Last Update {{ $filters.datetime(status.created_at) }}: {{ status.status }} {{ status.creator.name }}
     </div>
     <div v-else>
         No Status

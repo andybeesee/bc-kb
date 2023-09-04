@@ -6,6 +6,7 @@
 </template>
 <script>
 // TODO: Support custom icons
+// TODO: Support changing team from here
 export default {
     props: {
         team: Object,

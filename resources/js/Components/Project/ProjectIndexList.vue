@@ -12,6 +12,7 @@
     </div>
 </template>
 <script>
+// TODO: finish filters - teams, users incomplete projects, status filters, etc.
 import { debounce } from "lodash";
 import ProjectListItem from "./ProjectListItem.vue";
 import PageLinks from "../PageLinks.vue";

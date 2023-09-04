@@ -1,13 +1,15 @@
 <template>
     <div>
-        <TabNav @change="tab = $event" :tabs="tabs" :active="tab" />
+        <div class="mb-4">
+            <TabNav @change="tab = $event" :tabs="tabs" :active="tab" />
+        </div>
 
 
         <div v-if="tab === 'dashboard'">
-            Dashboard
+            <ProjectIndexDashboard />
         </div>
 
-        <div v-if="tab === 'all'" class="mt-4">
+        <div v-if="tab === 'all'">
             <ProjectIndexList />
         </div>
 
@@ -25,12 +27,13 @@ import PageLinks from "../../Components/PageLinks.vue";
 import ProjectListItem from "../../Components/Project/ProjectListItem.vue";
 import TabNav from "../../Components/TabNav.vue";
 import ProjectIndexList from "../../Components/Project/ProjectIndexList.vue";
+import ProjectIndexDashboard from "../../Components/Project/ProjectIndexDashboard.vue";
 
 export default  {
-    components: {ProjectIndexList, TabNav, ProjectListItem, PageLinks },
+    components: {ProjectIndexDashboard, ProjectIndexList, TabNav, ProjectListItem, PageLinks },
     data() {
         return {
-            tab: 'all',
+            tab: 'dashboard',
             tabs: [
                 { id: 'dashboard', name: 'Dashboard', icon: 'chart' },
                 { id: 'all', name: 'All Projects', icon: 'list' },

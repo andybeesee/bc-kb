@@ -6,6 +6,7 @@
 </template>
 <script>
 // TODO: Support avatar icon
+// TODO: Support changing user fromhere
 export default {
     props: {
         user: Object,
