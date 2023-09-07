@@ -26,7 +26,7 @@
                 </div>
                 <div class="flex items-center">
                     <div class="col-span-5 text-sm text-zinc-500 dark:text-zinc-300">
-                        <CurrentStatusBadge :status="project.current_status" />
+                        <CurrentStatusBadge type="project" :id="project.id" :status="project.current_status" />
                     </div>
                     <div class="text-right ml-auto">
                         <span v-if="project.incomplete_tasks_count > 0" class="text-sm text-zinc-400 dark:text-zinc-600">

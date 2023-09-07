@@ -55,6 +55,7 @@
 }
 
 
+/*
 @media(prefers-color-scheme: dark) {
     .form-label {
         @apply text-zinc-300;
@@ -81,3 +82,4 @@
     }
 
 }
+*/

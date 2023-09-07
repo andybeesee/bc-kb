@@ -69,4 +69,9 @@ Route::middleware(['auth'])->prefix('api')->name('api.')->group(function() {
     Route::put('/tasks/{task}/assigned-to', [\App\Http\Controllers\API\Task\TaskUserController::class, 'updateAssigned'])->name('tasks.update.assigned-to');
     Route::put('/tasks/{task}/completed-by', [\App\Http\Controllers\API\Task\TaskUserController::class, 'updateCompleted'])->name('tasks.update.completed-by');
     Route::put('/tasks/{task}/complete-toggle', \App\Http\Controllers\API\Task\ToggleCompleteController::class)->name('tasks.toggle-complete');
+
+    Route::get('/current-statuses/{type}/{id}', [\App\Http\Controllers\API\CurrentStatusController::class, 'index'])->name('current-statuses.index');
+    Route::get('/current-statuses/{type}/{id}/current', [\App\Http\Controllers\API\CurrentStatusController::class, 'show'])->name('current-statuses.current');
+    Route::post('/current-statuses/{type}/{id}', [\App\Http\Controllers\API\CurrentStatusController::class, 'store'])->name('current-statuses.store');
+    Route::delete('/current-statuses/{type}/{id}', [\App\Http\Controllers\API\CurrentStatusController::class, 'destroy'])->name('current-statuses.destroy');
 });

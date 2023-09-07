@@ -1,7 +1,6 @@
 <template>
     <div>
         <h1>Project Dashboard</h1>
-
         <div class="grid gap-4">
             <div class="card">
                 <div class="card-title">Current Projects</div>
@@ -32,9 +31,10 @@
 import axios from "axios";
 import ProjectListItem from "./ProjectListItem.vue";
 import TaskList from "./TaskList.vue";
+import Modal from "../Modal.vue";
 
 export default {
-    components: {TaskList, ProjectListItem},
+    components: {Modal, TaskList, ProjectListItem},
     beforeMount() {
       this.loadCurrentProjects();
     },
