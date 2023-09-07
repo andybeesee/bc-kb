@@ -64,6 +64,9 @@ Route::middleware(['auth'])->prefix('api')->name('api.')->group(function() {
     Route::get('/projects', \App\Http\Controllers\API\ProjectIndexController::class)->name('projects.index');
 
     Route::get('/tasks', \App\Http\Controllers\API\TaskIndexController::class)->name('tasks.index');
-    Route::put('/tasks/{task}/due-date', \App\Http\Controllers\API\Task\TaskDueDateController::class)->name('tasks.update.due-date');
-    Route::put('/tasks/{task}/assigned', \App\Http\Controllers\API\Task\TaskAssignmentController::class)->name('tasks.update.assigned');
+    Route::put('/tasks/{task}/due-date', [\App\Http\Controllers\API\Task\TaskDateController::class, 'dueDate'])->name('tasks.update.due-date');
+    Route::put('/tasks/{task}/completed-date', [\App\Http\Controllers\API\Task\TaskDateController::class, 'completedDate'])->name('tasks.update.completed-date');
+    Route::put('/tasks/{task}/assigned-to', [\App\Http\Controllers\API\Task\TaskUserController::class, 'updateAssigned'])->name('tasks.update.assigned-to');
+    Route::put('/tasks/{task}/completed-by', [\App\Http\Controllers\API\Task\TaskUserController::class, 'updateCompleted'])->name('tasks.update.completed-by');
+    Route::put('/tasks/{task}/complete-toggle', \App\Http\Controllers\API\Task\ToggleCompleteController::class)->name('tasks.toggle-complete');
 });

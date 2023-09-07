@@ -2,9 +2,14 @@
     <div class="py-1 px-2">
         <div class="flex items-center">
             <i class="fas fa-grip-vertical" v-if="sortable" />
-            <button type="button">
+            <button
+                type="button"
+                @click="toggleComplete"
+                class="text-lg"
+                :class="{ 'text-green-600': task.is_complete }"
+            >
                 <!-- TODO: complete/uncomplete -->
-                <i class="far fa-check-square" v-if="task.complete" />
+                <i class="fas fa-check-square" v-if="task.is_complete" />
                 <i class="far fa-square" v-else />
             </button>
             <div class="ml-2">
@@ -31,8 +36,24 @@
                     {{ task.comments_count }} Files
                 </button>
 
-                <div v-if="task.complete">
-                    Completion info
+                <div v-if="task.is_complete" class="flex text-green-500 items-center space-x-2">
+                    <div>Completed</div>
+                    <UserSelector
+                        :user="task.completed_by"
+                        :can-remove="false"
+                        @change="updatedCompletedBy"
+                    />
+
+                    <DateChanger
+                        prefix="Completed"
+                        :can-remove="false"
+                        :date="task.completed_date"
+                        @change="updateCompletedDate"
+                    />
+
+                    <Link title="Go to task detail page" class="text-xl" :href="route('tasks.show', task.id)">
+                        <i class="far fa-long-arrow-alt-right" />
+                    </Link>
                 </div>
                 <div class="flex items-center space-x-3" v-else>
                     <UserSelector
@@ -43,7 +64,7 @@
 
                     <DateChanger
                         prefix="Due"
-                        :class="task.is_late ? 'text-red-700' : 'text-butt'"
+                        :class="task.is_late ? 'text-red-700 dark:text-red-300' : ''"
                         placeholder="No Due Date"
                         :date="task.due_date"
                         @change="updateDueDate"
@@ -78,8 +99,30 @@ export default {
                 })
         },
         updatedAssignee(newId) {
-            axios.put(route('api.tasks.update.assigned', this.task.id), {
+            axios.put(route('api.tasks.update.assigned-to', this.task.id), {
                     user: newId,
+                })
+                .then((r) => {
+                    this.$emit('task-updated', r.data);
+                })
+        },
+        toggleComplete() {
+            axios.put(route('api.tasks.toggle-complete', this.task.id))
+                .then((r) => {
+                    this.$emit('task-updated', r.data);
+                })
+        },
+        updatedCompletedBy(newId) {
+            axios.put(route('api.tasks.update.completed-by', this.task.id), {
+                    user: newId,
+                })
+                .then((r) => {
+                    this.$emit('task-updated', r.data);
+                })
+        },
+        updateCompletedDate(newDate) {
+            axios.put(route('api.tasks.update.completed-date', this.task.id), {
+                    date: newDate,
                 })
                 .then((r) => {
                     this.$emit('task-updated', r.data);

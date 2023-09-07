@@ -16,6 +16,7 @@ class Task extends Model
 
     protected $appends = [
         'isLate' => 'is_late',
+        'isComplete' => 'is_complete',
     ];
 
     public function files()

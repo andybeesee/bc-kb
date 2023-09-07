@@ -10,10 +10,10 @@
             @update:model-value="handleDateChange"
         >
             <template #trigger>
-                <button class="px-2 border rounded border-zinc-300 hover:bg-zinc-100" type="button">
+                <button class="px-0.5 hover:bg-zinc-100 rounded dark:hover:bg-zinc-700" type="button">
                     <span v-if="dateSelected">
                         {{ prefix }} {{ $filters.date(date) }}
-                        <span title="Remove Date" class="ml-1 text-red-500 hover:text-red-600" @click.stop="remove">
+                        <span v-if="canRemove" title="Remove Date" class="ml-1 text-red-500 hover:text-red-600" @click.stop="remove">
                             <i class="fas fa-times-circle" ></i>
                         </span>
                     </span>
@@ -36,6 +36,7 @@ export default {
         placeholder: { default: 'Select Date', type: String },
         date: { default: null },
         prefix: { default: '', type: String },
+        canRemove: { default: true, type: Boolean }
     },
     methods: {
         handleDateChange(e) {

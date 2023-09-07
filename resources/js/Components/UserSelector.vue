@@ -3,14 +3,12 @@
         <button
             @click="openDropdown"
             type="button"
-            class="hover:bg-zinc-100 dark:hover:bg-zinc-700 rounded border border-zinc-300 px-2"
+            class="px-0.5 rounded hover:bg-zinc-100 dark:hover:bg-zinc-700"
         >
             {{ user?.name ?? placeholder }}
 
-            <span  v-if="user" class="text-red-600 hover:text-red-800" @click.stop="selectUser(null)">
-                <i class="fas fa-times-circle" />
-            </span>
-            <i class="ml-1 text-xs fas fa-caret-down" />
+
+            <i class="ml-0.5 text-xs fas fa-caret-down" />
         </button>
 
         <div
@@ -18,8 +16,11 @@
             v-click-outside="closeDropdown"
             class="absolute bg-white dark:bg-zinc-700 z-10 max-h-[200px] overflow-y-scroll border border-zinc-300 rounded shadow"
         >
+            <div  v-if="canRemove && user" class="p-1 cursor-pointer bg-red-100 dark:bg-red-700 dark:hover:bg-red-900" @click.stop="selectUser(null)">
+                <i class="fas fa-times-circle" /> Remove
+            </div>
             <div
-                class="p-1 cursor-pointer truncate hover:bg-zinc-100 dark:hover:bg-zinc-900"
+                class="p-1 dark:text-zinc-200 cursor-pointer truncate hover:bg-zinc-100 dark:hover:bg-zinc-900"
                 v-for="opt in options"
                 :title="opt.name"
                 :class="{
@@ -30,7 +31,6 @@
             >
                 {{ opt.name }}
             </div>
-            user selecter
         </div>
     </div>
 </template>
@@ -40,6 +40,7 @@ export default {
     props: {
         placeholder: { default: 'Select Date', type: String },
         user: { default: null },
+        canRemove: { default: true, type: Boolean },
     },
     data() {
         return {

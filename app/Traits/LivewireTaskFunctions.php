@@ -53,8 +53,6 @@ trait LivewireTaskFunctions
         DB::table('tasks')
             ->where('id', $taskId)
             ->update(['assigned_to' => null, 'updated_at' => now()]);
-
-
     }
 
     #[On('changeTaskCompletedBy')]
