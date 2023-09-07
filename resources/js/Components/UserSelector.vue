@@ -3,7 +3,7 @@
         <button
             @click="openDropdown"
             type="button"
-            class="hover:bg-zinc-100 rounded border border-zinc-300 px-2"
+            class="hover:bg-zinc-100 dark:hover:bg-zinc-700 rounded border border-zinc-300 px-2"
         >
             {{ user?.name ?? placeholder }}
 
@@ -16,7 +16,7 @@
         <div
             v-if="open"
             v-click-outside="closeDropdown"
-            class="absolute bg-white z-10 max-h-[200px] overflow-y-scroll border border-zinc-300 rounded shadow"
+            class="absolute bg-white dark:bg-zinc-700 z-10 max-h-[200px] overflow-y-scroll border border-zinc-300 rounded shadow"
         >
             <div
                 class="p-1 cursor-pointer truncate hover:bg-zinc-100"
