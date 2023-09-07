@@ -19,7 +19,7 @@
             class="absolute bg-white dark:bg-zinc-700 z-10 max-h-[200px] overflow-y-scroll border border-zinc-300 rounded shadow"
         >
             <div
-                class="p-1 cursor-pointer truncate hover:bg-zinc-100"
+                class="p-1 cursor-pointer truncate hover:bg-zinc-100 dark:hover:bg-zinc-900"
                 v-for="opt in options"
                 :title="opt.name"
                 :class="{

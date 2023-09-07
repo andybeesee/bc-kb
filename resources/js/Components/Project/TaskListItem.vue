@@ -1,5 +1,5 @@
 <template>
-    <div class="p-2">
+    <div class="py-1 px-2">
         <div class="flex items-center">
             <i class="fas fa-grip-vertical" v-if="sortable" />
             <button type="button">
@@ -49,6 +49,9 @@
                         @change="updateDueDate"
                     />
 
+                    <Link title="Go to task detail page" class="text-xl" :href="route('tasks.show', task.id)">
+                        <i class="far fa-long-arrow-alt-right" />
+                    </Link>
                 </div>
             </div>
         </div>
