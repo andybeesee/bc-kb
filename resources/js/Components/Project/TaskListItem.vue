@@ -50,10 +50,6 @@
                         :date="task.completed_date"
                         @change="updateCompletedDate"
                     />
-
-                    <Link title="Go to task detail page" class="text-xl" :href="route('tasks.show', task.id)">
-                        <i class="far fa-long-arrow-alt-right" />
-                    </Link>
                 </div>
                 <div class="flex items-center space-x-3" v-else>
                     <UserSelector
@@ -69,18 +65,17 @@
                         :date="task.due_date"
                         @change="updateDueDate"
                     />
-
-                    <Link title="Go to task detail page" class="text-xl" :href="route('tasks.show', task.id)">
-                        <i class="far fa-long-arrow-alt-right" />
-                    </Link>
                 </div>
             </div>
         </div>
     </div>
 </template>
 <script>
+// TODO: handle file dragover and upload
+// TODO: Open modal with detailed info
 import DateChanger from "../DateChanger.vue";
 import UserSelector from "../UserSelector.vue";
+
 export default {
     components: {DateChanger, UserSelector},
     props: {
