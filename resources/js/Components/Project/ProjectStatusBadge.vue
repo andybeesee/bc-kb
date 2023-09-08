@@ -3,7 +3,7 @@
         <Modal v-if="changing" title="Changing Status" @close="closeChangeForm">
             <template #title>Changing Status on {{ project.name }}</template>
 
-            <form class="bg-white rounded p-3" @submit.prevent="saveStatus">
+            <form @submit.prevent="saveStatus">
                 <div class="grid gap-1">
                     <Radio
                         v-for="(opt, val) in options"

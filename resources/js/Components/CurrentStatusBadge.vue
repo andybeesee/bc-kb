@@ -2,7 +2,7 @@
     <div :class="{ 'bg-yellow-100 dark:bg-yellow-500 text-black px-2 rounded': changing }">
         <Modal v-if="changing" @close="changing = false">
             <template #title>Changing Status</template>
-            <div class="bg-white p-4 rounded">
+            <div>
                 <CurrentStatusForm
                     @change="handleChange"
                     :type="type"

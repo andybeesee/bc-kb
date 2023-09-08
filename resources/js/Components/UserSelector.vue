@@ -35,6 +35,7 @@
     </div>
 </template>
 <script>
+// TODO: Support avatar..
 export default {
     emits: ['change'],
     props: {

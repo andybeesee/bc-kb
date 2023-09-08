@@ -1,15 +1,11 @@
 <template>
     <div>
-        <div v-if="current" class="bg-blue-100 p-3 mb-4 rounded">
-            <div class="font-semibold">Current status is:</div>
+        <div v-if="current" class="bg-blue-800 text-white p-3 mb-4 rounded">
+            <div class="font-semibold text-sm mb-1">Current status is:</div>
             {{ current.status }}
         </div>
 
         <form @submit.prevent="saveNew">
-            <div class="mb-4" v-if="type === 'project'">
-                Other status options...
-            </div>
-
             <Textarea v-model="newStatus" label="New Status" />
 
             <div class="mt-3">

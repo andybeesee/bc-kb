@@ -6,7 +6,7 @@
 
             <div  @click.self="sendClose" class="fixed inset-0 z-10 w-screen overflow-y-auto">
                 <div class="mx-auto max-w-4xl mt-10">
-                    <div class="flex items-center justify-between text-lg mb-2 bg-zinc-900 rounded px-3 py-2">
+                    <div class="flex items-center justify-between text-lg mb-2 bg-zinc-900 text-zinc-100 rounded px-3 py-2">
                         <div class="font-bold text-2xl">
                             <slot name="title">
                                 Titel Goes Here
@@ -17,7 +17,7 @@
                         </button>
                     </div>
 
-                    <div class="text-zinc-900">
+                    <div class="p-3 bg-white rounded-md dark:bg-zinc-900 dark:border-zinc-500 dark:border">
                         <slot />
                     </div>
                 </div>
