@@ -5,7 +5,7 @@
             <div class="card">
                 <div class="card-title">Current Projects</div>
                 <div class="divide-y dark:divide-zinc-700">
-                    <ProjectListItem v-for="project in currentProjects" :project="project" />
+                    <ProjectListItem @projectUpdated="handleProjectUpdate" v-for="project in currentProjects" :project="project" />
                 </div>
             </div>
 
@@ -53,6 +53,9 @@ export default {
                     this.loadingProjects = false;
                 })
         },
+        handleProjectUpdate(p) {
+            console.log('handle p', p);
+        }
     }
 }
 </script>

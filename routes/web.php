@@ -62,6 +62,8 @@ Route::middleware(['auth'])->prefix('api')->name('api.')->group(function() {
     Route::get('/users', \App\Http\Controllers\API\UserIndexController::class)->name('users.index');
 
     Route::get('/projects', \App\Http\Controllers\API\ProjectIndexController::class)->name('projects.index');
+    Route::get('/project-statuses', [\App\Http\Controllers\API\ProjectStatusController::class, 'index'])->name('project-statuses.index');
+    Route::put('/project-statuses/{project}', [\App\Http\Controllers\API\ProjectStatusController::class, 'update'])->name('project-statuses.update');
 
     Route::get('/tasks', \App\Http\Controllers\API\TaskIndexController::class)->name('tasks.index');
     Route::put('/tasks/{task}/due-date', [\App\Http\Controllers\API\Task\TaskDateController::class, 'dueDate'])->name('tasks.update.due-date');

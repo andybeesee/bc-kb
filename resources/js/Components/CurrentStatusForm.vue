@@ -6,6 +6,10 @@
         </div>
 
         <form @submit.prevent="saveNew">
+            <div class="mb-4" v-if="type === 'project'">
+                Other status options...
+            </div>
+
             <Textarea v-model="newStatus" label="New Status" />
 
             <div class="mt-3">

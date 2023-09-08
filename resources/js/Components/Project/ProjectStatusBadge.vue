@@ -1,21 +1,79 @@
 <template>
     <div>
-        <div :title="titleCaseStatus" v-if="iconOnly">
-            <i class="rounded-full my-auto" :class="statusIconClasses" />
-        </div>
-        <div class="px-2 rounded" :class="statusBadgeClasses"  v-else>
-            {{ titleCaseStatus }}
+        <Modal v-if="changing" title="Changing Status" @close="closeChangeForm">
+            <template #title>Changing Status on {{ project.name }}</template>
+
+            <form class="bg-white rounded p-3" @submit.prevent="saveStatus">
+                <div class="grid gap-1">
+                    <Radio
+                        v-for="(opt, val) in options"
+                        name="newstat"
+                        v-model="newStatus"
+                        :label="opt"
+                        :value="val"
+                    />
+                </div>
+                <div class="mt-4">
+                    <button type="submit" class="btn btn-primary">
+                        Save Change
+                    </button>
+                    <button type="button" class="btn btn-white ml-3" @click="closeChangeForm">
+                        Nevermind
+                    </button>
+                </div>
+            </form>
+        </Modal>
+        <div class="cursor-pointer" @click="openChangeForm">
+            <div :title="titleCaseStatus" v-if="iconOnly">
+                <i class="rounded-full my-auto" :class="statusIconClasses" />
+            </div>
+            <div class="px-2 rounded" :class="statusBadgeClasses"  v-else>
+                {{ titleCaseStatus }}
+            </div>
         </div>
     </div>
 </template>
 <script>
 import CurrentStatusBadge from "../CurrentStatusBadge.vue";
+import Modal from "../Modal.vue";
+import Radio from "../Form/Radio.vue";
 
 export default {
-    components: {CurrentStatusBadge},
+    components: {Radio, Modal, CurrentStatusBadge},
     props: {
         project: Object,
         iconOnly: { type: Boolean, default: false }
+    },
+    data() {
+        return {
+            changing: false,
+            options: [],
+            newStatus: '',
+        };
+    },
+    methods: {
+        openChangeForm() {
+            this.newStatus = this.project.status;
+            this.loadOptions();
+            this.changing = true;
+        },
+        closeChangeForm() {
+            this.options = [];
+            this.changing = false;
+        },
+        loadOptions() {
+            axios.get(`/api/project-statuses`).then(r => this.options = r.data);
+        },
+        saveStatus() {
+            this.project.status = this.newStatus;
+            axios.put(`/api/project-statuses/${this.project.id}`, {
+                status: this.newStatus,
+            }).then((r) => {
+                this.$emit('project-updated', r.data);
+                this.changing = false;
+                this.options = [];
+            })
+        },
     },
     computed: {
         statusIconContainerClasses() {
