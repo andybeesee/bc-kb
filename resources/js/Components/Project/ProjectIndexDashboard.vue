@@ -11,17 +11,35 @@
 
             <div class="card">
                 <div class="card-title">Past Due Tasks</div>
-                <TaskList :filters="['past_due']" :assigned-to="$page.props.auth.id" :show-checklist="true" :show-project="true" />
+                <TaskList :filters="['past_due']" :assigned-to="$page.props.auth.id" :show-checklist="true" :show-project="true">
+                    <template #no-tasks>
+                        <div class="bg-green-100 rounded-b-md card-body">
+                            No Past Due Tasks!
+                        </div>
+                    </template>
+                </TaskList>
             </div>
 
             <div class="card">
                 <div class="card-title">Due Date Upcoming</div>
-                <TaskList :filters="['upcoming']" :assigned-to="$page.props.auth.id" :show-checklist="true" :show-project="true" />
+                <TaskList :filters="['upcoming']" :assigned-to="$page.props.auth.id" :show-checklist="true" :show-project="true">
+                    <template #no-tasks>
+                        <div class="bg-green-100 rounded-b-md card-body">
+                            No Upcoming Tasks!
+                        </div>
+                    </template>
+                </TaskList>
             </div>
 
             <div class="card">
                 <div class="card-title">Incomplete Tasks</div>
-                <TaskList :filters="['incomplete']" :assigned-to="$page.props.auth.id" :show-checklist="true" :show-project="true" />
+                <TaskList :filters="['incomplete']" :assigned-to="$page.props.auth.id" :show-checklist="true" :show-project="true">
+                    <template #no-tasks>
+                        <div class="bg-green-100 rounded-b-md card-body">
+                            No Incomplete Tasks!
+                        </div>
+                    </template>
+                </TaskList>
             </div>
         </div>
 

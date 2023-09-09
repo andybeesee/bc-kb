@@ -1,5 +1,5 @@
 <template>
-    <div class="grid divide-y divide-zinc-300 dark:divide-zinc-700">
+    <div class="grid divide-y divide-zinc-300 dark:divide-zinc-700" v-if="tasks.length > 0">
         <TaskListItem
             @task-updated="handleUpdate"
             v-for="task in tasks"
@@ -8,6 +8,11 @@
             :show-checklist="showChecklist"
             :show-project="showProject"
         />
+    </div>
+    <div v-else>
+        <slot name="no-tasks">
+            No tasks
+        </slot>
     </div>
 </template>
 <script>

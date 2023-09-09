@@ -9,8 +9,8 @@
                     <Link :title="project.name" :href="route('projects.show', project.id)" class="truncate font-semibold hover:underline">
                         #{{ project.id }} {{ project.name }}
                     </Link>
-                    <TeamBadge class="ml-4 truncate" v-if="project.team" :team="project.team" />
-                    <UserBadge class="ml-4 truncate" v-if="project.owner" :user="project.owner" />
+                    <TeamSelector class="ml-4" v-if="project.team" :team="project.team" />
+                    <UserSelector class="ml-4" v-if="project.owner" :user="project.owner" @change="saveUser" />
 
                     <div class="ml-auto flex items-center space-x-3">
                         <span v-if="project.past_due_tasks_count > 0" class="text-sm text-red-600">
@@ -40,12 +40,12 @@
 </template>
 <script>
 import TaskCountBox from "../TaskCountBox.vue";
-import TeamBadge from "../TeamBadge.vue";
-import UserBadge from "../UserBadge.vue";
+import TeamSelector from "../TeamSelector.vue";
 import ProjectStatusBadge from './ProjectStatusBadge.vue';
 import CurrentStatusBadge from "../CurrentStatusBadge.vue";
+import UserSelector from "../UserSelector.vue";
 export default {
-    components: {CurrentStatusBadge, ProjectStatusBadge, UserBadge, TaskCountBox, TeamBadge},
+    components: {UserSelector, CurrentStatusBadge, ProjectStatusBadge, TaskCountBox, TeamSelector},
     props: {
         project: Object,
     },
@@ -56,5 +56,13 @@ export default {
             detailOpen: false,
         };
     },
+    methods: {
+        saveUser(user) {
+            // TODO: Save new owner
+        },
+        saveTeam(team) {
+            // TODO: Save new team
+        }
+    }
 }
 </script>
