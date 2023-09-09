@@ -12,4 +12,9 @@ class ChecklistTemplate extends Model
     protected $casts = [
         'tasks' => 'array',
     ];
+
+    public function projectTemplates()
+    {
+        return $this->belongsToMany(ProjectTemplate::class, 'project_template_checklist_template');
+    }
 }

@@ -68,4 +68,25 @@ class Task extends Model
                 });
         });
     }
+
+    public function scopeIsIncomplete($q)
+    {
+        return $q->whereNull('completed_date');
+    }
+
+    public function scopeIsComplete($q)
+    {
+        return $q->whereNotNull('completed_date');
+    }
+
+    public function scopeIsLate($q)
+    {
+        return $q->whereNull('completed_date')->where('due_date', '<', date('Y-m-d'));
+    }
+
+    public function scopeIsAssignedTo($q, $userId)
+    {
+        return $q->where('assigned_to', $userId);
+    }
+
 }

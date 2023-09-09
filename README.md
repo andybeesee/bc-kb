@@ -10,8 +10,16 @@
   * ~~update due date on task on dashboard~~
 * ~~Discussions on projects~~ - done but bad
 * ~~Project Detail dashboard~~ (disabled lol)
-* Project checklists - add checklist, import template
-* performance on project/tasks page - for 15+ groups with 100+ tasks
+* ~~Project checklists - add checklist, import template~~
+* ~~add tasks to default checklists, other checklists~~
+* ~~performance on project/tasks page - for 15+ groups with 100+ tasks~~
+  * showing one checklist at a time definitely helped
+* Project/tasks page - dashboard style showing in complete stuff like reminders
+  * due today
+  * due in the next 7 days
+  * due in the next 20 days
+  * no due date
+* Project/tasks page - drag task on to a new checklist to move it 
 * Checklist detail page
 * Standalone checklist (not on a project) - owned by a team and/or user
 * 

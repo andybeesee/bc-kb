@@ -9,7 +9,7 @@
     }"
 >
     @if(!empty($updating))
-        <div @close-project-update-form="closeForm" @modal-close="closeForm" @project-status-updated="closeForm">
+        <div @close-project-update-form="closeForm" @modal-close="closeForm" @project-updated="closeForm" @project-status-updated="closeForm">
             <x-modal name="modal-dboard-name" :show="true">
                 <div class="p-4">
                     <livewire:project-update-status-form :project-id="$updating" />

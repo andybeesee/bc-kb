@@ -22,25 +22,45 @@ class ProjectTaskList extends Component
 
     public null|int $showDetailTask = null;
 
+    public $addingGroup = false;
+
+    public $openedChecklist = null;
+
+    public $addingTask = false;
+
+    public $addingTaskToChecklist = null;
+
     public null|string $startingTab = null;
 
     public function render()
     {
-        $checklists = Checklist::with(['tasks' => fn($tq) => $tq->with(['completedBy', 'assignedTo'])->withCount('files')])
+        return view('livewire.project-task-list');
+    }
+
+    public function getDefaultChecklistProperty()
+    {
+        $q = Task::where('project_id', $this->projectId)->whereNull('checklist_id');
+
+        return (object) [
+            'incomplete_tasks_count' => (clone $q)->isIncomplete()->count(),
+            'complete_tasks_count' => (clone $q)->isComplete()->count(),
+            'late_tasks_count' => (clone $q)->isLate()->count(),
+            'incomplete_assigned_to_user_tasks_count' => (clone $q)->isAssignedTo(auth()->user()->id)->count()
+        ];
+    }
+
+    public function getChecklistsProperty()
+    {
+        return Checklist::withCount([
+            // 'tasks',
+            'incompleteTasks',
+            'completeTasks',
+            'lateTasks',
+            'incompleteAssignedToUserTasks'
+        ])
             ->where('project_id', $this->projectId)
             ->orderBy('sort')
             ->get();
-
-        $tasks = Task::with(['completedBy', 'assignedTo'])
-            ->withCount(['files', 'comments'])
-            ->where('project_id', $this->projectId)
-            ->whereNull('checklist_id')
-            ->orderBy('sort')
-            ->get();
-
-        return view('livewire.project-task-list')
-            ->with('tasks', $tasks)
-            ->with('checklists', $checklists);
     }
 
     public function openDetail($taskId, $tab = null)
@@ -54,6 +74,30 @@ class ProjectTaskList extends Component
         $this->showDetailTask = null;
     }
 
+    public function getOpenChecklistDetailProperty()
+    {
+        if(empty($this->openedChecklist)) {
+            return false;
+        }
+
+        return Checklist::with('tasks')->findOrFail($this->openedChecklist);
+    }
+
+    public function getTasksToShowProperty()
+    {
+        $q = Task::where('project_id', $this->projectId)
+            ->orderBy('sort')
+            ->with(['assignedTo', 'completedBy']);
+
+        if(empty($this->openedChecklist)) {
+            $q = $q->whereNull('checklist_id');
+        } else {
+            $q = $q->where('checklist_id', $this->openedChecklist);
+        }
+
+        return $q->get();
+    }
+
     #[On('movedList')]
     public function handleTaskMove($taskId, $checklistId, $items)
     {
@@ -64,6 +108,18 @@ class ProjectTaskList extends Component
             ]);
 
         $this->handleSort($items, $checklistId);
+    }
+
+    #[On('task-added')]
+    public function handleTaskAdd()
+    {
+
+    }
+
+    public function openAddTask($checklistId = null)
+    {
+        $this->addingTask = true;
+        $this->addingTaskToChecklist = $checklistId;
     }
 
     #[On('sorted')]
